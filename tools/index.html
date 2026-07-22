@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tools — solab</title>
+  <meta name="description" content="Software and tools from the Ovchinnikov Lab (solab).">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../">solab</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="../">Home</a></li>
+        <li><a href="../lab/">Lab</a></li>
+        <li><a href="../research/">Research</a></li>
+        <li><a href="../publications/">Publications</a></li>
+        <li><a href="../tools/" class="active">Tools</a></li>
+        <li><a href="../resources/">Resources</a></li>
+        <li><a href="../contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1 class="page-title">Tools</h1>
+
+      <h2 class="section-title">Recent</h2>
+      <div class="card-list">
+        <div class="card"><img class="card-img" src="../assets/img/tools/msa_pairformer.png" alt="MSA_Pairformer"><h3><a href="https://github.com/yoakiyama/MSA_Pairformer">MSA_Pairformer</a></h3><p>Scaling down protein language modeling with MSA Pairformer</p></div>
+        <div class="card"><img class="card-img" src="../assets/img/tools/absolute_stability.png" alt="absolute-stability-predictor"><h3><a href="https://github.com/yehlincho/absolute-stability-predictor">absolute-stability-predictor</a></h3><p>Fine-tuned models (ESM3ΔG, SaProtΔG) that predict per-residue protein stability (ΔG) and mutational effects from structure</p></div>
+        <div class="card"><img class="card-img" src="../assets/img/tools/protein_ebm.png" alt="ProteinEBM"><h3><a href="https://github.com/jproney/ProteinEBM">ProteinEBM</a></h3><p>Energy-based models of protein structure learned from sequence via denoising score matching</p></div>
+        <div class="card"><img class="card-img" src="../assets/img/tools/protein_hunter.png" alt="Protein-Hunter"><h3><a href="https://github.com/yehlincho/Protein-Hunter">Protein-Hunter</a></h3><p>Exploiting structure hallucination within diffusion for protein design</p></div>
+        <div class="card"><img class="card-img" src="../assets/img/tools/cirpin.png" alt="CIRPIN"><h3><a href="https://github.com/aidenkoloj/CIRPIN">CIRPIN</a></h3><p>Learning circular permutation-invariant representations to uncover putative protein homologs</p></div>
+        <div class="card"><img class="card-img" src="../assets/img/tools/bindcraft.png" alt="BindCraft"><h3><a href="https://github.com/martinpacesa/BindCraft">BindCraft</a></h3><p>One-shot design of functional protein binders</p></div>
+      </div>
+
+      <h2 class="section-title" style="margin-top:40px">All tools</h2>
+      <div class="card-list">
+        <div class="card"><h3><a href="https://github.com/sokrypton/ColabFold">ColabFold</a></h3><p>Making protein folding accessible to all via Google Colab</p></div>
+        <div class="card"><h3><a href="https://github.com/sokrypton/ColabDesign">ColabDesign</a></h3><p>Design proteins using TrRosetta, RosettaFold and AlphaFold</p></div>
+        <div class="card"><h3><a href="https://github.com/yehlincho/BoltzDesign1">BoltzDesign</a></h3><p>Inverting All-Atom Structure Prediction Model for Generalized Biomolecular Binder Design</p></div>
+        <div class="card"><h3><a href="https://github.com/spetti/SMURF">SMURF</a></h3><p>End-to-end learning of multiple sequence alignments with differentiable Smith-Waterman</p></div>
+        <div class="card"><h3><a href="https://github.com/jtrinquier/SoftAlign">SoftAlign</a></h3><p>End-to-end protein structures alignment</p></div>
+        <div class="card"><h3><a href="https://github.com/jproney/AF2Rank">AF2Rank</a></h3><p>State-of-the-Art Estimation of Protein Model Accuracy using AlphaFold</p></div>
+        <div class="card"><h3><a href="../publications/#prediction">AF2BIND</a></h3><p>Lightweight and fast prediction of ligand-binding sites</p></div>
+        <div class="card"><h3><a href="http://openseq.org">GREMLIN</a></h3><p>Web-server and database for predicting contacts. For source code see: <a href="https://github.com/sokrypton/GREMLIN_CPP">C++</a>, <a href="https://github.com/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb">Python (Tensorflow)</a>, <a href="https://github.com/sokrypton/laxy/blob/main/examples/gremlin_jax.ipynb">Python (Jax)</a></p></div>
+        <div class="card"><h3>CatJac</h3><p>Categorical Jacobian to uncover pairwise relationships in sequence models. Implemented for: <a href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/esm2.ipynb">ESM2</a>, <a href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/esm3.ipynb">ESM3</a>, <a href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/proteinmpnn.ipynb">ProteinMPNN</a>, Evo, gLM2</p></div>
+        <div class="card"><h3><a href="https://github.com/sokrypton/seqsal">seqsal</a></h3><p>What do generative models learn from protein sequences?</p></div>
+        <div class="card"><h3><a href="https://github.com/sokrypton/seqmodels">seqmodels</a></h3><p>Unified framework for modeling multivariate distributions in biological sequences</p></div>
+        <div class="card"><h3><a href="https://github.com/sokrypton/map_align">map_align</a></h3><p>contact map alignment</p></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>Department of Biology, <a href="https://web.mit.edu/">Massachusetts Institute of Technology</a></span>
+      <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
+    </div>
+  </footer>
+</body>
+</html>

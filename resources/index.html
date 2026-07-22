@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resources — solab</title>
+  <meta name="description" content="Useful resources for those starting computational projects in the solab.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../">solab</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="../">Home</a></li>
+        <li><a href="../lab/">Lab</a></li>
+        <li><a href="../research/">Research</a></li>
+        <li><a href="../publications/">Publications</a></li>
+        <li><a href="../tools/">Tools</a></li>
+        <li><a href="../resources/" class="active">Resources</a></li>
+        <li><a href="../contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1 class="page-title">Resources</h1>
+      <p class="page-intro">Useful resources for those starting computational projects in the solab!</p>
+
+      <section class="res-group">
+        <h2 class="section-title">Python</h2>
+        <ul>
+          <li><a href="https://colab.research.google.com/">Google colab</a> — Run python notebooks directly in your web-browser! Alternatives: <a href="https://jupyter.org/try">Jupyter</a> by mybinder.org, <a href="https://www.anaconda.com/distribution/#download-section">Anaconda</a> - install on your own computer</li>
+          <li><a href="https://jakevdp.github.io/WhirlwindTourOfPython/">A Whirlwind Tour of Python</a> by J. VanderPlas — Introduction to Basic Python</li>
+          <li><a href="https://jakevdp.github.io/PythonDataScienceHandbook/">Python Data Science Handbook</a> by J. VanderPlas — Introduction to Scientific libraries used in Python</li>
+        </ul>
+      </section>
+
+      <section class="res-group">
+        <h2 class="section-title">Mathematics and Statistics</h2>
+        <ul>
+          <li><a href="https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw">3Blue1Brown</a> - series of animated youtube videos:
+            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of linear algebra</a>,
+            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr">Essence of calculus</a>,
+            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">Neural Networks</a>,
+            <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDNPOjrT6KVlfJuKtYTftqH6">Differential Equations</a></li>
+          <li>Advanced topics: <a href="http://web.stanford.edu/~hastie/ElemStatLearn/">The Elements of Statistical Learning</a> by T. Hastie, R. Tibshirani and J. Friedman; <a href="https://www.cs.ubc.ca/~murphyk/MLbook/">Machine Learning: a Probabilistic Perspective</a> by K. Murphy</li>
+        </ul>
+      </section>
+
+      <section class="res-group">
+        <h2 class="section-title">Neural networks</h2>
+        <ul>
+          <li>Interactive examples - BEST WAY TO LEARN!
+            <a href="https://playground.tensorflow.org">Playground</a> (for classification/regression),
+            <a href="https://poloclub.github.io/ganlab/">GAN Lab</a> (generative models),
+            <a href="https://anomagram.fastforwardlabs.com/">Anomagram</a> (Autoencoder),
+            <a href="https://distill.pub/">Distill</a> (interactive publications)</li>
+          <li><a href="https://www.amazon.com/Deep-Learning-Python-Francois-Chollet/dp/1617294438/">Deep Learning with Python</a> (not free, link to Amazon) by F. Chollet — BIG picture introduction to NN. <a href="https://github.com/fchollet/deep-learning-with-python-notebooks">Notebooks to go with the book.</a></li>
+          <li>Advanced topics: <a href="http://www.deeplearningbook.org/">Deep Learning</a> by I. Goodfellow, Y. Bengio and A. Courville</li>
+          <li>Reviews: <a href="https://www.nature.com/articles/s41576-019-0122-6.epdf">Deep learning: new computational modeling techniques for genomics</a>; <a href="https://arxiv.org/abs/2003.11755">A Survey of Deep Learning for Scientific Discovery</a></li>
+        </ul>
+      </section>
+
+      <section class="res-group">
+        <h2 class="section-title">Proteins</h2>
+        <ul>
+          <li><a href="coevolution-structure-prediction/">Coevolution - List of milestones</a></li>
+          <li><a href="https://github.com/yangkky/Machine-learning-for-proteins">Papers on machine learning for proteins</a></li>
+          <li>Workshops (by Sergey Ovchinnikov):
+            <a href="https://docs.google.com/presentation/d/1F8K3tWNJg-qvzUnKiobTiAYg8ioMUjYgK5EZBtKSQZ4">Abinitio structure prediction (2018)</a>,
+            <a href="https://docs.google.com/presentation/d/1oEnGvhQrpACTmD9jYgNBvUCVFNAbgUbMYCqGSXsEnIE">Structure prediction w/ experimental data (2018)</a>,
+            Rosetta-Boston-Club (2019) - going from PSSM, MRF to VAE</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>Department of Biology, <a href="https://web.mit.edu/">Massachusetts Institute of Technology</a></span>
+      <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
+    </div>
+  </footer>
+</body>
+</html>
