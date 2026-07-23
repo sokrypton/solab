@@ -114,12 +114,16 @@
     var frag = document.createDocumentFragment();
     var colColor = [];
     for (var c = 0; c < g.cols; c++) colColor[c] = pick();     // each column one residue
+    // full alignment: gaps (grey "-") dominate, occasional stray residues,
+    // and the word stands out as vivid conserved columns.
     for (c = 0; c < g.cols; c++) {
       for (var r = 0; r < rows; r++) {
         if (g.on(c, r)) {
-          frag.appendChild(cellRect(c, r, pitch, cell, colColor[c]));
-        } else if (Math.random() < 0.10) {
-          frag.appendChild(cellRect(c, r, pitch, cell, Math.random() < 0.7 ? pick() : GRAY, 0.16));
+          frag.appendChild(cellRect(c, r, pitch, cell, colColor[c]));   // the word: vivid
+        } else if (Math.random() < 0.93) {
+          frag.appendChild(cellRect(c, r, pitch, cell, GRAY, 0.6));      // gap "-": receding grey
+        } else {
+          frag.appendChild(cellRect(c, r, pitch, cell, pick(), 0.5));    // stray residue
         }
       }
     }
