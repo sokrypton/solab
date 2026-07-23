@@ -448,31 +448,50 @@
       var groups = {};
       els.forEach(function (e, i) { var r = find(i); (groups[r] = groups[r] || []).push(e); });
 
-      var staticG = document.createElementNS(NS, 'g');
+      // ring radius (for spotting the genes that sit on the genome band)
+      var Rring = 0; big.forEach(function (i) { Rring = Math.max(Rring, Math.max(i.w, i.h) / 2); });
+
+      var staticG = document.createElementNS(NS, 'g');   // the genome ring — stays put
       big.forEach(function (i) { staticG.appendChild(i.n); });
-      var orbit = document.createElementNS(NS, 'g'); orbit.setAttribute('class', 'hero-orbit');
-      if (!reduce) orbit.style.animation = 'heroSpin 150s linear infinite';
-      var maxR = 0;
+
+      var items = [], maxR = 0;   // each orbiting element group + its centre + mode
       Object.keys(groups).forEach(function (k) {
         var cl = groups[k];
         var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
         cl.forEach(function (i) { x0 = Math.min(x0, i.x); y0 = Math.min(y0, i.y); x1 = Math.max(x1, i.x + i.w); y1 = Math.max(y1, i.y + i.h); });
         var gcx = (x0 + x1) / 2, gcy = (y0 + y1) / 2;
-        maxR = Math.max(maxR, Math.hypot(gcx - CXR, gcy - CYR) + Math.max(x1 - x0, y1 - y0) / 2);
-        var eg = document.createElementNS(NS, 'g'); eg.setAttribute('class', 'hero-counter');
-        eg.style.transformOrigin = gcx + 'px ' + gcy + 'px';
-        if (!reduce) eg.style.animation = 'heroSpinRev 150s linear infinite';
+        var rad = Math.hypot(gcx - CXR, gcy - CYR);
+        maxR = Math.max(maxR, rad + Math.max(x1 - x0, y1 - y0) / 2);
+        var eg = document.createElementNS(NS, 'g');
         cl.forEach(function (i) { eg.appendChild(i.n); });
-        orbit.appendChild(eg);
+        // genes sit on the genome band → they ride the ring (tangent); everything
+        // else orbits but stays upright
+        var onRing = Rring > 0 && rad > 0.6 * Rring && rad < 1.08 * Rring;
+        items.push({ el: eg, cx: gcx, cy: gcy, tangent: onRing });
       });
       big.forEach(function (i) { maxR = Math.max(maxR, Math.hypot(i.cx - CXR, i.cy - CYR) + Math.max(i.w, i.h) / 2); });
 
       g.textContent = '';
-      g.appendChild(staticG);   // ring behind
-      g.appendChild(orbit);     // elements in front
+      g.appendChild(staticG);                       // ring behind
+      items.forEach(function (it) { g.appendChild(it.el); });   // elements in front
       var R = maxR + 10;
       svg.setAttribute('viewBox', (CXR - R) + ' ' + (CYR - R) + ' ' + (2 * R) + ' ' + (2 * R));
       var img = el.querySelector('img'); if (img) img.remove();
+
+      // one shared angle drives everything (no drift): orbit about the ring
+      // centre, then counter-rotate the uprights about their own centre
+      if (!reduce) {
+        var PERIOD = 150000, t0 = performance.now();
+        (function spin(now) {
+          var th = ((now - t0) / PERIOD) * 360;
+          items.forEach(function (it) {
+            var t = 'rotate(' + th.toFixed(3) + ' ' + CXR + ' ' + CYR + ')';
+            if (!it.tangent) t += ' rotate(' + (-th).toFixed(3) + ' ' + it.cx.toFixed(2) + ' ' + it.cy.toFixed(2) + ')';
+            it.el.setAttribute('transform', t);
+          });
+          requestAnimationFrame(spin);
+        })(performance.now());
+      }
     }).catch(function () {});
   }
 
