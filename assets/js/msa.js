@@ -251,10 +251,6 @@
           if (Math.random() < 0.7) put(c.i + di, c.j + dj, RES[2], 0.5);
       }
     });
-    for (var z = 0, nz = (n * 0.05) | 0; z < nz; z++) {
-      var ni = (Math.random() * n) | 0, nj = (Math.random() * n) | 0;
-      if (Math.abs(ni - nj) > 3) put(ni, nj, RES[4], 0.2);
-    }
     var frag = document.createDocumentFragment();
     for (var key in grid) {
       var gi = (key / n) | 0, gj = key % n, cd = grid[key];
