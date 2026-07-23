@@ -410,6 +410,39 @@
     window.addEventListener('resize', function () { resize(); draw(M); });
   }
 
+  // Home hero: inline the vector logo and slowly orbit the whole diagram
+  // around the ring centre (the "cycle of protein evolution" turning).
+  function animateHero(el) {
+    var src = el.getAttribute('data-svg'); if (!src) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    fetch(src).then(function (r) { return r.text(); }).then(function (txt) {
+      var tmp = document.createElement('div'); tmp.innerHTML = txt;
+      var svg = tmp.querySelector('svg'); if (!svg) return;
+      // drop transparent full-canvas rects so getBBox is tight
+      [].forEach.call(svg.querySelectorAll('[fill-opacity="0.0"]'), function (nd) { nd.parentNode.removeChild(nd); });
+      var g = svg.querySelector('g'); if (!g) return;
+      var inner = document.createElementNS(NS, 'g'); inner.setAttribute('class', 'hero-spin');
+      [].slice.call(g.childNodes).forEach(function (k) { inner.appendChild(k); });
+      g.appendChild(inner);
+      svg.removeAttribute('width'); svg.removeAttribute('height'); svg.setAttribute('class', 'hero-svg');
+      el.insertBefore(svg, el.firstChild);            // must be in the DOM to measure
+      var cx = 487.26, cy = 354.63;                   // ring centre (from the inner circle path)
+      try {
+        var bb = inner.getBBox();
+        var R = Math.max(
+          Math.sqrt((bb.x - cx) * (bb.x - cx) + (bb.y - cy) * (bb.y - cy)),
+          Math.sqrt((bb.x + bb.width - cx) * (bb.x + bb.width - cx) + (bb.y - cy) * (bb.y - cy)),
+          Math.sqrt((bb.x - cx) * (bb.x - cx) + (bb.y + bb.height - cy) * (bb.y + bb.height - cy)),
+          Math.sqrt((bb.x + bb.width - cx) * (bb.x + bb.width - cx) + (bb.y + bb.height - cy) * (bb.y + bb.height - cy))
+        ) + 8;
+        svg.setAttribute('viewBox', (cx - R) + ' ' + (cy - R) + ' ' + (2 * R) + ' ' + (2 * R));
+      } catch (e) {}
+      inner.style.transformOrigin = cx + 'px ' + cy + 'px';
+      if (!reduce) inner.style.animation = 'heroSpin 140s linear infinite';
+      var img = el.querySelector('img'); if (img) img.remove();
+    }).catch(function () {});
+  }
+
   function sectionWord() {
     var a = document.querySelector('.nav-links a.active');
     if (a && a.textContent.trim()) return a.textContent.trim();
@@ -444,6 +477,8 @@
     });
     [].forEach.call(document.querySelectorAll('.msa-band'), fillBand);
     [].forEach.call(document.querySelectorAll('.msa-mark'), fillMark);
+    var heroLive = document.querySelector('.hero-live');
+    if (heroLive) animateHero(heroLive);
     // contact page: one fold drives both the 3D trace (left) and its contact map (right)
     var canvas = document.querySelector('.struct-3d canvas');
     var mapEl = document.querySelector('.contact-map');
