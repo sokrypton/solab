@@ -420,14 +420,18 @@
     // placements measured from the original artboard (each element's rect read
     // from its parent-group matrix in logo.svg, then scaled ~1.06x about the ring
     // centre into the composite's coordinate system) so frame 0 matches the logo
+    // centres optimised to minimise element overlap across the full rotation:
+    // since every element orbits rigidly and stays upright, pairwise centre
+    // distances are constant, so spreading them onto an even ring band (all pairwise
+    // distances >= the combined half-extent diagonal) keeps them clear at every angle.
     var spec = [
-      { f: '01.png', cx: 233, cy: 207, w: 124, h: 101 },   // energy landscape (top-left)
-      { f: '02.png', cx: 333, cy: 183, w: 81, h: 102 },    // green protein (top)
-      { f: '03.png', cx: 408, cy: 188, w: 100, h: 127 },   // 3-protein complex (top-right)
-      { f: '06.svg', cx: 465, cy: 256, w: 94, h: 126 },    // network graph (right)
-      { f: '05.png', cx: 335, cy: 444, w: 116, h: 127 },   // field photos (bottom)
-      { f: '07.svg', cx: 188, cy: 385, w: 130, h: 142 },   // MSA block (left)
-      { f: '04.png', cx: 170, cy: 272, w: 106, h: 75 }     // active-site protein (upper-left)
+      { f: '01.png', cx: 201, cy: 186, w: 124, h: 101 },   // energy landscape
+      { f: '02.png', cx: 337, cy: 142, w: 81, h: 102 },    // green protein
+      { f: '03.png', cx: 464, cy: 212, w: 100, h: 127 },   // 3-protein complex
+      { f: '06.svg', cx: 494, cy: 367, w: 94, h: 126 },    // network graph
+      { f: '05.png', cx: 385, cy: 489, w: 116, h: 127 },   // field photos
+      { f: '07.svg', cx: 206, cy: 461, w: 130, h: 142 },   // MSA block
+      { f: '04.png', cx: 140, cy: 316, w: 106, h: 75 }     // active-site protein
     ];
     var svg = document.createElementNS(NS, 'svg');
     // tight square viewBox around the rotation circle so the logo fills its box.
