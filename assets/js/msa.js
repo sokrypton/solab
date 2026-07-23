@@ -182,12 +182,39 @@
       }
     });
 
-    // 4. thread N→C; enter each element from the end nearest the previous exit,
-    //    connect with a loop whose length follows the 3D gap
+    // 4. choose the N→C visiting order (and per-element direction) that minimises
+    //    the total connecting-loop length — a short-path search over the placed
+    //    elements. Elements are few (3–5), so brute-force every permutation.
+    function ends(el) { var c = el.coords; return [c[0], c[c.length - 1]]; }
+    function loopCost(order, firstRev) {
+      var total = 0, last = null;
+      for (var a = 0; a < order.length; a++) {
+        var ep = ends(elems[order[a]]);
+        if (last === null) { last = firstRev ? ep[0] : ep[1]; continue; }
+        var d0 = vlen(vsub(ep[0], last)), d1 = vlen(vsub(ep[1], last));
+        if (d1 < d0) { total += d1; last = ep[0]; } else { total += d0; last = ep[1]; }
+      }
+      return total;
+    }
+    var idxs = []; for (var q0 = 0; q0 < elems.length; q0++) idxs.push(q0);
+    var best = { c: Infinity, order: idxs.slice(), fr: 0 };
+    (function permute(arr) {                                   // Heap's algorithm
+      function gen(k) {
+        if (k === 1) {
+          for (var fr = 0; fr < 2; fr++) { var cc = loopCost(arr, fr); if (cc < best.c) best = { c: cc, order: arr.slice(), fr: fr }; }
+          return;
+        }
+        for (var idx = 0; idx < k; idx++) { gen(k - 1); var j = (k % 2) ? 0 : idx, tmp = arr[k - 1]; arr[k - 1] = arr[j]; arr[j] = tmp; }
+      }
+      gen(arr.length);
+    })(idxs.slice());
+
+    // thread the chain along the best order; loops follow the (now short) 3D gaps
     var P = [], T = [], lastPos = null;
-    elems.forEach(function (el) {
-      var c = el.coords.slice();
-      if (lastPos) {
+    best.order.forEach(function (oi) {
+      var c = elems[oi].coords.slice();
+      if (lastPos === null) { if (best.fr) c.reverse(); }
+      else {
         if (vlen(vsub(c[c.length - 1], lastPos)) < vlen(vsub(c[0], lastPos))) c.reverse();
         var entry = c[0], gap = vlen(vsub(entry, lastPos));
         var cntL = Math.max(2, Math.min(6, Math.round(gap / 3.5)));
@@ -197,7 +224,7 @@
           P.push(vadd(mid, vscale(out, Math.sin(f * Math.PI) * 2.5))); T.push('L');
         }
       }
-      for (var r2 = 0; r2 < c.length; r2++) { P.push(c[r2]); T.push(el.h ? 'H' : 'E'); }
+      for (var r2 = 0; r2 < c.length; r2++) { P.push(c[r2]); T.push(elems[oi].h ? 'H' : 'E'); }
       lastPos = c[c.length - 1];
     });
 
