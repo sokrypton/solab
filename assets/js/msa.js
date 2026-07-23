@@ -154,7 +154,9 @@
     } else {                                             // mixed α/β
       for (e = 0; e < 4 + ((Math.random() * 2) | 0); e++)
         elems.push(Math.random() < 0.5 ? coil(9 + ((Math.random() * 7) | 0)) : strand(5 + ((Math.random() * 3) | 0)));
-      if (!elems.some(function (x) { return !x.h; })) elems[0] = strand(6);   // keep ≥1 strand
+      // a sheet needs ≥2 strands — never a lone unpaired strand; convert helices until paired
+      var nStr = elems.filter(function (x) { return !x.h; }).length;
+      for (var f = 0; nStr < 2 && f < elems.length; f++) if (elems[f].h) { elems[f] = strand(5 + ((Math.random() * 3) | 0)); nStr++; }
     }
 
     var strandEls = elems.filter(function (x) { return !x.h; });
