@@ -211,6 +211,8 @@ main { flex: 1 0 auto; }
   border-bottom: 1px solid var(--line);
 }
 .msa-band[data-rows="8"] { height: 72px; }
+.hero-band .msa-band { height: 150px; }    /* one large ambient MSA on the home page */
+.site-footer .msa-band { height: 56px; }   /* smaller ambient MSA on other pages */
 .msa-row {
   display: inline-flex;
   height: 100%;
@@ -225,6 +227,8 @@ main { flex: 1 0 auto; }
 @media (max-width: 700px) {
   .msa-band { height: 76px; }
   .msa-band[data-rows="8"] { height: 54px; }
+  .hero-band .msa-band { height: 104px; }
+  .site-footer .msa-band { height: 44px; }
 }
 .page-intro {
   color: var(--ink-soft);
@@ -270,23 +274,6 @@ h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin
 }
 .hero-img img { position: relative; z-index: 1; }
 .hero-svg { position: relative; z-index: 1; display: block; width: 100%; height: auto; }
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  letter-spacing: .02em;
-  color: var(--ink-soft);
-  margin: 0 0 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-}
-.hero-eyebrow::before {
-  content: "";
-  width: 10px; height: 10px;
-  background: var(--res-coral);
-  border-radius: 2px;
-  flex: none;
-}
 .hero-tagline {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.4vw, 42px);
