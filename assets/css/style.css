@@ -1,26 +1,16 @@
 /* ============================================================
    solab.org — stylesheet
    "Alignment / residue-grid" identity: warm paper + residue palette
-   sampled from the lab's MSA colouring, Bricolage Grotesque display,
-   JetBrains Mono for sequence/data. Signature: live multiple-sequence
-   -alignment graphics generated in assets/js/msa.js. Dark mode aware.
+   sampled from the lab's MSA colouring, fully monospace (JetBrains
+   Mono). Signature: live multiple-sequence-alignment graphics
+   generated in assets/js/msa.js. Dark mode aware.
    ============================================================ */
 
 /* ---------- Self-hosted fonts ---------- */
 @font-face {
-  font-family: 'Bricolage Grotesque';
-  src: url(../fonts/bricolage.woff2) format('woff2');
-  font-weight: 300 800; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url(../fonts/inter.woff2) format('woff2');
-  font-weight: 100 900; font-style: normal; font-display: swap;
-}
-@font-face {
   font-family: 'JetBrains Mono';
   src: url(../fonts/jetbrainsmono.woff2) format('woff2');
-  font-weight: 400 700; font-style: normal; font-display: swap;
+  font-weight: 400 800; font-style: normal; font-display: swap;
 }
 
 :root {
@@ -56,7 +46,7 @@
 
   --maxw:   1180px;
   --radius: 4px;
-  --font-display: 'Bricolage Grotesque', 'Georgia', serif;
+  --font-display: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 }
