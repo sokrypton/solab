@@ -375,7 +375,7 @@
     });
     canvas.addEventListener('pointermove', function (e) {
       if (!dragging) return;
-      rotY += (e.clientX - lx) * 0.011; rotX = clampX(rotX + (e.clientY - ly) * 0.011);
+      rotY += (e.clientX - lx) * 0.011; rotX = clampX(rotX - (e.clientY - ly) * 0.011);
       lx = e.clientX; ly = e.clientY;
       if (reduce) draw(rotY, rotX);
     });
