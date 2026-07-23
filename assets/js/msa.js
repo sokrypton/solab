@@ -430,7 +430,15 @@
       { f: '04.png', cx: 170, cy: 272, w: 106, h: 75 }     // active-site protein (upper-left)
     ];
     var svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('viewBox', '0 0 ' + VB + ' ' + VB);
+    // tight square viewBox around the rotation circle so the logo fills its box.
+    // radius = farthest element corner from centre while orbiting (+ small margin)
+    var reach = 171;   // ring outer radius baseline
+    spec.forEach(function (e) {
+      var d = Math.sqrt((e.cx - C) * (e.cx - C) + (e.cy - C) * (e.cy - C));
+      reach = Math.max(reach, d + Math.sqrt(e.w * e.w + e.h * e.h) / 2);
+    });
+    var HALF = Math.ceil(reach) + 4;
+    svg.setAttribute('viewBox', (C - HALF) + ' ' + (C - HALF) + ' ' + (2 * HALF) + ' ' + (2 * HALF));
     svg.setAttribute('class', 'hero-svg');
     function img(href, x, y, w, h) {
       var im = document.createElementNS(NS, 'image');
