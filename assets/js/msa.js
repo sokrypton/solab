@@ -6,6 +6,7 @@
 (function () {
   var RES = ['#6e9e4f', '#4e7fc4', '#e0a32e', '#d75a45', '#8e5b9f']; // green blue gold coral plum
   var GRAY = '#c9c1ad';
+  var INK = '#3a3428';
   var NS = 'http://www.w3.org/2000/svg';
 
   function pick() { return RES[(Math.random() * RES.length) | 0]; }
@@ -131,6 +132,48 @@
     mark.appendChild(svg);
   }
 
+  // ---- protein contact map (contact page) ----
+  // Symmetric L×L matrix: diagonal, helix bands near the diagonal (coral),
+  // β-sheet contacts off-diagonal (blue), plus sparse noise. Random each load.
+  function contactMap(n, cell) {
+    var gap = 1, pitch = cell + gap;
+    var svg = svgEl(n, n, cell, gap);
+    var grid = {};
+    function put(i, j, color, op) {
+      if (i < 0 || j < 0 || i >= n || j >= n) return;
+      grid[i * n + j] = { c: color, o: op };
+      grid[j * n + i] = { c: color, o: op };
+    }
+    for (var i = 0; i < n; i++) { put(i, i, INK, 1); put(i, i + 1, INK, 0.9); }        // diagonal
+    var nh = 4 + ((Math.random() * 3) | 0);                                            // helices
+    for (var h = 0; h < nh; h++) {
+      var s = (Math.random() * (n - 14)) | 0, L = 8 + ((Math.random() * 9) | 0);
+      for (var t = 0; t < L && s + t + 4 < n; t++) {
+        put(s + t, s + t + 3, RES[3], 0.95);
+        put(s + t, s + t + 4, RES[3], 0.7);
+      }
+    }
+    var nb = 3 + ((Math.random() * 3) | 0);                                            // β-strand pairs
+    for (var b = 0; b < nb; b++) {
+      var p = (Math.random() * (n - 22)) | 0;
+      var q = p + 10 + ((Math.random() * (n - p - 12)) | 0);
+      if (q >= n - 3) continue;
+      var len = 5 + ((Math.random() * 9) | 0), anti = Math.random() < 0.6;
+      for (var u = 0; u < len; u++) put(p + u, anti ? q - u : q + u, RES[1], 0.95);
+    }
+    for (var z = 0; z < n * 0.5; z++) {                                                // noise
+      var ri = (Math.random() * n) | 0, rj = (Math.random() * n) | 0;
+      if (Math.abs(ri - rj) > 2) put(ri, rj, Math.random() < 0.5 ? RES[2] : RES[4], 0.32);
+    }
+    var frag = document.createDocumentFragment();
+    for (var k in grid) {
+      var gi = (k / n) | 0, gj = k % n, cellData = grid[k];
+      frag.appendChild(cellRect(gj, gi, pitch, cell, cellData.c, cellData.o));
+    }
+    svg.appendChild(frag);
+    return svg;
+  }
+
   function sectionWord() {
     var a = document.querySelector('.nav-links a.active');
     if (a && a.textContent.trim()) return a.textContent.trim();
@@ -165,6 +208,10 @@
     });
     [].forEach.call(document.querySelectorAll('.msa-band'), fillBand);
     [].forEach.call(document.querySelectorAll('.msa-mark'), fillMark);
+    [].forEach.call(document.querySelectorAll('.contact-map'), function (el) {
+      el.textContent = '';
+      el.appendChild(contactMap(46, 7));
+    });
   }
 
   var timer;
