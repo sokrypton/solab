@@ -417,17 +417,17 @@
   function animateHero(el) {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var BASE = 'assets/hero/', C = 320, VB = 640, RINGD = 350;
-    // placements measured from the original artboard (centre x,y and width in the
-    // composite's coordinate system), so frame 0 matches the static logo
-    var AR = { '01.png': 302 / 375, '02.png': 279 / 208, '03.png': 362 / 260, '04.png': 223 / 314, '05.png': 374 / 344, '06.svg': 85.41 / 64.28, '07.svg': 96.59 / 88.58 };
+    // placements measured from the original artboard (each element's rect read
+    // from its parent-group matrix in logo.svg, then scaled ~1.06x about the ring
+    // centre into the composite's coordinate system) so frame 0 matches the logo
     var spec = [
-      { f: '01.png', cx: 256, cy: 201, w: 190 },   // energy landscape (top-left)
-      { f: '02.png', cx: 333, cy: 183, w: 81 },    // green protein (top)
-      { f: '03.png', cx: 408, cy: 188, w: 101 },   // 3-protein complex (top-right)
-      { f: '06.svg', cx: 470, cy: 222, w: 80 },    // network graph (top-right)
-      { f: '05.png', cx: 335, cy: 444, w: 116 },   // field photos (bottom)
-      { f: '07.svg', cx: 188, cy: 385, w: 130 },   // MSA block (left)
-      { f: '04.png', cx: 170, cy: 272, w: 106 }    // active-site protein (upper-left)
+      { f: '01.png', cx: 256, cy: 201, w: 190, h: 155 },   // energy landscape (top-left)
+      { f: '02.png', cx: 333, cy: 183, w: 81, h: 102 },    // green protein (top)
+      { f: '03.png', cx: 408, cy: 188, w: 100, h: 127 },   // 3-protein complex (top-right)
+      { f: '06.svg', cx: 471, cy: 190, w: 85, h: 113 },    // network graph (top-right)
+      { f: '05.png', cx: 335, cy: 444, w: 116, h: 127 },   // field photos (bottom)
+      { f: '07.svg', cx: 188, cy: 385, w: 130, h: 142 },   // MSA block (left)
+      { f: '04.png', cx: 170, cy: 272, w: 106, h: 75 }     // active-site protein (upper-left)
     ];
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + VB + ' ' + VB);
@@ -444,7 +444,7 @@
     svg.appendChild(ring);
     var items = [];
     spec.forEach(function (e) {
-      var w = e.w, h = w * AR[e.f];
+      var w = e.w, h = e.h;
       var wrap = document.createElementNS(NS, 'g');
       wrap.appendChild(img(BASE + e.f, e.cx - w / 2, e.cy - h / 2, w, h));
       svg.appendChild(wrap);
