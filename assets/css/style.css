@@ -753,56 +753,34 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 .route-card li { color: var(--ink-soft); font-size: 14px; line-height: 1.5; margin-bottom: 5px; }
 .route-card a { color: var(--brand); }
 
-/* ---------- Contact: framed card + contact map ---------- */
-.contact-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 40px;
-  align-items: start;
+/* ---------- Contact: the generated protein leads; info tucked in a corner ---------- */
+.contact-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 28px; flex-wrap: wrap; }
+.contact-info { text-align: right; max-width: 300px; font-size: 12.5px; color: var(--muted); }
+.contact-info .who { font-size: 15px; color: var(--ink); margin: 0 0 8px; }
+.contact-info .contact-email {
+  display: inline-block; margin: 0 0 10px;
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--brand);
+  padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--brand-light);
 }
-.contact-viz { width: min(360px, 42vw); }
-.viz-stage { position: relative; width: 100%; aspect-ratio: 1 / 1; }
-.viz-stage figure {
-  position: absolute; margin: 0; overflow: hidden; background: var(--bg);
-  transition: inset .28s ease, width .28s ease, height .28s ease, box-shadow .28s ease;
+.contact-info .contact-email:hover { text-decoration: none; border-color: var(--brand); }
+.contact-info p { margin: 0; line-height: 1.6; }
+.contact-info .ci-mail { margin-top: 12px; }
+
+.viz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 26px auto 0; max-width: 860px; align-items: start; }
+.viz-pair figure { margin: 0; }
+.struct-3d canvas { width: 100%; aspect-ratio: 1 / 1; height: auto; display: block; cursor: grab; }
+.contact-map svg { width: 100%; height: auto; display: block; }
+.struct-3d::after, .contact-map::after {
+  display: block; margin-top: 10px;
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .04em;
+  color: var(--muted); text-align: center;
 }
-.viz-stage figure svg, .viz-stage figure canvas { display: block; width: 100%; height: 100%; }
-/* main (full) */
-.viz-stage[data-main="struct"] .struct-3d,
-.viz-stage[data-main="map"] .contact-map { inset: 0; width: 100%; height: 100%; z-index: 1; border-radius: 6px; }
-.viz-stage[data-main="struct"] .struct-3d canvas { cursor: grab; }
-/* inset (mini) — click to swap */
-.viz-stage[data-main="struct"] .contact-map,
-.viz-stage[data-main="map"] .struct-3d {
-  width: 31%; height: 31%; right: 9px; top: 9px; z-index: 2;
-  border: 1px solid var(--line); border-radius: 5px; box-shadow: var(--shadow-md); cursor: pointer;
-}
-.viz-cap { margin: 12px 0 0; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); text-align: center; }
+.struct-3d::after { content: "predicted structure · drag to rotate"; }
+.contact-map::after { content: "contact map"; }
 @media (max-width: 760px) {
-  .contact-layout { grid-template-columns: 1fr; gap: 28px; }
-  .contact-viz { width: 100%; max-width: 340px; }
+  .viz-pair { grid-template-columns: 1fr; gap: 22px; }
+  .contact-info { text-align: left; }
 }
-.contact-card {
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 34px 38px 36px;
-  background: var(--bg-soft);
-  max-width: 720px;
-}
-.contact-card .who { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); margin: 0; }
-.contact-email {
-  display: inline-block;
-  margin: 14px 0 30px;
-  font-family: var(--font-mono);
-  font-size: 15px;
-  color: var(--brand);
-  padding: 8px 16px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--brand-light);
-}
-.contact-email:hover { text-decoration: none; border-color: var(--brand); }
-.contact-card .contact-grid { gap: 28px; margin: 0; }
 
 /* ---------- Coevolution: rail timeline ---------- */
 .timeline { list-style: none; margin: 12px 0 0; padding: 0 0 0 5px; }

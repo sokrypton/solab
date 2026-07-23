@@ -348,7 +348,7 @@
     function draw(theta, tilt) {
       var s = size();
       if (canvas.width !== Math.round(s * DPR)) { canvas.width = canvas.height = Math.round(s * DPR); }
-      var R = s * 0.82, cx = s / 2, cy = s / 2, ct = Math.cos(theta), st = Math.sin(theta), cT = Math.cos(tilt), sT = Math.sin(tilt);
+      var R = s * 0.9, cx = s / 2, cy = s / 2, ct = Math.cos(theta), st = Math.sin(theta), cT = Math.cos(tilt), sT = Math.sin(tilt);
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, s, s);
       var sc = fine.map(function (q) {
         var x = q.p.x * ct + q.p.z * st, z = -q.p.x * st + q.p.z * ct, y = q.p.y;
@@ -435,24 +435,13 @@
     });
     [].forEach.call(document.querySelectorAll('.msa-band'), fillBand);
     [].forEach.call(document.querySelectorAll('.msa-mark'), fillMark);
-    // contact page: one fold drives both the 3D trace and its contact map,
-    // shown as a main view + inset that you can click to swap.
-    var stage = document.querySelector('.viz-stage');
-    if (stage) {
+    // contact page: one fold drives both the 3D trace (left) and its contact map (right)
+    var canvas = document.querySelector('.struct-3d canvas');
+    var mapEl = document.querySelector('.contact-map');
+    if (canvas || mapEl) {
       var fold = buildFold(), N = fold.pts.length;
-      var canvas = stage.querySelector('.struct-3d canvas');
-      var mapEl = stage.querySelector('.contact-map');
       if (canvas) proteinTrace(fold.pts, canvas);
       if (mapEl) { mapEl.textContent = ''; mapEl.appendChild(contactMap(fold.pairs, N, 7)); }
-      var cap = document.querySelector('.viz-cap');
-      function setMain(which) {
-        stage.setAttribute('data-main', which);
-        if (cap) cap.textContent = (which === 'struct' ? 'predicted structure' : 'contact map') + ' · click the inset to swap';
-      }
-      var sfig = stage.querySelector('.struct-3d');
-      if (sfig) sfig.addEventListener('click', function () { setMain('struct'); });
-      if (mapEl) mapEl.addEventListener('click', function () { setMain('map'); });
-      setMain(stage.getAttribute('data-main') || 'struct');
     }
   }
 
