@@ -138,8 +138,8 @@
   function buildSSE(n) {
     var sse = [], pos = 1 + ((Math.random() * 3) | 0);
     while (pos < n - 6) {
-      var isH = Math.random() < 0.55;
-      var len = isH ? 8 + ((Math.random() * 10) | 0) : 4 + ((Math.random() * 4) | 0);
+      var isH = Math.random() < 0.5;
+      var len = isH ? 8 + ((Math.random() * 10) | 0) : 4 + ((Math.random() * 5) | 0);
       if (pos + len > n - 2) break;
       sse.push({ h: isH, s: pos, e: pos + len - 1 });
       pos += len + 2 + ((Math.random() * 3) | 0);
@@ -176,7 +176,9 @@
     strands.forEach(function (S, mi) {
       for (var res = S.s; res <= S.e && res < n; res++) {
         var xp = xoffOf[mi] + dirOf[mi] * (res - S.s) * STEP;
-        place[res] = V(xp, mi * SEP, Math.sin(xp * 0.12 + mi * 0.5) * 1.6); // gentle sheet twist
+        // uniform twist along the strands (same for every row) keeps paired
+        // residues aligned so the sheet stays coherent
+        place[res] = V(xp, mi * SEP, Math.sin(xp * 0.10) * 1.1);
       }
     });
     var sheetC = V(0, 0, 0), cnt = 0;
@@ -191,9 +193,9 @@
         pairs.push({ i: hMid, j: anchorRes, kind: 'tert' });
         pairs.push({ i: hMid + 1, j: anchorRes, kind: 'tert' });
       }
-      var axis = vnorm(V(1, hi % 2 ? 0.4 : -0.4, 0.25));
+      var axis = vnorm(V(1, hi % 2 ? 0.35 : -0.35, 0.15));
       var u = vnorm(vcross(axis, V(0, 1, 0.01))), w = vnorm(vcross(axis, u));
-      var base = vadd(anchor, V(0, (hi % 2 ? -1 : 1) * SEP, 7 + hi * 5)); // packed off the sheet face
+      var base = vadd(anchor, V(0, (hi % 2 ? -1 : 1) * SEP * 0.6, 6 + hi * 3.5)); // packed just above the sheet face
       var Hlen = H.e - H.s;
       for (var kk = 0; kk <= Hlen && H.s + kk < n; kk++) {
         var ph = kk * 1.75, along = (kk - Hlen / 2) * 1.5;
@@ -297,7 +299,7 @@
       segs.forEach(function (g) {
         var near = (g.z + 1) / 2;
         ctx.strokeStyle = shade(COL[g.t], near < 0 ? 0 : near > 1 ? 1 : near);
-        ctx.lineWidth = (g.t === 'L' ? 3.2 : 6.5) * ((g.a.w + g.b.w) / 2);
+        ctx.lineWidth = (g.t === 'L' ? 3.6 : 7.5) * ((g.a.w + g.b.w) / 2);
         ctx.beginPath(); ctx.moveTo(g.a.x, g.a.y); ctx.lineTo(g.b.x, g.b.y); ctx.stroke();
       });
     }
