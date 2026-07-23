@@ -485,7 +485,27 @@
     return 'solab';
   }
 
+  // colour the "solab" wordmark one residue per letter — an alignment column
+  // per letter (five letters, five residues), echoing the favicon.
+  function colorizeBrand() {
+    var pal = ['var(--res-green)', 'var(--res-gold)', 'var(--res-blue)', 'var(--res-coral)', 'var(--res-plum)'];
+    [].forEach.call(document.querySelectorAll('.brand'), function (b) {
+      if (b.dataset.msa) return;
+      var t = b.textContent.trim();
+      if (!t) return;
+      b.textContent = '';
+      for (var i = 0; i < t.length; i++) {
+        var s = document.createElement('span');
+        s.textContent = t[i];
+        if (t[i] !== ' ') s.style.color = pal[i % pal.length];
+        b.appendChild(s);
+      }
+      b.dataset.msa = '1';
+    });
+  }
+
   function inject() {
+    colorizeBrand();
     var word = sectionWord();
     var hero = document.querySelector('.hero-band');
     if (hero && !hero.querySelector('.msa-band')) {
