@@ -420,18 +420,18 @@
     // placements measured from the original artboard (each element's rect read
     // from its parent-group matrix in logo.svg, then scaled ~1.06x about the ring
     // centre into the composite's coordinate system) so frame 0 matches the logo
-    // centres optimised to minimise element overlap across the full rotation:
-    // since every element orbits rigidly and stays upright, pairwise centre
-    // distances are constant, so spreading them onto an even ring band (all pairwise
-    // distances >= the combined half-extent diagonal) keeps them clear at every angle.
+    // centres optimised to minimise overlap across the full rotation. Every element
+    // orbits rigidly and stays upright, so pairwise centre distances are constant;
+    // the ring's baked-in gene trapezoids (~4 o'clock) rotate with it and are treated
+    // as fixed obstacles. Relaxed onto a ring band allowing a little overlap.
     var spec = [
-      { f: '01.png', cx: 201, cy: 186, w: 124, h: 101 },   // energy landscape
-      { f: '02.png', cx: 337, cy: 142, w: 81, h: 102 },    // green protein
-      { f: '03.png', cx: 464, cy: 212, w: 100, h: 127 },   // 3-protein complex
-      { f: '06.svg', cx: 494, cy: 367, w: 94, h: 126 },    // network graph
-      { f: '05.png', cx: 385, cy: 489, w: 116, h: 127 },   // field photos
-      { f: '07.svg', cx: 206, cy: 461, w: 130, h: 142 },   // MSA block
-      { f: '04.png', cx: 140, cy: 316, w: 106, h: 75 }     // active-site protein
+      { f: '01.png', cx: 181, cy: 223, w: 124, h: 101 },   // energy landscape
+      { f: '02.png', cx: 275, cy: 157, w: 81, h: 102 },    // green protein
+      { f: '03.png', cx: 391, cy: 166, w: 100, h: 127 },   // 3-protein complex
+      { f: '06.svg', cx: 478, cy: 258, w: 94, h: 126 },    // network graph
+      { f: '05.png', cx: 349, cy: 488, w: 116, h: 127 },   // field photos
+      { f: '07.svg', cx: 209, cy: 448, w: 130, h: 142 },   // MSA block
+      { f: '04.png', cx: 152, cy: 335, w: 106, h: 75 }     // active-site protein
     ];
     var svg = document.createElementNS(NS, 'svg');
     // tight square viewBox around the rotation circle so the logo fills its box.
