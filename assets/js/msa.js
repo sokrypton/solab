@@ -142,22 +142,16 @@
   function buildFold() {
     var STEP = 3.4, SEP = 4.8;
 
-    // 1. topology — sample a fold class so we get variety: α-helix bundle,
-    //    all-β sheet, or mixed α/β
-    var mode = Math.random(), elems = [], e;
+    // 1. topology — always a mixed α/β fold
+    var elems = [], e;
     function coil(len) { return { h: true, len: len }; }
     function strand(len) { return { h: false, len: len }; }
-    if (mode < 0.25) {                                   // α-helix bundle
-      for (e = 0; e < 3 + ((Math.random() * 2) | 0); e++) elems.push(coil(11 + ((Math.random() * 6) | 0)));
-    } else if (mode < 0.5) {                             // all-β sheet
-      for (e = 0; e < 3 + ((Math.random() * 2) | 0); e++) elems.push(strand(5 + ((Math.random() * 3) | 0)));
-    } else {                                             // mixed α/β
-      for (e = 0; e < 4 + ((Math.random() * 2) | 0); e++)
-        elems.push(Math.random() < 0.5 ? coil(9 + ((Math.random() * 7) | 0)) : strand(5 + ((Math.random() * 3) | 0)));
-      // a sheet needs ≥2 strands — never a lone unpaired strand; convert helices until paired
-      var nStr = elems.filter(function (x) { return !x.h; }).length;
-      for (var f = 0; nStr < 2 && f < elems.length; f++) if (elems[f].h) { elems[f] = strand(5 + ((Math.random() * 3) | 0)); nStr++; }
-    }
+    for (e = 0; e < 4 + ((Math.random() * 2) | 0); e++)
+      elems.push(Math.random() < 0.5 ? coil(9 + ((Math.random() * 7) | 0)) : strand(5 + ((Math.random() * 3) | 0)));
+    // guarantee both a sheet (≥2 paired strands) and at least one helix
+    var nStr = elems.filter(function (x) { return !x.h; }).length;
+    for (var f = 0; nStr < 2 && f < elems.length; f++) if (elems[f].h) { elems[f] = strand(5 + ((Math.random() * 3) | 0)); nStr++; }
+    if (!elems.some(function (x) { return x.h; })) elems[elems.length - 1] = coil(11 + ((Math.random() * 6) | 0));
 
     var strandEls = elems.filter(function (x) { return !x.h; });
     var helixEls = elems.filter(function (x) { return x.h; });
