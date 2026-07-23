@@ -38,7 +38,6 @@
       </div>
       <h2 class="section-title" id="mPubTitle">Publications</h2>
       <ul class="pub-list" id="mPubs"></ul>
-      <p class="member-note" id="mNote" hidden></p>
     </div>
   </main>
 
@@ -55,7 +54,7 @@
       var name = (q.get('name') || '').trim();
       var el = function (id) { return document.getElementById(id); };
       var nameEl = el('mName'), roleEl = el('mRole'), avatarEl = el('mAvatar'),
-          linksEl = el('mLinks'), pubEl = el('mPubs'), titleEl = el('mPubTitle'), noteEl = el('mNote');
+          linksEl = el('mLinks'), pubEl = el('mPubs'), titleEl = el('mPubTitle');
       if (!name) { nameEl.textContent = 'Member not found'; titleEl.hidden = true; return; }
       nameEl.textContent = name;
       document.title = name + ' — solab';
@@ -115,8 +114,6 @@
         });
       } else {
         titleEl.hidden = true;
-        noteEl.hidden = false;
-        noteEl.textContent = 'No publications on this site list ' + name + ' as an author.';
       }
     })();
   </script>

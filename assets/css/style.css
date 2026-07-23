@@ -439,7 +439,6 @@ h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin
 .member-links a { color: var(--brand); display: inline-flex; }
 .member-links a:hover { color: var(--accent); }
 .member-links svg { width: 17px; height: 17px; }
-.member-note { color: var(--ink-soft); }
 
 /* ---------- Generic card lists (tools, resources) ---------- */
 .card-list {
