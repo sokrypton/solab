@@ -57,7 +57,7 @@
   --maxw:   1180px;
   --radius: 4px;
   --font-display: 'Bricolage Grotesque', 'Georgia', serif;
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 }
 

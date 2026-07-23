@@ -6,7 +6,9 @@
 (function () {
   var RES = ['#6e9e4f', '#4e7fc4', '#e0a32e', '#d75a45', '#8e5b9f']; // green blue gold coral plum
   var GRAY = '#c9c1ad';
-  var INK = '#3a3428';
+  var DARK = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var GAP = DARK ? '#4a4335' : '#d0c9b7';   // solid grey gap cell ("-"), legible in both themes
+  var INK = DARK ? '#d8d0bf' : '#3a3428';   // contact-map diagonal
   var NS = 'http://www.w3.org/2000/svg';
 
   function pick() { return RES[(Math.random() * RES.length) | 0]; }
@@ -122,9 +124,9 @@
         if (g.on(c, r)) {
           frag.appendChild(cellRect(c, r, pitch, cell, colColor[c]));   // the word: vivid
         } else if (Math.random() < 0.93) {
-          frag.appendChild(cellRect(c, r, pitch, cell, GRAY, 0.6));      // gap "-": receding grey
+          frag.appendChild(cellRect(c, r, pitch, cell, GAP));            // gap "-": solid grey
         } else {
-          frag.appendChild(cellRect(c, r, pitch, cell, pick(), 0.5));    // stray residue
+          frag.appendChild(cellRect(c, r, pitch, cell, pick(), 0.55));   // stray residue
         }
       }
     }
