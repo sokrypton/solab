@@ -661,18 +661,14 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 .contact-block h3::before { content: ""; width: 9px; height: 9px; border-radius: 2px; background: var(--res-blue); }
 .contact-block p { margin: 4px 0; color: var(--ink-soft); }
 
-/* ---------- Definition-style resource blocks ---------- */
-.res-group { margin-bottom: 22px; }
-.res-group ul { margin: 6px 0 0; padding-left: 22px; }
-.res-group li { margin-bottom: 8px; color: var(--ink-soft); }
-
 /* ---------- Resources: category cards ---------- */
 .res-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 22px;
-  margin-top: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 6px;
 }
+@media (max-width: 720px) { .res-grid { grid-template-columns: 1fr; } }
 .res-card {
   border: 1px solid var(--line);
   border-radius: 6px;
