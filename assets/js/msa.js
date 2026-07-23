@@ -410,91 +410,6 @@
     window.addEventListener('resize', function () { resize(); draw(M); });
   }
 
-  // Home hero: inline the vector logo, keep the ring static, and orbit each
-  // element around the ring centre while it stays upright (outer group spins
-  // one way; each element group counter-spins about its own centre → the net
-  // motion is a pure orbit, no self-spin).
-  function animateHero(el) {
-    var src = el.getAttribute('data-svg'); if (!src) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var CXR = 487.26, CYR = 354.63;                   // ring centre (inner-circle path)
-    fetch(src).then(function (r) { return r.text(); }).then(function (txt) {
-      var tmp = document.createElement('div'); tmp.innerHTML = txt;
-      var svg = tmp.querySelector('svg'); if (!svg) return;
-      [].forEach.call(svg.querySelectorAll('[fill-opacity="0.0"]'), function (nd) { nd.parentNode.removeChild(nd); });
-      var g = svg.querySelector('g'); if (!g) return;
-      svg.removeAttribute('width'); svg.removeAttribute('height'); svg.setAttribute('class', 'hero-svg');
-      el.insertBefore(svg, el.firstChild);            // in the DOM so getBBox works
-
-      var tags = { path: 1, image: 1, rect: 1, circle: 1, ellipse: 1, polygon: 1, polyline: 1, line: 1, g: 1 };
-      var nodes = [].slice.call(g.childNodes).filter(function (nd) { return nd.nodeType === 1 && tags[nd.tagName]; });
-      var info = nodes.map(function (nd) {
-        var b; try { b = nd.getBBox(); } catch (e) { b = { x: CXR, y: CYR, width: 0, height: 0 }; }
-        return { n: nd, x: b.x, y: b.y, w: b.width, h: b.height, cx: b.x + b.width / 2, cy: b.y + b.height / 2 };
-      });
-      var extent = 0;
-      info.forEach(function (i) { extent = Math.max(extent, i.w, i.h); });
-      // large spans (the ring / annulus) stay static; everything else orbits
-      var big = info.filter(function (i) { return i.w > 0.5 * extent || i.h > 0.5 * extent; });
-      var els = info.filter(function (i) { return !(i.w > 0.5 * extent || i.h > 0.5 * extent); });
-
-      // cluster element parts into whole elements (union-find on centre distance)
-      var D = 78, par = els.map(function (_, i) { return i; });
-      function find(a) { while (par[a] !== a) { par[a] = par[par[a]]; a = par[a]; } return a; }
-      for (var a = 0; a < els.length; a++) for (var b2 = a + 1; b2 < els.length; b2++) {
-        var dx = els[a].cx - els[b2].cx, dy = els[a].cy - els[b2].cy;
-        if (dx * dx + dy * dy < D * D) par[find(a)] = find(b2);
-      }
-      var groups = {};
-      els.forEach(function (e, i) { var r = find(i); (groups[r] = groups[r] || []).push(e); });
-
-      // ring radius (for spotting the genes that sit on the genome band)
-      var Rring = 0; big.forEach(function (i) { Rring = Math.max(Rring, Math.max(i.w, i.h) / 2); });
-
-      var staticG = document.createElementNS(NS, 'g');   // the genome ring — stays put
-      big.forEach(function (i) { staticG.appendChild(i.n); });
-
-      var items = [], maxR = 0;   // each orbiting element group + its centre + mode
-      Object.keys(groups).forEach(function (k) {
-        var cl = groups[k];
-        var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-        cl.forEach(function (i) { x0 = Math.min(x0, i.x); y0 = Math.min(y0, i.y); x1 = Math.max(x1, i.x + i.w); y1 = Math.max(y1, i.y + i.h); });
-        var gcx = (x0 + x1) / 2, gcy = (y0 + y1) / 2;
-        var rad = Math.hypot(gcx - CXR, gcy - CYR);
-        maxR = Math.max(maxR, rad + Math.max(x1 - x0, y1 - y0) / 2);
-        var eg = document.createElementNS(NS, 'g');
-        cl.forEach(function (i) { eg.appendChild(i.n); });
-        // genes sit on the genome band → they ride the ring (tangent); everything
-        // else orbits but stays upright
-        var onRing = Rring > 0 && rad > 0.6 * Rring && rad < 1.08 * Rring;
-        items.push({ el: eg, cx: gcx, cy: gcy, tangent: onRing });
-      });
-      big.forEach(function (i) { maxR = Math.max(maxR, Math.hypot(i.cx - CXR, i.cy - CYR) + Math.max(i.w, i.h) / 2); });
-
-      g.textContent = '';
-      g.appendChild(staticG);                       // ring behind
-      items.forEach(function (it) { g.appendChild(it.el); });   // elements in front
-      var R = maxR + 10;
-      svg.setAttribute('viewBox', (CXR - R) + ' ' + (CYR - R) + ' ' + (2 * R) + ' ' + (2 * R));
-      var img = el.querySelector('img'); if (img) img.remove();
-
-      // one shared angle drives everything (no drift): orbit about the ring
-      // centre, then counter-rotate the uprights about their own centre
-      if (!reduce) {
-        var PERIOD = 150000, t0 = performance.now();
-        (function spin(now) {
-          var th = ((now - t0) / PERIOD) * 360;
-          items.forEach(function (it) {
-            var t = 'rotate(' + th.toFixed(3) + ' ' + CXR + ' ' + CYR + ')';
-            if (!it.tangent) t += ' rotate(' + (-th).toFixed(3) + ' ' + it.cx.toFixed(2) + ' ' + it.cy.toFixed(2) + ')';
-            it.el.setAttribute('transform', t);
-          });
-          requestAnimationFrame(spin);
-        })(performance.now());
-      }
-    }).catch(function () {});
-  }
-
   function sectionWord() {
     var a = document.querySelector('.nav-links a.active');
     if (a && a.textContent.trim()) return a.textContent.trim();
@@ -529,8 +444,6 @@
     });
     [].forEach.call(document.querySelectorAll('.msa-band'), fillBand);
     [].forEach.call(document.querySelectorAll('.msa-mark'), fillMark);
-    var heroLive = document.querySelector('.hero-live');
-    if (heroLive) animateHero(heroLive);
     // contact page: one fold drives both the 3D trace (left) and its contact map (right)
     var canvas = document.querySelector('.struct-3d canvas');
     var mapEl = document.querySelector('.contact-map');
