@@ -134,25 +134,8 @@
     mark.appendChild(svg);
   }
 
-  // ---- protein contact map (contact page) ----
-  // Model a chain of secondary-structure elements, then draw the contacts they
-  // imply, the way a real Cβ–Cβ map looks:
-  //   - backbone diagonal (thin); helices thicken it (i,i+3 / i,i+4) in coral
-  //   - β-strands pair in space -> off-diagonal ladders (anti-parallel = anti-
-  //     diagonal, parallel = parallel), a few cells thick, in blue
-  //   - a couple of tertiary packing blobs (gold); minimal noise
-  // Symmetric, and regenerated each load.
-  function contactMap(n, cell) {
-    var gap = 1, pitch = cell + gap;
-    var svg = svgEl(n, n, cell, gap);
-    var grid = {};
-    function put(i, j, color, op) {
-      if (i < 0 || j < 0 || i >= n || j >= n) return;
-      grid[i * n + j] = { c: color, o: op };
-      grid[j * n + i] = { c: color, o: op };
-    }
-
-    // 1. lay out helices (H) and strands (E) along the chain, loops between
+  // ---- secondary-structure model shared by the contact map and the 3D trace ----
+  function buildSSE(n) {
     var sse = [], pos = 1 + ((Math.random() * 3) | 0);
     while (pos < n - 6) {
       var isH = Math.random() < 0.55;
@@ -161,52 +144,115 @@
       sse.push({ h: isH, s: pos, e: pos + len - 1 });
       pos += len + 2 + ((Math.random() * 3) | 0);
     }
+    return sse;
+  }
 
-    // 2. backbone diagonal (thin everywhere)
+  // Deterministic N→C fold: lay the β-strands as adjacent sheet rows (correct
+  // register + direction so their contacts form by construction), pack helices
+  // against an anchor, connect with interpolated loops. Returns the 3D Cα points
+  // AND the contact list — the SAME contacts the map draws, so they always match.
+  // No iterative relaxation, so it's cheap.
+  function buildFold(sse, n) {
+    var T = new Array(n); for (var t = 0; t < n; t++) T[t] = 'L';
+    sse.forEach(function (x) { for (var i = x.s; i <= x.e && i < n; i++) T[i] = x.h ? 'H' : 'E'; });
+
+    var strands = sse.filter(function (x) { return !x.h; });
+    var helices = sse.filter(function (x) { return x.h; });
+    for (var a = strands.length - 1; a > 0; a--) {           // shuffled order = spatial sheet order
+      var b = (Math.random() * (a + 1)) | 0, tmp = strands[a]; strands[a] = strands[b]; strands[b] = tmp;
+    }
+
+    var STEP = 3.4, SEP = 4.8, pairs = [], place = {}, dirOf = [], xoffOf = [];
+    for (var m = 0; m < strands.length; m++) {
+      var Q = strands[m];
+      if (m === 0) { dirOf[m] = 1; xoffOf[m] = 0; continue; }
+      var P = strands[m - 1], anti = Math.random() < 0.7;
+      dirOf[m] = anti ? -dirOf[m - 1] : dirOf[m - 1];
+      var q0 = anti ? Q.e : Q.s;                              // Q residue that pairs with P.s
+      xoffOf[m] = xoffOf[m - 1] - dirOf[m] * (q0 - Q.s) * STEP;
+      var L = Math.min(P.e - P.s, Q.e - Q.s);
+      for (var k = 0; k <= L; k++) pairs.push({ i: P.s + k, j: anti ? Q.e - k : Q.s + k, kind: 'beta' });
+    }
+    strands.forEach(function (S, mi) {
+      for (var res = S.s; res <= S.e && res < n; res++) {
+        var xp = xoffOf[mi] + dirOf[mi] * (res - S.s) * STEP;
+        place[res] = V(xp, mi * SEP, Math.sin(xp * 0.12 + mi * 0.5) * 1.6); // gentle sheet twist
+      }
+    });
+    var sheetC = V(0, 0, 0), cnt = 0;
+    for (var rk in place) { sheetC = vadd(sheetC, place[rk]); cnt++; }
+    sheetC = cnt ? vscale(sheetC, 1 / cnt) : sheetC;
+
+    helices.forEach(function (H, hi) {
+      var keys = Object.keys(place), anchorRes = keys.length ? (keys[(Math.random() * keys.length) | 0] | 0) : null;
+      var anchor = anchorRes != null ? place[anchorRes] : sheetC;
+      var hMid = (H.s + H.e) >> 1;
+      if (anchorRes != null && Math.abs(hMid - anchorRes) > 4) {   // tertiary packing contact
+        pairs.push({ i: hMid, j: anchorRes, kind: 'tert' });
+        pairs.push({ i: hMid + 1, j: anchorRes, kind: 'tert' });
+      }
+      var axis = vnorm(V(1, hi % 2 ? 0.4 : -0.4, 0.25));
+      var u = vnorm(vcross(axis, V(0, 1, 0.01))), w = vnorm(vcross(axis, u));
+      var base = vadd(anchor, V(0, (hi % 2 ? -1 : 1) * SEP, 7 + hi * 5)); // packed off the sheet face
+      var Hlen = H.e - H.s;
+      for (var kk = 0; kk <= Hlen && H.s + kk < n; kk++) {
+        var ph = kk * 1.75, along = (kk - Hlen / 2) * 1.5;
+        place[H.s + kk] = vadd(base, vadd(vscale(axis, along),
+          vadd(vscale(u, Math.cos(ph) * 2.3), vscale(w, Math.sin(ph) * 2.3))));
+      }
+    });
+
+    var i = 0;                                               // loops: interpolate between placed ends
+    while (i < n) {
+      if (place[i]) { i++; continue; }
+      var j = i; while (j < n && !place[j]) j++;
+      var prev = (i - 1 >= 0 && place[i - 1]) ? place[i - 1] : (place[j] || sheetC);
+      var next = (j < n && place[j]) ? place[j] : prev;
+      for (var q = i; q < j; q++) {
+        var f = (q - i + 1) / (j - i + 1);
+        place[q] = vadd(vadd(vscale(prev, 1 - f), vscale(next, f)), V(0, 0, Math.sin(f * Math.PI) * 3));
+      }
+      i = j;
+    }
+    if (!place[0]) place[0] = place[1] || sheetC;
+
+    var P2 = []; for (i = 0; i < n; i++) P2.push(place[i] || sheetC);
+    var ctr = V(0, 0, 0); P2.forEach(function (p) { ctr = vadd(ctr, p); }); ctr = vscale(ctr, 1 / n);
+    var maxr = 0; P2 = P2.map(function (p) { var d = vsub(p, ctr); maxr = Math.max(maxr, vlen(d)); return d; });
+    var sc = 1 / (maxr || 1);
+    var pts = []; for (i = 0; i < n; i++) pts.push({ p: vscale(P2[i], sc), t: T[i] });
+    return { pairs: pairs, pts: pts };
+  }
+
+  // Contact map from the SSE model + shared contact list: thin backbone diagonal,
+  // helices thickening it (i,i+3 / i,i+4), β ladders and tertiary blobs off-diagonal.
+  function contactMap(sse, pairs, n, cell) {
+    var gap = 1, pitch = cell + gap;
+    var svg = svgEl(n, n, cell, gap);
+    var grid = {};
+    function put(i, j, color, op) {
+      if (i < 0 || j < 0 || i >= n || j >= n) return;
+      grid[i * n + j] = { c: color, o: op };
+      grid[j * n + i] = { c: color, o: op };
+    }
     for (var i = 0; i < n; i++) { put(i, i, INK, 1); put(i, i + 1, INK, 0.8); }
-
-    // 3. helices thicken the diagonal
     sse.forEach(function (x) {
       if (!x.h) return;
       for (var a = x.s; a <= x.e - 3; a++) put(a, a + 3, RES[3], 0.9);
       for (a = x.s; a <= x.e - 4; a++) put(a, a + 4, RES[3], 0.5);
     });
-
-    // 4. β-sheet: pair strands that are adjacent in space (shuffled order)
-    var strands = sse.filter(function (x) { return !x.h; });
-    for (var s2 = strands.length - 1; s2 > 0; s2--) {
-      var r = (Math.random() * (s2 + 1)) | 0, tmp = strands[s2]; strands[s2] = strands[r]; strands[r] = tmp;
-    }
-    for (var p = 0; p < strands.length - 1; p++) {
-      var A = strands[p], B = strands[p + 1];
-      if (A.s > B.s) { var t2 = A; A = B; B = t2; }
-      var anti = Math.random() < 0.7;
-      var L = Math.min(A.e - A.s, B.e - B.s);
-      for (var k = 0; k <= L; k++) {
-        var ai = A.s + k, bi = anti ? B.e - k : B.s + k;
-        put(ai, bi, RES[1], 0.95);          // register band, a couple cells thick
-        put(ai, bi + 1, RES[1], 0.45);
-        put(ai + 1, bi, RES[1], 0.45);
+    pairs.forEach(function (c) {
+      if (c.kind === 'beta') {
+        put(c.i, c.j, RES[1], 0.95); put(c.i, c.j + 1, RES[1], 0.4); put(c.i + 1, c.j, RES[1], 0.4);
+      } else {
+        for (var di = -1; di <= 1; di++) for (var dj = -1; dj <= 1; dj++)
+          if (Math.random() < 0.7) put(c.i + di, c.j + dj, RES[2], 0.5);
       }
-    }
-
-    // 5. a couple of tertiary packing blobs between distant elements
-    for (var q = 0, nt = 1 + ((Math.random() * 2) | 0); q < nt && sse.length > 1; q++) {
-      var e1 = sse[(Math.random() * sse.length) | 0], e2 = sse[(Math.random() * sse.length) | 0];
-      if (e1 === e2) continue;
-      var ci = e1.s + ((Math.random() * (e1.e - e1.s + 1)) | 0);
-      var cj = e2.s + ((Math.random() * (e2.e - e2.s + 1)) | 0);
-      if (Math.abs(ci - cj) < 4) continue;
-      for (var di = -1; di <= 1; di++) for (var dj = -1; dj <= 1; dj++)
-        if (Math.random() < 0.65) put(ci + di, cj + dj, RES[2], 0.5);
-    }
-
-    // 6. minimal isolated noise
-    for (var z = 0, nz = (n * 0.08) | 0; z < nz; z++) {
+    });
+    for (var z = 0, nz = (n * 0.05) | 0; z < nz; z++) {
       var ni = (Math.random() * n) | 0, nj = (Math.random() * n) | 0;
-      if (Math.abs(ni - nj) > 3) put(ni, nj, RES[4], 0.22);
+      if (Math.abs(ni - nj) > 3) put(ni, nj, RES[4], 0.2);
     }
-
     var frag = document.createDocumentFragment();
     for (var key in grid) {
       var gi = (key / n) | 0, gj = key % n, cd = grid[key];
@@ -214,6 +260,80 @@
     }
     svg.appendChild(frag);
     return svg;
+  }
+
+  // ---- 3D Cα backbone trace from the same SSE model (self-contained) ----
+  function V(x, y, z) { return { x: x, y: y, z: z }; }
+  function vadd(a, b) { return V(a.x + b.x, a.y + b.y, a.z + b.z); }
+  function vsub(a, b) { return V(a.x - b.x, a.y - b.y, a.z - b.z); }
+  function vscale(a, s) { return V(a.x * s, a.y * s, a.z * s); }
+  function vlen(a) { return Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z); }
+  function vnorm(a) { var l = vlen(a) || 1; return vscale(a, 1 / l); }
+  function vcross(a, b) { return V(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
+  function rnd1() { return Math.random() * 2 - 1; }
+
+  function proteinTrace(pts, canvas) {
+    var ctx = canvas.getContext('2d');
+    var DPR = Math.min(2, window.devicePixelRatio || 1);
+    var BG = DARK ? [25, 21, 16] : [250, 247, 240];
+    var COL = { H: [215, 90, 69], E: [78, 127, 196], L: DARK ? [150, 142, 126] : [140, 133, 118] };
+    function size() { return canvas.clientWidth || 320; }
+    function resize() { var s = size(); canvas.width = s * DPR; canvas.height = s * DPR; }
+    function shade(rgb, near) { var f = 0.4 + 0.6 * near; return 'rgb(' + rgb.map(function (v2, k) { return Math.round(v2 * f + BG[k] * (1 - f)); }).join(',') + ')'; }
+    function draw(theta, tilt) {
+      var s = size();
+      if (canvas.width !== Math.round(s * DPR)) { canvas.width = canvas.height = Math.round(s * DPR); }
+      var R = s * 0.86, cx = s / 2, cy = s / 2, ct = Math.cos(theta), st = Math.sin(theta), tl = tilt, cT = Math.cos(tl), sT = Math.sin(tl);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, s, s);
+      var sc = pts.map(function (q) {
+        var x = q.p.x * ct + q.p.z * st, z = -q.p.x * st + q.p.z * ct, y = q.p.y;
+        var y2 = y * cT - z * sT, z2 = y * sT + z * cT, pe = 1 / (1.9 - z2 * 0.55);
+        return { x: cx + x * R * pe, y: cy + y2 * R * pe, z: z2, t: q.t, w: pe };
+      });
+      var segs = [], k;
+      for (k = 0; k < sc.length - 1; k++) segs.push({ a: sc[k], b: sc[k + 1], z: (sc[k].z + sc[k + 1].z) / 2, t: sc[k + 1].t });
+      segs.sort(function (m, o) { return m.z - o.z; });
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      segs.forEach(function (g) {
+        var near = (g.z + 1) / 2;
+        ctx.strokeStyle = shade(COL[g.t], near < 0 ? 0 : near > 1 ? 1 : near);
+        ctx.lineWidth = (g.t === 'L' ? 3.2 : 6.5) * ((g.a.w + g.b.w) / 2);
+        ctx.beginPath(); ctx.moveTo(g.a.x, g.a.y); ctx.lineTo(g.b.x, g.b.y); ctx.stroke();
+      });
+    }
+    resize();
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var rotY = 0.5, rotX = -0.5, dragging = false, lx = 0, ly = 0;
+    function clampX(v) { return v < -1.45 ? -1.45 : v > 1.45 ? 1.45 : v; }
+    canvas.style.touchAction = 'none';
+    var stage = canvas.closest ? canvas.closest('.viz-stage') : null;
+    function isMain() { return !stage || stage.getAttribute('data-main') === 'struct'; }
+    canvas.addEventListener('pointerdown', function (e) {
+      if (!isMain()) return;                 // when inset, let the click expand instead of rotate
+      dragging = true; lx = e.clientX; ly = e.clientY;
+      try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+      canvas.style.cursor = 'grabbing'; e.preventDefault();
+    });
+    canvas.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      rotY += (e.clientX - lx) * 0.011; rotX = clampX(rotX + (e.clientY - ly) * 0.011);
+      lx = e.clientX; ly = e.clientY;
+      if (reduce) draw(rotY, rotX);
+    });
+    function end() { dragging = false; canvas.style.cursor = 'grab'; }
+    canvas.addEventListener('pointerup', end);
+    canvas.addEventListener('pointercancel', end);
+    if (reduce) { draw(rotY, rotX); }
+    else {
+      var last = performance.now();
+      (function loop(now) {
+        var dt = now - last; last = now;
+        if (!dragging) rotY += dt / 9000;      // gentle auto-spin when idle
+        draw(rotY, rotX);
+        canvas.__raf = requestAnimationFrame(loop);
+      })(performance.now());
+    }
+    window.addEventListener('resize', function () { resize(); draw(rotY, rotX); });
   }
 
   function sectionWord() {
@@ -250,10 +370,25 @@
     });
     [].forEach.call(document.querySelectorAll('.msa-band'), fillBand);
     [].forEach.call(document.querySelectorAll('.msa-mark'), fillMark);
-    [].forEach.call(document.querySelectorAll('.contact-map'), function (el) {
-      el.textContent = '';
-      el.appendChild(contactMap(46, 7));
-    });
+    // contact page: one fold drives both the 3D trace and its contact map,
+    // shown as a main view + inset that you can click to swap.
+    var stage = document.querySelector('.viz-stage');
+    if (stage) {
+      var N = 46, sse = buildSSE(N), fold = buildFold(sse, N);
+      var canvas = stage.querySelector('.struct-3d canvas');
+      var mapEl = stage.querySelector('.contact-map');
+      if (canvas) proteinTrace(fold.pts, canvas);
+      if (mapEl) { mapEl.textContent = ''; mapEl.appendChild(contactMap(sse, fold.pairs, N, 7)); }
+      var cap = document.querySelector('.viz-cap');
+      function setMain(which) {
+        stage.setAttribute('data-main', which);
+        if (cap) cap.textContent = (which === 'struct' ? 'predicted structure' : 'contact map') + ' · click the inset to swap';
+      }
+      var sfig = stage.querySelector('.struct-3d');
+      if (sfig) sfig.addEventListener('click', function () { setMain('struct'); });
+      if (mapEl) mapEl.addEventListener('click', function () { setMain('map'); });
+      setMain(stage.getAttribute('data-main') || 'struct');
+    }
   }
 
   var timer;

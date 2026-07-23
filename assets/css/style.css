@@ -760,21 +760,27 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
   gap: 40px;
   align-items: start;
 }
-.contact-map { margin: 0; width: min(340px, 38vw); }
-.contact-map svg { width: 100%; height: auto; display: block; }
-.contact-map::after {
-  content: "contact map";
-  display: block;
-  margin-top: 10px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  letter-spacing: .04em;
-  color: var(--muted);
-  text-align: center;
+.contact-viz { width: min(360px, 42vw); }
+.viz-stage { position: relative; width: 100%; aspect-ratio: 1 / 1; }
+.viz-stage figure {
+  position: absolute; margin: 0; overflow: hidden; background: var(--bg);
+  transition: inset .28s ease, width .28s ease, height .28s ease, box-shadow .28s ease;
 }
+.viz-stage figure svg, .viz-stage figure canvas { display: block; width: 100%; height: 100%; }
+/* main (full) */
+.viz-stage[data-main="struct"] .struct-3d,
+.viz-stage[data-main="map"] .contact-map { inset: 0; width: 100%; height: 100%; z-index: 1; border-radius: 6px; }
+.viz-stage[data-main="struct"] .struct-3d canvas { cursor: grab; }
+/* inset (mini) — click to swap */
+.viz-stage[data-main="struct"] .contact-map,
+.viz-stage[data-main="map"] .struct-3d {
+  width: 31%; height: 31%; right: 9px; top: 9px; z-index: 2;
+  border: 1px solid var(--line); border-radius: 5px; box-shadow: var(--shadow-md); cursor: pointer;
+}
+.viz-cap { margin: 12px 0 0; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); text-align: center; }
 @media (max-width: 760px) {
   .contact-layout { grid-template-columns: 1fr; gap: 28px; }
-  .contact-map { width: 100%; max-width: 320px; }
+  .contact-viz { width: 100%; max-width: 340px; }
 }
 .contact-card {
   border: 1px solid var(--line);
