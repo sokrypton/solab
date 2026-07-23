@@ -410,35 +410,68 @@
     window.addEventListener('resize', function () { resize(); draw(M); });
   }
 
-  // Home hero: inline the vector logo and slowly orbit the whole diagram
-  // around the ring centre (the "cycle of protein evolution" turning).
+  // Home hero: inline the vector logo, keep the ring static, and orbit each
+  // element around the ring centre while it stays upright (outer group spins
+  // one way; each element group counter-spins about its own centre → the net
+  // motion is a pure orbit, no self-spin).
   function animateHero(el) {
     var src = el.getAttribute('data-svg'); if (!src) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var CXR = 487.26, CYR = 354.63;                   // ring centre (inner-circle path)
     fetch(src).then(function (r) { return r.text(); }).then(function (txt) {
       var tmp = document.createElement('div'); tmp.innerHTML = txt;
       var svg = tmp.querySelector('svg'); if (!svg) return;
-      // drop transparent full-canvas rects so getBBox is tight
       [].forEach.call(svg.querySelectorAll('[fill-opacity="0.0"]'), function (nd) { nd.parentNode.removeChild(nd); });
       var g = svg.querySelector('g'); if (!g) return;
-      var inner = document.createElementNS(NS, 'g'); inner.setAttribute('class', 'hero-spin');
-      [].slice.call(g.childNodes).forEach(function (k) { inner.appendChild(k); });
-      g.appendChild(inner);
       svg.removeAttribute('width'); svg.removeAttribute('height'); svg.setAttribute('class', 'hero-svg');
-      el.insertBefore(svg, el.firstChild);            // must be in the DOM to measure
-      var cx = 487.26, cy = 354.63;                   // ring centre (from the inner circle path)
-      try {
-        var bb = inner.getBBox();
-        var R = Math.max(
-          Math.sqrt((bb.x - cx) * (bb.x - cx) + (bb.y - cy) * (bb.y - cy)),
-          Math.sqrt((bb.x + bb.width - cx) * (bb.x + bb.width - cx) + (bb.y - cy) * (bb.y - cy)),
-          Math.sqrt((bb.x - cx) * (bb.x - cx) + (bb.y + bb.height - cy) * (bb.y + bb.height - cy)),
-          Math.sqrt((bb.x + bb.width - cx) * (bb.x + bb.width - cx) + (bb.y + bb.height - cy) * (bb.y + bb.height - cy))
-        ) + 8;
-        svg.setAttribute('viewBox', (cx - R) + ' ' + (cy - R) + ' ' + (2 * R) + ' ' + (2 * R));
-      } catch (e) {}
-      inner.style.transformOrigin = cx + 'px ' + cy + 'px';
-      if (!reduce) inner.style.animation = 'heroSpin 140s linear infinite';
+      el.insertBefore(svg, el.firstChild);            // in the DOM so getBBox works
+
+      var tags = { path: 1, image: 1, rect: 1, circle: 1, ellipse: 1, polygon: 1, polyline: 1, line: 1, g: 1 };
+      var nodes = [].slice.call(g.childNodes).filter(function (nd) { return nd.nodeType === 1 && tags[nd.tagName]; });
+      var info = nodes.map(function (nd) {
+        var b; try { b = nd.getBBox(); } catch (e) { b = { x: CXR, y: CYR, width: 0, height: 0 }; }
+        return { n: nd, x: b.x, y: b.y, w: b.width, h: b.height, cx: b.x + b.width / 2, cy: b.y + b.height / 2 };
+      });
+      var extent = 0;
+      info.forEach(function (i) { extent = Math.max(extent, i.w, i.h); });
+      // large spans (the ring / annulus) stay static; everything else orbits
+      var big = info.filter(function (i) { return i.w > 0.5 * extent || i.h > 0.5 * extent; });
+      var els = info.filter(function (i) { return !(i.w > 0.5 * extent || i.h > 0.5 * extent); });
+
+      // cluster element parts into whole elements (union-find on centre distance)
+      var D = 78, par = els.map(function (_, i) { return i; });
+      function find(a) { while (par[a] !== a) { par[a] = par[par[a]]; a = par[a]; } return a; }
+      for (var a = 0; a < els.length; a++) for (var b2 = a + 1; b2 < els.length; b2++) {
+        var dx = els[a].cx - els[b2].cx, dy = els[a].cy - els[b2].cy;
+        if (dx * dx + dy * dy < D * D) par[find(a)] = find(b2);
+      }
+      var groups = {};
+      els.forEach(function (e, i) { var r = find(i); (groups[r] = groups[r] || []).push(e); });
+
+      var staticG = document.createElementNS(NS, 'g');
+      big.forEach(function (i) { staticG.appendChild(i.n); });
+      var orbit = document.createElementNS(NS, 'g'); orbit.setAttribute('class', 'hero-orbit');
+      if (!reduce) orbit.style.animation = 'heroSpin 150s linear infinite';
+      var maxR = 0;
+      Object.keys(groups).forEach(function (k) {
+        var cl = groups[k];
+        var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        cl.forEach(function (i) { x0 = Math.min(x0, i.x); y0 = Math.min(y0, i.y); x1 = Math.max(x1, i.x + i.w); y1 = Math.max(y1, i.y + i.h); });
+        var gcx = (x0 + x1) / 2, gcy = (y0 + y1) / 2;
+        maxR = Math.max(maxR, Math.hypot(gcx - CXR, gcy - CYR) + Math.max(x1 - x0, y1 - y0) / 2);
+        var eg = document.createElementNS(NS, 'g'); eg.setAttribute('class', 'hero-counter');
+        eg.style.transformOrigin = gcx + 'px ' + gcy + 'px';
+        if (!reduce) eg.style.animation = 'heroSpinRev 150s linear infinite';
+        cl.forEach(function (i) { eg.appendChild(i.n); });
+        orbit.appendChild(eg);
+      });
+      big.forEach(function (i) { maxR = Math.max(maxR, Math.hypot(i.cx - CXR, i.cy - CYR) + Math.max(i.w, i.h) / 2); });
+
+      g.textContent = '';
+      g.appendChild(staticG);   // ring behind
+      g.appendChild(orbit);     // elements in front
+      var R = maxR + 10;
+      svg.setAttribute('viewBox', (CXR - R) + ' ' + (CYR - R) + ' ' + (2 * R) + ' ' + (2 * R));
       var img = el.querySelector('img'); if (img) img.remove();
     }).catch(function () {});
   }
