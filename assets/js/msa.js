@@ -135,8 +135,13 @@
   }
 
   // ---- protein contact map (contact page) ----
-  // Symmetric L×L matrix: diagonal, helix bands near the diagonal (coral),
-  // β-sheet contacts off-diagonal (blue), plus sparse noise. Random each load.
+  // Model a chain of secondary-structure elements, then draw the contacts they
+  // imply, the way a real Cβ–Cβ map looks:
+  //   - backbone diagonal (thin); helices thicken it (i,i+3 / i,i+4) in coral
+  //   - β-strands pair in space -> off-diagonal ladders (anti-parallel = anti-
+  //     diagonal, parallel = parallel), a few cells thick, in blue
+  //   - a couple of tertiary packing blobs (gold); minimal noise
+  // Symmetric, and regenerated each load.
   function contactMap(n, cell) {
     var gap = 1, pitch = cell + gap;
     var svg = svgEl(n, n, cell, gap);
@@ -146,31 +151,66 @@
       grid[i * n + j] = { c: color, o: op };
       grid[j * n + i] = { c: color, o: op };
     }
-    for (var i = 0; i < n; i++) { put(i, i, INK, 1); put(i, i + 1, INK, 0.9); }        // diagonal
-    var nh = 4 + ((Math.random() * 3) | 0);                                            // helices
-    for (var h = 0; h < nh; h++) {
-      var s = (Math.random() * (n - 14)) | 0, L = 8 + ((Math.random() * 9) | 0);
-      for (var t = 0; t < L && s + t + 4 < n; t++) {
-        put(s + t, s + t + 3, RES[3], 0.95);
-        put(s + t, s + t + 4, RES[3], 0.7);
+
+    // 1. lay out helices (H) and strands (E) along the chain, loops between
+    var sse = [], pos = 1 + ((Math.random() * 3) | 0);
+    while (pos < n - 6) {
+      var isH = Math.random() < 0.55;
+      var len = isH ? 8 + ((Math.random() * 10) | 0) : 4 + ((Math.random() * 4) | 0);
+      if (pos + len > n - 2) break;
+      sse.push({ h: isH, s: pos, e: pos + len - 1 });
+      pos += len + 2 + ((Math.random() * 3) | 0);
+    }
+
+    // 2. backbone diagonal (thin everywhere)
+    for (var i = 0; i < n; i++) { put(i, i, INK, 1); put(i, i + 1, INK, 0.8); }
+
+    // 3. helices thicken the diagonal
+    sse.forEach(function (x) {
+      if (!x.h) return;
+      for (var a = x.s; a <= x.e - 3; a++) put(a, a + 3, RES[3], 0.9);
+      for (a = x.s; a <= x.e - 4; a++) put(a, a + 4, RES[3], 0.5);
+    });
+
+    // 4. β-sheet: pair strands that are adjacent in space (shuffled order)
+    var strands = sse.filter(function (x) { return !x.h; });
+    for (var s2 = strands.length - 1; s2 > 0; s2--) {
+      var r = (Math.random() * (s2 + 1)) | 0, tmp = strands[s2]; strands[s2] = strands[r]; strands[r] = tmp;
+    }
+    for (var p = 0; p < strands.length - 1; p++) {
+      var A = strands[p], B = strands[p + 1];
+      if (A.s > B.s) { var t2 = A; A = B; B = t2; }
+      var anti = Math.random() < 0.7;
+      var L = Math.min(A.e - A.s, B.e - B.s);
+      for (var k = 0; k <= L; k++) {
+        var ai = A.s + k, bi = anti ? B.e - k : B.s + k;
+        put(ai, bi, RES[1], 0.95);          // register band, a couple cells thick
+        put(ai, bi + 1, RES[1], 0.45);
+        put(ai + 1, bi, RES[1], 0.45);
       }
     }
-    var nb = 3 + ((Math.random() * 3) | 0);                                            // β-strand pairs
-    for (var b = 0; b < nb; b++) {
-      var p = (Math.random() * (n - 22)) | 0;
-      var q = p + 10 + ((Math.random() * (n - p - 12)) | 0);
-      if (q >= n - 3) continue;
-      var len = 5 + ((Math.random() * 9) | 0), anti = Math.random() < 0.6;
-      for (var u = 0; u < len; u++) put(p + u, anti ? q - u : q + u, RES[1], 0.95);
+
+    // 5. a couple of tertiary packing blobs between distant elements
+    for (var q = 0, nt = 1 + ((Math.random() * 2) | 0); q < nt && sse.length > 1; q++) {
+      var e1 = sse[(Math.random() * sse.length) | 0], e2 = sse[(Math.random() * sse.length) | 0];
+      if (e1 === e2) continue;
+      var ci = e1.s + ((Math.random() * (e1.e - e1.s + 1)) | 0);
+      var cj = e2.s + ((Math.random() * (e2.e - e2.s + 1)) | 0);
+      if (Math.abs(ci - cj) < 4) continue;
+      for (var di = -1; di <= 1; di++) for (var dj = -1; dj <= 1; dj++)
+        if (Math.random() < 0.65) put(ci + di, cj + dj, RES[2], 0.5);
     }
-    for (var z = 0; z < n * 0.5; z++) {                                                // noise
-      var ri = (Math.random() * n) | 0, rj = (Math.random() * n) | 0;
-      if (Math.abs(ri - rj) > 2) put(ri, rj, Math.random() < 0.5 ? RES[2] : RES[4], 0.32);
+
+    // 6. minimal isolated noise
+    for (var z = 0, nz = (n * 0.08) | 0; z < nz; z++) {
+      var ni = (Math.random() * n) | 0, nj = (Math.random() * n) | 0;
+      if (Math.abs(ni - nj) > 3) put(ni, nj, RES[4], 0.22);
     }
+
     var frag = document.createDocumentFragment();
-    for (var k in grid) {
-      var gi = (k / n) | 0, gj = k % n, cellData = grid[k];
-      frag.appendChild(cellRect(gj, gi, pitch, cell, cellData.c, cellData.o));
+    for (var key in grid) {
+      var gi = (key / n) | 0, gj = key % n, cd = grid[key];
+      frag.appendChild(cellRect(gj, gi, pitch, cell, cd.c, cd.o));
     }
     svg.appendChild(frag);
     return svg;
