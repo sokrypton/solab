@@ -750,19 +750,11 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 .route-card li { color: var(--ink-soft); font-size: 14px; line-height: 1.5; margin-bottom: 5px; }
 .route-card a { color: var(--brand); }
 
-/* ---------- Contact: the generated protein leads; info tucked in a corner ---------- */
-.contact-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 28px; flex-wrap: wrap; }
-.contact-info { display: flex; flex-direction: column; align-items: flex-end; max-width: 460px; margin-left: auto; }
-.contact-info .who { font-size: 15px; color: var(--ink); margin: 0 0 8px; }
-.contact-info .contact-email {
-  display: inline-block; margin: 0 0 12px;
-  font-family: var(--font-mono); font-size: 12.5px; color: var(--brand);
-  padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--brand-light);
-}
-.contact-info .contact-email:hover { text-decoration: none; border-color: var(--brand); }
-.addr-row { display: flex; gap: 10px; }
+/* ---------- Contact: the generated protein leads; info flows after the MSA mark ---------- */
+.contact-head { display: flex; align-items: flex-start; gap: 14px 20px; flex-wrap: wrap; }
+.info-boxes { display: flex; gap: 12px; flex-wrap: wrap; flex: 1 1 auto; }
 .addr-box {
-  flex: 1 1 0; min-width: 0; text-align: left;
+  flex: 1 1 180px; min-width: 170px; text-align: left;
   border: 1px solid var(--line); border-radius: 6px; background: var(--bg-soft);
   padding: 12px 16px;
   font-size: 13px; color: var(--ink-soft); line-height: 1.65;
@@ -776,6 +768,12 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 .addr-label::before { content: ""; width: 9px; height: 9px; border-radius: 2px; }
 .addr-label.loc::before { background: var(--res-blue); }
 .addr-label.mail::before { background: var(--res-coral); }
+.id-box .who { display: block; font-size: 14px; color: var(--ink); margin-bottom: 9px; }
+.id-box .contact-email {
+  display: inline-block; font-family: var(--font-mono); font-size: 12.5px; color: var(--brand);
+  padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--brand-light);
+}
+.id-box .contact-email:hover { text-decoration: none; border-color: var(--brand); }
 
 .viz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 26px auto 0; max-width: 860px; align-items: start; }
 .viz-pair figure { margin: 0; }
@@ -790,7 +788,6 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 .contact-map::after { content: "contact map"; }
 @media (max-width: 760px) {
   .viz-pair { grid-template-columns: 1fr; gap: 22px; }
-  .contact-info { text-align: left; }
 }
 
 /* ---------- Coevolution: rail timeline ---------- */
