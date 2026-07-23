@@ -410,6 +410,61 @@
     window.addEventListener('resize', function () { resize(); draw(M); });
   }
 
+  // Home hero: compose the logo from its separate parts around the genome ring.
+  // The ring image (genes baked in) spins about its centre; every other element
+  // orbits the ring but stays upright. Each part is its own <image>, so there's
+  // no fragile grouping.
+  function animateHero(el) {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var BASE = 'assets/hero/', C = 320, VB = 640, RINGD = 350;
+    // element ring layout: angle (deg, clockwise from top), radius from centre,
+    // width, and aspect (h/w)
+    var spec = [
+      { f: '01.png', deg: -42, r: 198, w: 150, ar: 302 / 375 },   // energy landscape
+      { f: '02.png', deg: -8, r: 196, w: 86, ar: 279 / 208 },    // green protein
+      { f: '03.png', deg: 26, r: 205, w: 116, ar: 362 / 260 },    // 3-protein complex
+      { f: '06.svg', deg: 70, r: 150, w: 66, ar: 85.41 / 64.28 }, // network graph
+      { f: '05.png', deg: 166, r: 165, w: 150, ar: 374 / 344 },   // field photos
+      { f: '07.svg', deg: 250, r: 150, w: 120, ar: 96.59 / 88.58 }, // MSA block
+      { f: '04.png', deg: 300, r: 150, w: 120, ar: 223 / 314 }    // active-site protein
+    ];
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + VB + ' ' + VB);
+    svg.setAttribute('class', 'hero-svg');
+    function img(href, x, y, w, h) {
+      var im = document.createElementNS(NS, 'image');
+      im.setAttributeNS('http://www.w3.org/1999/xlink', 'href', href);
+      im.setAttribute('href', href);
+      im.setAttribute('x', x); im.setAttribute('y', y); im.setAttribute('width', w); im.setAttribute('height', h);
+      return im;
+    }
+    var ringH = RINGD * (245.62 / 247.95);
+    var ring = img(BASE + '08.svg', C - RINGD / 2, C - ringH / 2, RINGD, ringH);
+    svg.appendChild(ring);
+    var items = [];
+    spec.forEach(function (e) {
+      var th = e.deg * Math.PI / 180, px = C + e.r * Math.sin(th), py = C - e.r * Math.cos(th);
+      var w = e.w, h = w * e.ar;
+      var wrap = document.createElementNS(NS, 'g');
+      wrap.appendChild(img(BASE + e.f, px - w / 2, py - h / 2, w, h));
+      svg.appendChild(wrap);
+      items.push({ el: wrap, cx: px, cy: py });
+    });
+    el.insertBefore(svg, el.firstChild);
+    var fb = el.querySelector('img'); if (fb) fb.remove();
+    if (!reduce) {
+      var PERIOD = 150000, t0 = performance.now();
+      (function spin(now) {
+        var th = ((now - t0) / PERIOD) * 360, base = 'rotate(' + th.toFixed(3) + ' ' + C + ' ' + C + ')';
+        ring.setAttribute('transform', base);
+        items.forEach(function (it) {
+          it.el.setAttribute('transform', base + ' rotate(' + (-th).toFixed(3) + ' ' + it.cx.toFixed(2) + ' ' + it.cy.toFixed(2) + ')');
+        });
+        requestAnimationFrame(spin);
+      })(performance.now());
+    }
+  }
+
   function sectionWord() {
     var a = document.querySelector('.nav-links a.active');
     if (a && a.textContent.trim()) return a.textContent.trim();
@@ -444,6 +499,8 @@
     });
     [].forEach.call(document.querySelectorAll('.msa-band'), fillBand);
     [].forEach.call(document.querySelectorAll('.msa-mark'), fillMark);
+    var heroLive = document.querySelector('.hero-live');
+    if (heroLive) animateHero(heroLive);
     // contact page: one fold drives both the 3D trace (left) and its contact map (right)
     var canvas = document.querySelector('.struct-3d canvas');
     var mapEl = document.querySelector('.contact-map');
