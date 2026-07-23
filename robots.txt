@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://solab.org/sitemap.xml
