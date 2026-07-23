@@ -1,5 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="24" fill="#35679c"/>
-  <circle cx="79" cy="24" r="9" fill="#e07a3f"/>
-  <text x="49" y="53" text-anchor="middle" dominant-baseline="central" font-family="'Space Grotesk', 'Helvetica Neue', Arial, sans-serif" font-size="54" font-weight="700" fill="#ffffff">so</text>
+  <!-- solab identity: a tiny multiple-sequence alignment.
+       Conserved residue columns (a few gaps) in the lab's MSA palette. -->
+  <rect width="100" height="100" rx="22" fill="#241f18"/>
+  <g>
+    <!-- col 1: green (conserved) -->
+    <rect x="12" y="20" width="13" height="13" rx="2" fill="#6e9e4f"/>
+    <rect x="12" y="36" width="13" height="13" rx="2" fill="#6e9e4f"/>
+    <rect x="12" y="52" width="13" height="13" rx="2" fill="#6e9e4f"/>
+    <rect x="12" y="68" width="13" height="13" rx="2" fill="#6e9e4f"/>
+    <!-- col 2: gold (gap row 3) -->
+    <rect x="28" y="20" width="13" height="13" rx="2" fill="#e0a32e"/>
+    <rect x="28" y="36" width="13" height="13" rx="2" fill="#e0a32e"/>
+    <rect x="28" y="68" width="13" height="13" rx="2" fill="#e0a32e"/>
+    <!-- col 3: blue (gap row 4) -->
+    <rect x="44" y="20" width="13" height="13" rx="2" fill="#4e7fc4"/>
+    <rect x="44" y="36" width="13" height="13" rx="2" fill="#4e7fc4"/>
+    <rect x="44" y="52" width="13" height="13" rx="2" fill="#4e7fc4"/>
+    <!-- col 4: coral (gap row 2) -->
+    <rect x="60" y="20" width="13" height="13" rx="2" fill="#d75a45"/>
+    <rect x="60" y="52" width="13" height="13" rx="2" fill="#d75a45"/>
+    <rect x="60" y="68" width="13" height="13" rx="2" fill="#d75a45"/>
+    <!-- col 5: plum (conserved) -->
+    <rect x="76" y="20" width="13" height="13" rx="2" fill="#8e5b9f"/>
+    <rect x="76" y="36" width="13" height="13" rx="2" fill="#8e5b9f"/>
+    <rect x="76" y="52" width="13" height="13" rx="2" fill="#8e5b9f"/>
+    <rect x="76" y="68" width="13" height="13" rx="2" fill="#8e5b9f"/>
+  </g>
 </svg>
