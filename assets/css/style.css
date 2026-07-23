@@ -215,7 +215,7 @@ main { flex: 1 0 auto; }
   color: var(--ink);
 }
 /* signature: live multiple-sequence-alignment graphics (generated in msa.js) */
-.msa-mark { display: block; height: 56px; margin-bottom: 18px; }
+.msa-mark { display: block; height: 62px; margin-bottom: 18px; }
 .msa-mark svg { display: block; height: 100%; width: auto; }
 .msa-band {
   overflow: hidden;
