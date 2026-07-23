@@ -786,6 +786,14 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 }
 .struct-3d::after { content: "predicted structure · drag to rotate"; }
 .contact-map::after { content: "contact map"; }
+.viz-actions { text-align: center; margin-top: 18px; }
+.regen-btn {
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-soft);
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px;
+  padding: 8px 18px; cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease;
+}
+.regen-btn:hover { color: var(--brand); border-color: var(--brand); background: var(--brand-light); }
 @media (max-width: 760px) {
   .viz-pair { grid-template-columns: 1fr; gap: 22px; }
 }

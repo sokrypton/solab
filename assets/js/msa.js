@@ -311,33 +311,40 @@
     function resize() { var s = size(); canvas.width = s * DPR; canvas.height = s * DPR; }
     function shade(rgb, near) { var f = 0.4 + 0.6 * near; return 'rgb(' + rgb.map(function (v2, k) { return Math.round(v2 * f + BG[k] * (1 - f)); }).join(',') + ')'; }
 
-    // per-residue cartoon width (fraction of canvas size); β-strands taper to an
-    // arrowhead at their C-terminus
-    var n = pts.length, WID = new Array(n);
-    for (var i = 0; i < n; i++) {
-      var ty = pts[i].t;
-      if (ty === 'H') WID[i] = 0.05;
-      else if (ty === 'E') {
-        var e = i; while (e + 1 < n && pts[e + 1].t === 'E') e++;
-        var fe = e - i;
-        WID[i] = fe === 0 ? 0.012 : fe === 1 ? 0.05 : fe === 2 ? 0.066 : 0.042;
-      } else WID[i] = 0.018;
-    }
-    // Catmull-Rom smoothed backbone (precomputed once)
+    // Catmull-Rom
     function cr(p0, p1, p2, p3, t) {
       var t2 = t * t, t3 = t2 * t;
       function a(a0, a1, a2, a3) { return 0.5 * ((2 * a1) + (-a0 + a2) * t + (2 * a0 - 5 * a1 + 4 * a2 - a3) * t2 + (-a0 + 3 * a1 - 3 * a2 + a3) * t3); }
       return V(a(p0.x, p1.x, p2.x, p3.x), a(p0.y, p1.y, p2.y, p3.y), a(p0.z, p1.z, p2.z, p3.z));
     }
-    var fine = [], SUB = 8;
-    for (i = 0; i < n - 1; i++) {
-      var p0 = (pts[i - 1] || pts[i]).p, p1 = pts[i].p, p2 = pts[i + 1].p, p3 = (pts[i + 2] || pts[i + 1]).p;
-      for (var sIdx = 0; sIdx < SUB; sIdx++) {
-        var f = sIdx / SUB;
-        fine.push({ p: cr(p0, p1, p2, p3, f), t: pts[i].t, w: WID[i] * (1 - f) + WID[i + 1] * f });
+    // smooth the Cα backbone into a cartoon tube whose width encodes SS
+    // (β-strands taper to an arrowhead at their C-terminus). Reassignable so we
+    // can swap in a freshly generated fold without re-adding listeners/loops.
+    var fine = [];
+    function setFold(pp) {
+      var n = pp.length, WID = new Array(n), i;
+      for (i = 0; i < n; i++) {
+        var ty = pp[i].t;
+        if (ty === 'H') WID[i] = 0.05;
+        else if (ty === 'E') {
+          var e = i; while (e + 1 < n && pp[e + 1].t === 'E') e++;
+          var fe = e - i;
+          WID[i] = fe === 0 ? 0.012 : fe === 1 ? 0.05 : fe === 2 ? 0.066 : 0.042;
+        } else WID[i] = 0.018;
       }
+      var out = [], SUB = 8;
+      for (i = 0; i < n - 1; i++) {
+        var p0 = (pp[i - 1] || pp[i]).p, p1 = pp[i].p, p2 = pp[i + 1].p, p3 = (pp[i + 2] || pp[i + 1]).p;
+        for (var sIdx = 0; sIdx < SUB; sIdx++) {
+          var f = sIdx / SUB;
+          out.push({ p: cr(p0, p1, p2, p3, f), t: pp[i].t, w: WID[i] * (1 - f) + WID[i + 1] * f });
+        }
+      }
+      out.push({ p: pp[n - 1].p, t: pp[n - 1].t, w: WID[n - 1] });
+      fine = out;
     }
-    fine.push({ p: pts[n - 1].p, t: pts[n - 1].t, w: WID[n - 1] });
+    setFold(pts);
+    canvas.__setFold = setFold;   // used by the regenerate button
 
     // trackball rotation: an accumulated 3×3 matrix (no gimbal clamp → never sticks)
     function mMul(A, B) {
@@ -441,9 +448,18 @@
     var canvas = document.querySelector('.struct-3d canvas');
     var mapEl = document.querySelector('.contact-map');
     if (canvas || mapEl) {
-      var fold = buildFold(), N = fold.pts.length;
-      if (canvas) proteinTrace(fold.pts, canvas);
-      if (mapEl) { mapEl.textContent = ''; mapEl.appendChild(contactMap(fold.pairs, N, 7)); }
+      var started = false;
+      function regen() {
+        var fold = buildFold();
+        if (mapEl) { mapEl.textContent = ''; mapEl.appendChild(contactMap(fold.pairs, fold.pts.length, 7)); }
+        if (canvas) {
+          if (!started) { proteinTrace(fold.pts, canvas); started = true; }
+          else if (canvas.__setFold) canvas.__setFold(fold.pts);   // swap fold, keep the running loop
+        }
+      }
+      regen();
+      var btn = document.querySelector('.regen-btn');
+      if (btn) btn.addEventListener('click', regen);
     }
   }
 
