@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Member — solab</title>
+  <meta name="description" content="Publications by a solab lab member.">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../../">solab</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../" class="active">Lab</a></li>
+        <li><a href="../../research/">Research</a></li>
+        <li><a href="../../publications/">Publications</a></li>
+        <li><a href="../../tools/">Tools</a></li>
+        <li><a href="../../resources/">Resources</a></li>
+        <li><a href="../../contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="container">
+      <a class="back-link" href="../">&larr; Lab</a>
+      <div class="member-head">
+        <div class="member-avatar" id="mAvatar" aria-hidden="true"></div>
+        <div class="member-info">
+          <h1 class="member-name" id="mName">Member</h1>
+          <p class="member-role" id="mRole"></p>
+          <div class="member-links" id="mLinks"></div>
+        </div>
+      </div>
+      <h2 class="section-title" id="mPubTitle">Publications</h2>
+      <ul class="pub-list" id="mPubs"></ul>
+      <p class="member-note" id="mNote" hidden></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span><a href="https://web.mit.edu/">Massachusetts Institute of Technology</a></span>
+      <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
+    </div>
+  </footer>
+
+  <script>
+    (async function () {
+      var q = new URLSearchParams(location.search);
+      var name = (q.get('name') || '').trim();
+      var el = function (id) { return document.getElementById(id); };
+      var nameEl = el('mName'), roleEl = el('mRole'), avatarEl = el('mAvatar'),
+          linksEl = el('mLinks'), pubEl = el('mPubs'), titleEl = el('mPubTitle'), noteEl = el('mNote');
+      if (!name) { nameEl.textContent = 'Member not found'; titleEl.hidden = true; return; }
+      nameEl.textContent = name;
+      document.title = name + ' — solab';
+
+      function parse(html) { return new DOMParser().parseFromString(html, 'text/html'); }
+      async function get(url) { var r = await fetch(url); if (!r.ok) throw 0; return parse(await r.text()); }
+
+      // pull the member's card (avatar / role / links) from the lab or alumni page
+      var person = null, personBase = null, urls = ['../', '../alumni/'];
+      for (var i = 0; i < urls.length; i++) {
+        try {
+          var d = await get(urls[i]);
+          person = [].slice.call(d.querySelectorAll('.person')).find(function (p) {
+            var n = p.querySelector('.name'); return n && n.textContent.trim() === name;
+          });
+          if (person) { personBase = new URL(urls[i], location.href); break; }
+        } catch (e) {}
+      }
+      if (person) {
+        var av = person.querySelector('.avatar');
+        if (av) {
+          var c = av.cloneNode(true); c.removeAttribute('loading');
+          var raw = av.getAttribute('src');   // src is relative to the lab page — re-resolve it
+          if (raw) c.setAttribute('src', new URL(raw, personBase).href);
+          avatarEl.appendChild(c);
+        }
+        var role = person.querySelector('.role'); if (role) roleEl.textContent = role.textContent;
+        var lk = person.querySelector('.links'); if (lk) linksEl.appendChild(lk.cloneNode(true));
+      }
+
+      // author key: "Lastname Initial" (matches how the publications list authors)
+      var toks = name.split(/\s+/);
+      var key = toks[toks.length - 1] + ' ' + toks[0][0];
+
+      var mine = [];
+      try {
+        var pd = await get('../../publications/');
+        [].slice.call(pd.querySelectorAll('.pub')).forEach(function (p) {
+          var a = (p.querySelector('.pub-auth') || {}).textContent || '';
+          var authors = a.replace(/\./g, '').split(/,|\band\b/).map(function (s) { return s.trim(); }).filter(Boolean);
+          if (authors.some(function (t) { return t === key || t.indexOf(key) === 0; })) mine.push(p);
+        });
+      } catch (e) {}
+
+      mine.sort(function (a, b) {
+        var ya = (a.querySelector('.pub-year') || {}).textContent || 0;
+        var yb = (b.querySelector('.pub-year') || {}).textContent || 0;
+        return yb - ya;
+      });
+
+      if (mine.length) {
+        titleEl.textContent = 'Publications (' + mine.length + ')';
+        mine.forEach(function (p) {
+          var li = p.cloneNode(true);
+          li.classList.remove('is-hidden', 'year-dup');
+          pubEl.appendChild(li);
+        });
+      } else {
+        titleEl.hidden = true;
+        noteEl.hidden = false;
+        noteEl.textContent = 'No publications on this site list ' + name + ' as an author.';
+      }
+    })();
+  </script>
+  <script defer src="../../assets/js/msa.js"></script>
+</body>
+</html>

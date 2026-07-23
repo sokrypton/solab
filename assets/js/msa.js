@@ -516,8 +516,30 @@
     });
   }
 
+  // make each lab member link to their auto-generated publications profile
+  function wireMembers() {
+    if (!document.querySelector('.people-grid')) return;
+    var base = location.pathname.indexOf('/lab/alumni') > -1 ? '../member/' : 'member/';
+    [].forEach.call(document.querySelectorAll('.person'), function (p) {
+      if (p.dataset.wired) return;
+      var nm = p.querySelector('.name');
+      if (!nm) return;
+      var href = base + '?name=' + encodeURIComponent(nm.textContent.trim());
+      var a = document.createElement('a');       // real link on the name (keyboard-accessible)
+      a.href = href; a.className = 'name-link'; a.textContent = nm.textContent;
+      nm.textContent = ''; nm.appendChild(a);
+      p.classList.add('person--link');
+      p.addEventListener('click', function (e) {  // whole card clickable, but let inner links work
+        if (e.target.closest('a')) return;
+        location.href = href;
+      });
+      p.dataset.wired = '1';
+    });
+  }
+
   function inject() {
     colorizeBrand();
+    wireMembers();
     var word = sectionWord();
     var hero = document.querySelector('.hero-band');
     if (hero && !hero.querySelector('.msa-band')) {
