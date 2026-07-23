@@ -339,15 +339,26 @@
     }
     fine.push({ p: pts[n - 1].p, t: pts[n - 1].t, w: WID[n - 1] });
 
-    function draw(theta, tilt) {
+    // trackball rotation: an accumulated 3×3 matrix (no gimbal clamp → never sticks)
+    function mMul(A, B) {
+      var C = new Array(9);
+      for (var r = 0; r < 3; r++) for (var c = 0; c < 3; c++)
+        C[r * 3 + c] = A[r * 3] * B[c] + A[r * 3 + 1] * B[3 + c] + A[r * 3 + 2] * B[6 + c];
+      return C;
+    }
+    function mRotX(a) { var c = Math.cos(a), s = Math.sin(a); return [1, 0, 0, 0, c, -s, 0, s, c]; }
+    function mRotY(a) { var c = Math.cos(a), s = Math.sin(a); return [c, 0, s, 0, 1, 0, -s, 0, c]; }
+
+    function draw(M) {
       var s = size();
       if (canvas.width !== Math.round(s * DPR)) { canvas.width = canvas.height = Math.round(s * DPR); }
-      var R = s * 0.9, cx = s / 2, cy = s / 2, ct = Math.cos(theta), st = Math.sin(theta), cT = Math.cos(tilt), sT = Math.sin(tilt);
+      var R = s * 0.9, cx = s / 2, cy = s / 2;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, s, s);
       var sc = fine.map(function (q) {
-        var x = q.p.x * ct + q.p.z * st, z = -q.p.x * st + q.p.z * ct, y = q.p.y;
-        var y2 = y * cT - z * sT, z2 = y * sT + z * cT, pe = 1 / (1.9 - z2 * 0.55);
-        return { x: cx + x * R * pe, y: cy + y2 * R * pe, z: z2, t: q.t, w: q.w, pe: pe };
+        var p = q.p, x = M[0] * p.x + M[1] * p.y + M[2] * p.z,
+          y = M[3] * p.x + M[4] * p.y + M[5] * p.z,
+          z = M[6] * p.x + M[7] * p.y + M[8] * p.z, pe = 1 / (1.9 - z * 0.55);
+        return { x: cx + x * R * pe, y: cy - y * R * pe, z: z, t: q.t, w: q.w, pe: pe };
       });
       var segs = [], k;
       for (k = 0; k < sc.length - 1; k++) segs.push({ a: sc[k], b: sc[k + 1], z: (sc[k].z + sc[k + 1].z) / 2, t: sc[k + 1].t, w: (sc[k].w + sc[k + 1].w) / 2, pe: (sc[k].pe + sc[k + 1].pe) / 2 });
@@ -362,37 +373,34 @@
     }
     resize();
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var rotY = 0.5, rotX = -0.5, dragging = false, lx = 0, ly = 0;
-    function clampX(v) { return v < -1.45 ? -1.45 : v > 1.45 ? 1.45 : v; }
+    var M = mMul(mRotX(-0.35), mRotY(0.6)), dragging = false, lx = 0, ly = 0;
     canvas.style.touchAction = 'none';
-    var stage = canvas.closest ? canvas.closest('.viz-stage') : null;
-    function isMain() { return !stage || stage.getAttribute('data-main') === 'struct'; }
     canvas.addEventListener('pointerdown', function (e) {
-      if (!isMain()) return;                 // when inset, let the click expand instead of rotate
       dragging = true; lx = e.clientX; ly = e.clientY;
       try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
       canvas.style.cursor = 'grabbing'; e.preventDefault();
     });
     canvas.addEventListener('pointermove', function (e) {
       if (!dragging) return;
-      rotY += (e.clientX - lx) * 0.011; rotX = clampX(rotX - (e.clientY - ly) * 0.011);
-      lx = e.clientX; ly = e.clientY;
-      if (reduce) draw(rotY, rotX);
+      var dx = e.clientX - lx, dy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+      // rotate about the screen axes (camera frame) → trackball feel
+      M = mMul(mMul(mRotX(dy * 0.01), mRotY(dx * 0.01)), M);
+      if (reduce) draw(M);
     });
     function end() { dragging = false; canvas.style.cursor = 'grab'; }
     canvas.addEventListener('pointerup', end);
     canvas.addEventListener('pointercancel', end);
-    if (reduce) { draw(rotY, rotX); }
+    if (reduce) { draw(M); }
     else {
       var last = performance.now();
       (function loop(now) {
         var dt = now - last; last = now;
-        if (!dragging) rotY += dt / 9000;      // gentle auto-spin when idle
-        draw(rotY, rotX);
+        if (!dragging) M = mMul(mRotY(dt / 9000), M);   // gentle auto-spin when idle
+        draw(M);
         canvas.__raf = requestAnimationFrame(loop);
       })(performance.now());
     }
-    window.addEventListener('resize', function () { resize(); draw(rotY, rotX); });
+    window.addEventListener('resize', function () { resize(); draw(M); });
   }
 
   function sectionWord() {
