@@ -421,7 +421,7 @@
     // from its parent-group matrix in logo.svg, then scaled ~1.06x about the ring
     // centre into the composite's coordinate system) so frame 0 matches the logo
     var spec = [
-      { f: '01.png', cx: 256, cy: 201, w: 124, h: 101 },   // energy landscape (top-left)
+      { f: '01.png', cx: 255, cy: 228, w: 124, h: 101 },   // energy landscape (top-left)
       { f: '02.png', cx: 333, cy: 183, w: 81, h: 102 },    // green protein (top)
       { f: '03.png', cx: 408, cy: 188, w: 100, h: 127 },   // 3-protein complex (top-right)
       { f: '06.svg', cx: 465, cy: 256, w: 94, h: 126 },    // network graph (right)
