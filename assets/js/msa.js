@@ -124,9 +124,9 @@
         if (g.on(c, r)) {
           frag.appendChild(cellRect(c, r, pitch, cell, colColor[c]));   // the word: vivid
         } else if (Math.random() < 0.93) {
-          frag.appendChild(cellRect(c, r, pitch, cell, GAP));            // gap "-": solid grey
+          frag.appendChild(cellRect(c, r, pitch, cell, GAP, 0.35));      // gap "-": faint grey
         } else {
-          frag.appendChild(cellRect(c, r, pitch, cell, pick(), 0.55));   // stray residue
+          frag.appendChild(cellRect(c, r, pitch, cell, pick(), 0.5));    // stray residue
         }
       }
     }
