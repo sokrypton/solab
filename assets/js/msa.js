@@ -417,16 +417,17 @@
   function animateHero(el) {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var BASE = 'assets/hero/', C = 320, VB = 640, RINGD = 350;
-    // element ring layout: angle (deg, clockwise from top), radius from centre,
-    // width, and aspect (h/w)
+    // placements measured from the original artboard (centre x,y and width in the
+    // composite's coordinate system), so frame 0 matches the static logo
+    var AR = { '01.png': 302 / 375, '02.png': 279 / 208, '03.png': 362 / 260, '04.png': 223 / 314, '05.png': 374 / 344, '06.svg': 85.41 / 64.28, '07.svg': 96.59 / 88.58 };
     var spec = [
-      { f: '01.png', deg: -42, r: 198, w: 150, ar: 302 / 375 },   // energy landscape
-      { f: '02.png', deg: -8, r: 196, w: 86, ar: 279 / 208 },    // green protein
-      { f: '03.png', deg: 26, r: 205, w: 116, ar: 362 / 260 },    // 3-protein complex
-      { f: '06.svg', deg: 70, r: 150, w: 66, ar: 85.41 / 64.28 }, // network graph
-      { f: '05.png', deg: 166, r: 165, w: 150, ar: 374 / 344 },   // field photos
-      { f: '07.svg', deg: 250, r: 150, w: 120, ar: 96.59 / 88.58 }, // MSA block
-      { f: '04.png', deg: 300, r: 150, w: 120, ar: 223 / 314 }    // active-site protein
+      { f: '01.png', cx: 256, cy: 201, w: 190 },   // energy landscape (top-left)
+      { f: '02.png', cx: 333, cy: 183, w: 81 },    // green protein (top)
+      { f: '03.png', cx: 408, cy: 188, w: 101 },   // 3-protein complex (top-right)
+      { f: '06.svg', cx: 470, cy: 222, w: 80 },    // network graph (top-right)
+      { f: '05.png', cx: 335, cy: 444, w: 116 },   // field photos (bottom)
+      { f: '07.svg', cx: 188, cy: 385, w: 130 },   // MSA block (left)
+      { f: '04.png', cx: 170, cy: 272, w: 106 }    // active-site protein (upper-left)
     ];
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + VB + ' ' + VB);
@@ -443,12 +444,11 @@
     svg.appendChild(ring);
     var items = [];
     spec.forEach(function (e) {
-      var th = e.deg * Math.PI / 180, px = C + e.r * Math.sin(th), py = C - e.r * Math.cos(th);
-      var w = e.w, h = w * e.ar;
+      var w = e.w, h = w * AR[e.f];
       var wrap = document.createElementNS(NS, 'g');
-      wrap.appendChild(img(BASE + e.f, px - w / 2, py - h / 2, w, h));
+      wrap.appendChild(img(BASE + e.f, e.cx - w / 2, e.cy - h / 2, w, h));
       svg.appendChild(wrap);
-      items.push({ el: wrap, cx: px, cy: py });
+      items.push({ el: wrap, cx: e.cx, cy: e.cy });
     });
     el.insertBefore(svg, el.firstChild);
     var fb = el.querySelector('img'); if (fb) fb.remove();
