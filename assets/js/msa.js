@@ -142,45 +142,69 @@
   function buildFold() {
     var STEP = 3.4, SEP = 4.8;
 
-    // 1. topology: an ordered chain of 3–5 elements (N→C)
-    var nEl = 3 + ((Math.random() * 3) | 0), elems = [];
-    for (var e = 0; e < nEl; e++) {
-      var isH = Math.random() < 0.45;
-      elems.push({ h: isH, len: isH ? 9 + ((Math.random() * 8) | 0) : 5 + ((Math.random() * 3) | 0) });
-    }
-    if (elems.filter(function (x) { return !x.h; }).length < 2) {   // ensure a sheet
-      elems[0].h = elems[1].h = false;
-      elems[0].len = elems[1].len = 5 + ((Math.random() * 3) | 0);
+    // 1. topology — sample a fold class so we get variety: α-helix bundle,
+    //    all-β sheet, or mixed α/β
+    var mode = Math.random(), elems = [], e;
+    function coil(len) { return { h: true, len: len }; }
+    function strand(len) { return { h: false, len: len }; }
+    if (mode < 0.25) {                                   // α-helix bundle
+      for (e = 0; e < 3 + ((Math.random() * 2) | 0); e++) elems.push(coil(11 + ((Math.random() * 6) | 0)));
+    } else if (mode < 0.5) {                             // all-β sheet
+      for (e = 0; e < 3 + ((Math.random() * 2) | 0); e++) elems.push(strand(5 + ((Math.random() * 3) | 0)));
+    } else {                                             // mixed α/β
+      for (e = 0; e < 4 + ((Math.random() * 2) | 0); e++)
+        elems.push(Math.random() < 0.5 ? coil(9 + ((Math.random() * 7) | 0)) : strand(5 + ((Math.random() * 3) | 0)));
+      if (!elems.some(function (x) { return !x.h; })) elems[0] = strand(6);   // keep ≥1 strand
     }
 
-    // 2. β-sheet: strands as adjacent meander rows (alternating direction), curled
     var strandEls = elems.filter(function (x) { return !x.h; });
-    var CURL = 0.28, Rc = SEP / CURL;
-    strandEls.forEach(function (s, r) {
-      var dir = r % 2 === 0 ? 1 : -1, cy = Rc * Math.sin(r * CURL), cz = Rc * Math.cos(r * CURL);
-      s.coords = [];
-      for (var tt = 0; tt < s.len; tt++) {
-        var x = (tt - (s.len - 1) / 2) * STEP * dir;
-        s.coords.push(V(x, cy, cz + Math.sin(x * 0.09) * 0.7));
+    var helixEls = elems.filter(function (x) { return x.h; });
+    var HR = 2.3, HRISE = 1.5, HTURN = 1.75;             // idealized α-helix
+    function coilPts(base, axis, len) {
+      var u = vnorm(vcross(axis, Math.abs(axis.z) < 0.9 ? V(0, 0, 1) : V(1, 0, 0)));
+      var w = vnorm(vcross(axis, u)), out = [];
+      for (var tt = 0; tt < len; tt++) {
+        var ph = tt * HTURN, along = (tt - (len - 1) / 2) * HRISE;
+        out.push(vadd(base, vadd(vscale(axis, along), vadd(vscale(u, Math.cos(ph) * HR), vscale(w, Math.sin(ph) * HR)))));
       }
-    });
-    var sheetC = V(0, 0, 0), scnt = 0;
-    strandEls.forEach(function (s) { s.coords.forEach(function (p) { sheetC = vadd(sheetC, p); scnt++; }); });
-    sheetC = scnt ? vscale(sheetC, 1 / scnt) : sheetC;
+      return out;
+    }
+    var sheetC = V(0, 0, 0);
 
-    // 3. pack helices against alternating faces of the sheet
-    elems.filter(function (x) { return x.h; }).forEach(function (hh, hi) {
-      var face = hi % 2 === 0 ? 1 : -1;
-      var base = vadd(sheetC, V((Math.random() * 2 - 1) * STEP * 2, (Math.random() * 2 - 1) * SEP, face * 9.5));
-      var axis = vnorm(V(1, Math.random() * 0.5 - 0.25, 0.1));
-      var u = vnorm(vcross(axis, V(0, 0, 1))), w = vnorm(vcross(axis, u));
-      hh.coords = [];
-      for (var tt = 0; tt < hh.len; tt++) {
-        var ph = tt * 1.75, along = (tt - (hh.len - 1) / 2) * 1.5;
-        hh.coords.push(vadd(base, vadd(vscale(axis, along),
-          vadd(vscale(u, Math.cos(ph) * 2.3), vscale(w, Math.sin(ph) * 2.3)))));
-      }
-    });
+    if (strandEls.length) {
+      // 2. β-sheet: strands as adjacent meander rows (alternating direction), curled
+      var CURL = 0.28, Rc = SEP / CURL;
+      strandEls.forEach(function (s, r) {
+        var dir = r % 2 === 0 ? 1 : -1, cy = Rc * Math.sin(r * CURL), cz = Rc * Math.cos(r * CURL);
+        s.coords = [];
+        for (var tt = 0; tt < s.len; tt++) {
+          var x = (tt - (s.len - 1) / 2) * STEP * dir;
+          s.coords.push(V(x, cy, cz + Math.sin(x * 0.09) * 0.7));
+        }
+      });
+      var scnt = 0;
+      strandEls.forEach(function (s) { s.coords.forEach(function (p) { sheetC = vadd(sheetC, p); scnt++; }); });
+      sheetC = scnt ? vscale(sheetC, 1 / scnt) : sheetC;
+
+      // 3a. pack helices against alternating faces, staggered, close enough to contact
+      var faceSlot = { p: 0, n: 0 };
+      helixEls.forEach(function (hh, hi) {
+        var face = hi % 2 === 0 ? 1 : -1, key = face > 0 ? 'p' : 'n', slot = faceSlot[key]++;
+        var yoff = slot === 0 ? 0 : (slot % 2 ? 1 : -1) * Math.ceil(slot / 2) * SEP * 1.7;
+        var base = vadd(sheetC, V((Math.random() * 2 - 1) * STEP, yoff, face * 7.2));
+        hh.coords = coilPts(base, vnorm(V(1, 0, 0.08)), hh.len);
+      });
+    } else {
+      // 3b. α-helix bundle: up-down helices side by side, spaced ~10 Å so adjacent
+      //     helices pack together
+      helixEls.forEach(function (hh, hi) {
+        var xoff = (hi - (helixEls.length - 1) / 2) * 10.0, flip = hi % 2 === 0 ? 1 : -1;
+        hh.coords = coilPts(V(xoff, 0, 0), vnorm(V(0.05, flip, 0)), hh.len);
+      });
+      var cc = V(0, 0, 0), ct = 0;
+      helixEls.forEach(function (hh) { hh.coords.forEach(function (p) { cc = vadd(cc, p); ct++; }); });
+      sheetC = ct ? vscale(cc, 1 / ct) : cc;
+    }
 
     // 4. choose the N→C visiting order (and per-element direction) that minimises
     //    the total connecting-loop length — a short-path search over the placed
@@ -228,8 +252,10 @@
       lastPos = c[c.length - 1];
     });
 
-    // 5. derive contacts from the coordinates (this IS the structure's map)
-    var n = P.length, CUT = 8.0, pairs = [];
+    // 5. derive contacts from the coordinates (this IS the structure's map):
+    //    local helix (i,i+3/4), β pairing, and inter-element packing (helix-helix,
+    //    helix-sheet) all fall out of the distance test
+    var n = P.length, CUT = 8.5, pairs = [];
     for (var i = 0; i < n; i++) for (var j = i + 3; j < n; j++) {
       if (vlen(vsub(P[i], P[j])) < CUT) {
         var kind = (T[i] === 'H' && T[j] === 'H' && j - i <= 5) ? 'helix'
