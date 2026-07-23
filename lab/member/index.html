@@ -51,7 +51,7 @@
   <script>
     (async function () {
       var q = new URLSearchParams(location.search);
-      var name = (q.get('name') || '').trim();
+      var name = (q.get('name') || '').trim().replace(/_/g, ' ');
       var el = function (id) { return document.getElementById(id); };
       var nameEl = el('mName'), roleEl = el('mRole'), avatarEl = el('mAvatar'),
           linksEl = el('mLinks'), pubEl = el('mPubs'), titleEl = el('mPubTitle');

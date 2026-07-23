@@ -524,7 +524,7 @@
       if (p.dataset.wired) return;
       var nm = p.querySelector('.name');
       if (!nm) return;
-      var href = base + '?name=' + encodeURIComponent(nm.textContent.trim());
+      var href = base + '?name=' + encodeURIComponent(nm.textContent.trim().replace(/\s+/g, '_'));
       var a = document.createElement('a');       // real link on the name (keyboard-accessible)
       a.href = href; a.className = 'name-link'; a.textContent = nm.textContent;
       nm.textContent = ''; nm.appendChild(a);
