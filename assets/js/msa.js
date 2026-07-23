@@ -485,19 +485,31 @@
     return 'solab';
   }
 
-  // colour the "solab" wordmark one residue per letter — an alignment column
-  // per letter (five letters, five residues), echoing the favicon.
+  // render the "solab" wordmark like an MSA viewer: each letter in its own
+  // residue-coloured cell (five letters, five residues), echoing the favicon.
   function colorizeBrand() {
-    var pal = ['var(--res-green)', 'var(--res-gold)', 'var(--res-blue)', 'var(--res-coral)', 'var(--res-plum)'];
+    var pal = ['#6e9e4f', '#e0a32e', '#4e7fc4', '#d75a45', '#8e5b9f'];
+    function ink(hex) {   // dark or light glyph, whichever reads on the cell
+      var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16);
+      return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? '#241f18' : '#faf7f0';
+    }
     [].forEach.call(document.querySelectorAll('.brand'), function (b) {
       if (b.dataset.msa) return;
       var t = b.textContent.trim();
       if (!t) return;
       b.textContent = '';
+      b.style.letterSpacing = '0';
+      b.style.display = 'inline-flex';
+      b.style.gap = '2px';
       for (var i = 0; i < t.length; i++) {
+        var ch = t[i];
         var s = document.createElement('span');
-        s.textContent = t[i];
-        if (t[i] !== ' ') s.style.color = pal[i % pal.length];
+        s.textContent = ch;
+        if (ch !== ' ') {
+          var c = pal[i % pal.length];
+          s.style.cssText = 'display:inline-block;background:' + c + ';color:' + ink(c) +
+            ';border-radius:3px;padding:.02em .18em;min-width:.72em;text-align:center;';
+        }
         b.appendChild(s);
       }
       b.dataset.msa = '1';
