@@ -619,6 +619,8 @@ h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; margin
   padding-top: 3px;
 }
 .pub:hover .pub-year { color: var(--brand); }
+/* sorted by year: show each year once, blank the repeats (keeps the rail aligned) */
+.pub.year-dup .pub-year { visibility: hidden; }
 a.pub-title {
   font-family: var(--font-display);
   font-weight: 600;
