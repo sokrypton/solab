@@ -429,7 +429,7 @@
       { f: '02.png', cx: 275, cy: 157, w: 81, h: 102 },    // green protein
       { f: '03.png', cx: 391, cy: 166, w: 100, h: 127 },   // 3-protein complex
       { f: '06.svg', cx: 478, cy: 258, w: 94, h: 126 },    // network graph
-      { f: '05.png', cx: 349, cy: 488, w: 122, h: 124 },   // field / hot-spring badge
+      { f: '05.png', cx: 349, cy: 488, w: 135, h: 105 },   // orange + can cutout
       { f: '07.svg', cx: 209, cy: 448, w: 130, h: 142 },   // MSA block
       { f: '04.png', cx: 152, cy: 335, w: 106, h: 75 }     // active-site protein
     ];
