@@ -100,11 +100,19 @@
       try {
         var pd = await get('../../publications/');
         [].slice.call(pd.querySelectorAll('.pub')).forEach(function (p) {
-          var a = (p.querySelector('.pub-auth') || {}).textContent || '';
-          var authors = a.replace(/\./g, '').split(/,|\band\b/).map(function (s) { return s.trim(); }).filter(Boolean);
-          var hit = authors.some(function (t) {
-            return keys.some(function (k) { return t === k || t.indexOf(k) === 0; });
-          });
+          var hit;
+          var dm = p.getAttribute('data-members');
+          if (dm !== null) {
+            // paper explicitly declares its solab-member authors — authoritative,
+            // resolves abbreviated-name collisions (e.g. two different "Zhang Z")
+            hit = dm.split('|').map(function (s) { return s.trim(); }).indexOf(name) > -1;
+          } else {
+            var a = (p.querySelector('.pub-auth') || {}).textContent || '';
+            var authors = a.replace(/\./g, '').split(/,|\band\b/).map(function (s) { return s.trim(); }).filter(Boolean);
+            hit = authors.some(function (t) {
+              return keys.some(function (k) { return t === k || t.indexOf(k) === 0; });
+            });
+          }
           if (hit) mine.push(p);
         });
       } catch (e) {}
