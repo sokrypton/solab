@@ -279,7 +279,11 @@
       var sideSlot = { p: 0, n: 0 };
       coreHel.forEach(function (hh, hi) {
         var side = hi % 2 === 0 ? 1 : -1, key = side > 0 ? 'p' : 'n', slot = sideSlot[key]++;
-        var cross = 0.7 * side;                                 // ~40°, parallel per face
+        // helices cross the strands at ~40°; same-face helices stay parallel (same
+        //   sign) — forcing them to cross each other makes them collide (a lateral
+        //   stagger can't separate crossing helices), so α/β helices pack a bit more
+        //   parallel than native. Opposite faces are free to cross.
+        var cross = (0.6 + Math.random() * 0.25) * side;
         var axis = vnorm(vadd(vscale(sdir, Math.cos(cross)), vscale(tang, Math.sin(cross))));
         var perp = vnorm(vcross(nrm, axis));                    // in-plane, ⟂ the helix axis
         var lat = slot === 0 ? 0 : (slot % 2 ? 1 : -1) * Math.ceil(slot / 2) * 10.5;
@@ -288,16 +292,19 @@
         var cp = coilPts(base, axis, hh.len); hh.coords = cp.coords; hh.norms = cp.norms;
       });
     } else {
-      // 3b. α-helix bundle: helices arranged around a common axis (not a flat row),
-      //     alternating up/down, so each packs against its neighbours — a real
-      //     bundle with multiple helix–helix interactions. Ring radius set so
-      //     neighbours sit ~11 Å apart (native HH packing); a barrel for n ≥ 4.
-      var nb = coreHel.length, Rb = nb < 2 ? 0 : 5.5 / Math.sin(Math.PI / nb);
+      // 3b. α-helix cluster as a herringbone stack: helices stacked ~10 Å apart along
+      //     one axis, consecutive ones tilted by OPPOSITE angles so each adjacent pair
+      //     CROSSES. Native helix packing spans the whole 15–90° range (parallel/
+      //     antiparallel bundles through steep crossings), so we draw the crossing
+      //     angle per fold from that range rather than fixing it — reproducing the
+      //     native distribution, not just its median. Stack spacing keeps it clash-free.
+      var nb = coreHel.length, STEPz = 10;
+      var thBase = (16 + Math.random() * 70) * Math.PI / 360;      // per-fold crossing 16–86° ⇒ ±half
       coreHel.forEach(function (hh, hi) {
-        var ang = nb < 2 ? 0 : (hi / nb) * 2 * Math.PI;
-        var flip = hi % 2 === 0 ? 1 : -1;
-        var base = V(Rb * Math.cos(ang), 0, Rb * Math.sin(ang));
-        var cp = coilPts(base, vnorm(V(0.06 * Math.cos(ang), flip, 0.06 * Math.sin(ang))), hh.len);
+        var th = (hi % 2 ? -thBase : thBase) + (Math.random() * 2 - 1) * 0.1;
+        var base = V((Math.random() * 2 - 1) * 2.5, (Math.random() * 2 - 1) * 2.5,
+          (hi - (nb - 1) / 2) * STEPz);
+        var cp = coilPts(base, vnorm(V(Math.sin(th), Math.cos(th), 0)), hh.len);
         hh.coords = cp.coords; hh.norms = cp.norms;
       });
       var cc = V(0, 0, 0), ct = 0;
