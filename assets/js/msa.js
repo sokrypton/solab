@@ -330,22 +330,40 @@
       gen(arr.length);
     })(idxs.slice());
 
-    // thread the chain along the best order; loops are kept minimal — just enough
-    //   residues to span the 3D gap between consecutive SSE termini (≈ one per
-    //   3.8 Å), arced gently outward. They only lengthen when the gap requires it.
-    var P = [], T = [], N = [], U = [], lastPos = null, lastN = V(0, 0, 1);
+    // thread the chain along the best order. Each connecting loop is a circular arc
+    //   with segments of EXACTLY 3.8 Å (the ideal Cα-Cα virtual-bond length), so
+    //   loop residues — and the SSE↔loop junctions — keep correct backbone spacing.
+    //   The arc bulges outward when the gap is short (a tight turn); it flattens as
+    //   the gap approaches the straight length. Segment count is the fewest that can
+    //   span the gap at 3.8 Å (min 2 loop residues), giving native-like short turns.
+    function vdot3(a, b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
+    function solveBeta(ratio, m) {                    // sin(m·b)/sin(b) = ratio, b∈(0,π/m)
+      var lo = 1e-5, hi = Math.PI / m - 1e-5;         // ratio decreases monotonically in b
+      for (var it = 0; it < 44; it++) {
+        var b = (lo + hi) / 2;
+        if (Math.sin(m * b) / Math.sin(b) > ratio) lo = b; else hi = b;
+      }
+      return (lo + hi) / 2;
+    }
+    var P = [], T = [], N = [], U = [], lastPos = null, lastN = V(0, 0, 1), SB = 3.8;
     best.order.forEach(function (oi) {
       var c = elems[oi].coords.slice(), nrms = elems[oi].norms.slice(), ax = elems[oi].axis || null;
       if (lastPos === null) { if (best.fr) { c.reverse(); nrms.reverse(); } }
       else {
         if (vlen(vsub(c[c.length - 1], lastPos)) < vlen(vsub(c[0], lastPos))) { c.reverse(); nrms.reverse(); }
         var entry = c[0], entryN = nrms[0], gap = vlen(vsub(entry, lastPos));
-        var cntL = Math.max(2, Math.min(8, Math.round(gap / 3.8)));
-        for (var q = 1; q <= cntL; q++) {
-          var f = q / (cntL + 1), mp = vadd(vscale(lastPos, 1 - f), vscale(entry, f));
-          var out = vsub(mp, sheetC); out = vlen(out) > 0.001 ? vnorm(out) : V(0, 0, 1);
-          P.push(vadd(mp, vscale(out, Math.sin(f * Math.PI) * 2.2))); T.push('L');
-          N.push(vnorm(vadd(vscale(lastN, 1 - f), vscale(entryN, f))));   // loop normal: lerp flanks
+        var m = Math.max(3, Math.min(9, Math.ceil(gap / SB) + 1));   // # segments (loop residues = m-1)
+        var u = vscale(vsub(entry, lastPos), 1 / (gap || 1));
+        var w = vsub(vscale(vadd(lastPos, entry), 0.5), sheetC);     // bulge outward from core
+        w = vsub(w, vscale(u, vdot3(w, u)));                         // ⟂ to the chord
+        w = vlen(w) > 1e-3 ? vnorm(w) : vnorm(vcross(u, Math.abs(u.y) < 0.9 ? V(0, 1, 0) : V(1, 0, 0)));
+        var b = solveBeta(gap / SB, m), R = SB / (2 * Math.sin(b)), Phi = 2 * m * b;
+        var Cen = vsub(vscale(vadd(lastPos, entry), 0.5), vscale(w, R * Math.cos(Phi / 2)));
+        for (var q = 1; q <= m - 1; q++) {
+          var an = -Phi / 2 + q * (Phi / m);
+          P.push(vadd(Cen, vadd(vscale(w, R * Math.cos(an)), vscale(u, R * Math.sin(an))))); T.push('L');
+          var ff = q / m;
+          N.push(vnorm(vadd(vscale(lastN, 1 - ff), vscale(entryN, ff))));
           U.push(null);
         }
       }
