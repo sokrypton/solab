@@ -140,8 +140,8 @@
   // (residues within a distance cutoff), so map and structure are identical by
   // definition. Deterministic per load, no relaxation. Returns {pts, pairs}.
   function buildFold() {
-    var STEP = 3.4, SEP = 4.8, CUT = 7;    // virtual-Cβ contact cutoff (Å), calibrated
-                                           // to native side-chain contacts (see step 5)
+    var STEP = 3.4, SEP = 4.8, CUT = 7.5;  // virtual-Cβ contact cutoff (Å), calibrated
+                                           // to ConFind contact degree > 0.01 (see step 5)
 
     // ---- statistics from a survey of 151 native domains (SS via pydssp) ----
     //   fold-class mix, SSE lengths, sheet sizes, β pairing sense, and the
@@ -198,6 +198,7 @@
       return { coords: coords, norms: norms };
     }
     var sheetC = V(0, 0, 0);
+    var betaAdj = [];   // pairs of spatially-adjacent (H-bonded) strands — the known β ladders
 
     if (strandEls.length) {
       // 2. β-sheet: adjacent meander rows, curled AND twisted. Real sheets aren't
@@ -231,6 +232,10 @@
         var th = 0.44;   // ~25° inter-sheet rotation
         layFlat(strandEls.slice(0, nA), V(0, 0, -GAP / 2), V(1, 0, 0), V(0, 1, 0), 0);
         layFlat(strandEls.slice(nA), V(0, 0, GAP / 2), V(Math.cos(th), Math.sin(th), 0), V(-Math.sin(th), Math.cos(th), 0), nA);
+        // ladders run within each layer (consecutive strands); the two layers pack
+        //   as a hydrophobic core → tertiary, not a ladder.
+        for (var ba = 0; ba < nA - 1; ba++) betaAdj.push([strandEls[ba], strandEls[ba + 1]]);
+        for (var bb = nA; bb < strandEls.length - 1; bb++) betaAdj.push([strandEls[bb], strandEls[bb + 1]]);
       } else {
         // single β-sheet: adjacent meander rows, curled AND twisted. Real sheets
         //   aren't flat (native Cα ~2.8 Å RMS off-plane) and adjacent strands are
@@ -252,6 +257,7 @@
             s.norms.push(Nrm);
           }
         });
+        for (var ba2 = 0; ba2 < strandEls.length - 1; ba2++) betaAdj.push([strandEls[ba2], strandEls[ba2 + 1]]);
       }
       var scnt = 0;
       strandEls.forEach(function (s) { s.coords.forEach(function (p) { sheetC = vadd(sheetC, p); scnt++; }); });
@@ -352,23 +358,41 @@
     //    A residue–residue interaction needs the side chains to point at each other,
     //    not just Cα proximity. With Cα-only coords we approximate each side chain by
     //    a virtual Cβ: from the Cα-Cα-Cα geometry, a unit direction pointing away from
-    //    the backbone (bisector of the two Cα bonds), placed 2.5 Å out. Two residues
-    //    are in contact when their virtual Cβ are within CUT. Calibrated against 151
-    //    native structures (true contact = side-chain heavy atoms < 5 Å): this
-    //    (2.5 Å / CUT 7 Å) matches native contacts far better than a raw Cα cutoff
-    //    (F1 0.71 vs 0.32) — it drops the Cα-close-but-pointing-apart false pairs.
-    var n = P.length, pairs = [], CB = [];
+    //    the backbone (bisector of the two Cα bonds), placed 3.5 Å out. Two residues
+    //    are in contact when their virtual Cβ are within CUT. Calibrated against
+    //    ConFind (contact degree > 0.01) over 151 native structures: this
+    //    (3.5 Å / CUT 7.5 Å) matches the ConFind contact map far better than a raw Cα
+    //    cutoff (F1 0.78 vs ~0.3) — it drops the Cα-close-but-pointing-apart pairs.
+    var n = P.length, pairs = [], CB = [], betaSet = {};
     for (var ci = 0; ci < n; ci++) {
       var vv = V(0, 0, 0);
       if (ci > 0) vv = vadd(vv, vsub(P[ci], P[ci - 1]));
       if (ci < n - 1) vv = vadd(vv, vsub(P[ci], P[ci + 1]));
       var dd = vlen(vv) > 1e-6 ? vnorm(vv) : V(0, 0, 1);
-      CB.push(vadd(P[ci], vscale(dd, 2.5)));                    // virtual Cβ
+      CB.push(vadd(P[ci], vscale(dd, 3.5)));                    // virtual Cβ
     }
+    // 5a. exact β ladders. We built the sheet, so we KNOW which strands are paired
+    //     (adjacent within a sheet); emit their close residue pairs directly as β
+    //     instead of approximating. This guarantees complete, regular ladders
+    //     (anti-diagonal for antiparallel, diagonal for parallel).
+    var posIndex = new Map();
+    for (var pk = 0; pk < n; pk++) posIndex.set(P[pk], pk);
+    betaAdj.forEach(function (pr) {
+      var A = pr[0].coords, B = pr[1].coords;
+      for (var a = 0; a < A.length; a++) for (var b = 0; b < B.length; b++) {
+        if (vlen(vsub(A[a], B[b])) < 5.5) {
+          var gi1 = posIndex.get(A[a]), gi2 = posIndex.get(B[b]);
+          if (gi1 == null || gi2 == null || Math.abs(gi1 - gi2) < 3) continue;
+          var lo = Math.min(gi1, gi2), hi = Math.max(gi1, gi2), key = lo + ',' + hi;
+          if (!betaSet[key]) { betaSet[key] = 1; pairs.push({ i: lo, j: hi, kind: 'beta' }); }
+        }
+      }
+    });
+    // 5b. helix + tertiary from the virtual-Cβ contact test (β already handled above)
     for (var i = 0; i < n; i++) for (var j = i + 3; j < n; j++) {
+      if (betaSet[i + ',' + j]) continue;
       if (vlen(vsub(CB[i], CB[j])) < CUT) {
-        var kind = (T[i] === 'H' && T[j] === 'H' && j - i <= 5) ? 'helix'
-          : (T[i] === 'E' && T[j] === 'E') ? 'beta' : 'tert';
+        var kind = (T[i] === 'H' && T[j] === 'H' && j - i <= 5) ? 'helix' : 'tert';
         pairs.push({ i: i, j: j, kind: kind });
       }
     }
