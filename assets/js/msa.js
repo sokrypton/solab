@@ -140,67 +140,161 @@
   // (residues within a distance cutoff), so map and structure are identical by
   // definition. Deterministic per load, no relaxation. Returns {pts, pairs}.
   function buildFold() {
-    var STEP = 3.4, SEP = 4.8;
+    var STEP = 3.4, SEP = 4.8, CUT = 11;   // Cα contact cutoff, tuned to native
+                                           // non-local contact density (~8–9 per residue)
 
-    // 1. topology — mixed α/β, sized from a survey of 151 native domains
-    //    (strand ~4–7 res, helix ~8–14 res; a 2–4-strand sheet + 1–2 helices)
+    // ---- statistics from a survey of 151 native domains (SS via pydssp) ----
+    //   fold-class mix, SSE lengths, sheet sizes, β pairing sense, and the
+    //   tertiary-contact sparsity — all baked in as constants (no PDBs shipped).
     function coil(len) { return { h: true, len: len }; }
     function strand(len) { return { h: false, len: len }; }
-    function sLen() { return 4 + ((Math.random() * 4) | 0); }   // 4–7
-    function hLen() { return 8 + ((Math.random() * 7) | 0); }   // 8–14
-    var nStr = 2 + ((Math.random() * 3) | 0);                    // 2–4 strands
-    var nHel = 1 + ((Math.random() * 2) | 0);                    // 1–2 helices
+    function ri(a, b) { return a + ((Math.random() * (b - a + 1)) | 0); }   // int in [a,b]
+    function sLen() { return ri(4, 7); }                 // strand 4–7 (median 5)
+    function hLen() { return ri(8, 14); }                // helix 8–14 (median 10)
+    function sheetSize() {                               // strands-per-sheet, weighted
+      var w = [[2, 0.19], [3, 0.11], [4, 0.17], [5, 0.21], [6, 0.08]], tot = 0, r;
+      w.forEach(function (e) { tot += e[1]; }); r = Math.random() * tot;
+      for (var k = 0; k < w.length; k++) { r -= w[k][1]; if (r <= 0) return w[k][0]; }
+      return 4;
+    }
+
+    // 1. topology — pick a fold class (α 0.15 / β 0.14 / α-β 0.71) and its SSEs,
+    //    capped at ≤ 8 elements / ~90 residues so the compact map/3D stay legible
+    var roll = Math.random(), cls = roll < 0.15 ? 'a' : roll < 0.29 ? 'b' : 'ab';
+    var nStr = 0, nHel = 0, sandwich = false;
+    if (cls === 'a') { nHel = ri(2, 5); }
+    else if (cls === 'b') {
+      // ~36% of native β proteins are two sheets packed face-to-face (β-sandwich:
+      //   Ig-fold, jelly-roll). Build one for a fraction of β folds, with enough
+      //   strands to split across two sheets.
+      if (Math.random() < 0.45) { sandwich = true; nStr = ri(5, 8); }
+      else nStr = sheetSize();
+    }
+    else { nStr = Math.min(5, sheetSize()); nHel = ri(1, 3); }
+    while (nStr + nHel > 8) { if (nHel > (cls === 'a' ? 2 : 0)) nHel--; else nStr--; }
+
     var strandEls = [], helixEls = [], elems = [];
     for (var si = 0; si < nStr; si++) { var s0 = strand(sLen()); strandEls.push(s0); elems.push(s0); }
     for (var hi0 = 0; hi0 < nHel; hi0++) { var h0 = coil(hLen()); helixEls.push(h0); elems.push(h0); }
+
+    // Every SSE joins the packed core so it makes at least one tertiary contact —
+    //   strands pair into the sheet, helices all dock. Sparsity in the map then
+    //   comes from each SSE contacting only a few others (native mean ~1.9), never
+    //   from elements drifting off; no residue is left contact-free.
+    var coreHel = helixEls;
+
     var HR = 2.3, HRISE = 1.5, HTURN = 1.75;             // idealized α-helix
+    // returns Cα coords plus the per-residue ribbon face-normal (the radial from the
+    //   helix axis, which rotates ~100°/residue → a winding helix ribbon)
     function coilPts(base, axis, len) {
       var u = vnorm(vcross(axis, Math.abs(axis.z) < 0.9 ? V(0, 0, 1) : V(1, 0, 0)));
-      var w = vnorm(vcross(axis, u)), out = [];
+      var w = vnorm(vcross(axis, u)), coords = [], norms = [];
       for (var tt = 0; tt < len; tt++) {
         var ph = tt * HTURN, along = (tt - (len - 1) / 2) * HRISE;
-        out.push(vadd(base, vadd(vscale(axis, along), vadd(vscale(u, Math.cos(ph) * HR), vscale(w, Math.sin(ph) * HR)))));
+        var rad = vadd(vscale(u, Math.cos(ph) * HR), vscale(w, Math.sin(ph) * HR));
+        coords.push(vadd(base, vadd(vscale(axis, along), rad)));
+        norms.push(vnorm(rad));
       }
-      return out;
+      return { coords: coords, norms: norms };
     }
     var sheetC = V(0, 0, 0);
 
     if (strandEls.length) {
-      // 2. β-sheet: strands as adjacent meander rows (alternating direction), curled
-      var CURL = 0.28, Rc = SEP / CURL;
+      // 2. β-sheet: adjacent meander rows, curled AND twisted. Real sheets aren't
+      //    flat (native Cα ~2.8 Å RMS off-plane) and adjacent strands are rotated
+      //    ~24° w.r.t. each other — so rows fan about the sheet's up-axis (a gentle
+      //    right-handed twist) rather than running perfectly parallel. Strand step
+      //    is 3.8 Å (native extended-chain Cα spacing).
+      var SSTEP = 3.8;
       // adjacent strands: 81% antiparallel / 19% parallel (native survey)
       var dirs = [1];
       for (var dr = 1; dr < strandEls.length; dr++) dirs.push(Math.random() < 0.19 ? dirs[dr - 1] : -dirs[dr - 1]);
-      strandEls.forEach(function (s, r) {
-        var dir = dirs[r], cy = Rc * Math.sin(r * CURL), cz = Rc * Math.cos(r * CURL);
-        s.coords = [];
-        for (var tt = 0; tt < s.len; tt++) {
-          var x = (tt - (s.len - 1) / 2) * STEP * dir;
-          s.coords.push(V(x, cy, cz + Math.sin(x * 0.09) * 0.7));
-        }
-      });
+
+      if (sandwich) {
+        // β-sandwich (Ig-fold / jelly-roll): two flat sheets packed face-to-face
+        //   ~10 Å apart, the top layer rotated ~25° about the normal (native
+        //   inter-sheet twist). The two layers form the hydrophobic core, so they
+        //   make tertiary contacts across the interface.
+        var GAP = 10, nA = Math.ceil(strandEls.length / 2);
+        var layFlat = function (list, O, U, Vv, off) {
+          var Nrm = vnorm(vcross(U, Vv)), md = (list.length - 1) / 2;   // layer normal ⟂ strand
+          list.forEach(function (s, r) {
+            var C = vadd(O, vscale(Vv, (r - md) * SEP)), dir = dirs[off + r], sm = (s.len - 1) / 2;
+            s.coords = []; s.norms = [];
+            for (var tt = 0; tt < s.len; tt++) {
+              var along = (tt - sm) * SSTEP * dir, pleat = Math.sin(along * 0.09) * 0.7;
+              s.coords.push(vadd(vadd(C, vscale(U, along)), vscale(Nrm, pleat)));
+              s.norms.push(Nrm);
+            }
+          });
+        };
+        var th = 0.44;   // ~25° inter-sheet rotation
+        layFlat(strandEls.slice(0, nA), V(0, 0, -GAP / 2), V(1, 0, 0), V(0, 1, 0), 0);
+        layFlat(strandEls.slice(nA), V(0, 0, GAP / 2), V(Math.cos(th), Math.sin(th), 0), V(-Math.sin(th), Math.cos(th), 0), nA);
+      } else {
+        // single β-sheet: adjacent meander rows, curled AND twisted. Real sheets
+        //   aren't flat (native Cα ~2.8 Å RMS off-plane) and adjacent strands are
+        //   rotated ~24° w.r.t. each other, so rows fan about the sheet's up-axis
+        //   (a gentle right-handed twist). Strand step 3.8 Å (native extended chain).
+        var CURL = 0.20, Rc = SEP / CURL, TW = 0.12, smid = (strandEls.length - 1) / 2;
+        strandEls.forEach(function (s, r) {
+          var dir = dirs[r], cy = Rc * Math.sin(r * CURL), cz = Rc * Math.cos(r * CURL);
+          var phi = (r - smid) * TW, ax = V(Math.cos(phi), 0, Math.sin(phi));  // fanned long-axis
+          // sheet normal here = the curl's radial, orthogonalized against the strand axis
+          var radial = vnorm(V(0, cy, cz));
+          var rda = radial.x * ax.x + radial.y * ax.y + radial.z * ax.z;
+          var Nrm = vnorm(vsub(radial, vscale(ax, rda)));
+          s.coords = []; s.norms = [];
+          for (var tt = 0; tt < s.len; tt++) {
+            var along = (tt - (s.len - 1) / 2) * SSTEP * dir;
+            var pleat = Math.sin(along * 0.09) * 0.7;                          // gentle β-pleat
+            s.coords.push(vadd(V(0, cy, cz + pleat), vscale(ax, along)));
+            s.norms.push(Nrm);
+          }
+        });
+      }
       var scnt = 0;
       strandEls.forEach(function (s) { s.coords.forEach(function (p) { sheetC = vadd(sheetC, p); scnt++; }); });
       sheetC = scnt ? vscale(sheetC, 1 / scnt) : sheetC;
 
-      // 3a. pack helices against alternating faces, staggered, close enough to contact
-      var faceSlot = { p: 0, n: 0 };
-      helixEls.forEach(function (hh, hi) {
-        var face = hi % 2 === 0 ? 1 : -1, key = face > 0 ? 'p' : 'n', slot = faceSlot[key]++;
-        var yoff = slot === 0 ? 0 : (slot % 2 ? 1 : -1) * Math.ceil(slot / 2) * SEP * 1.7;
-        var base = vadd(sheetC, V((Math.random() * 2 - 1) * STEP, yoff, face * 8.6));
-        // helices cross the strands at ~40° (native helix–strand crossing angle)
-        hh.coords = coilPts(base, vnorm(V(0.77, 0.64 * face, 0.08)), hh.len);
+      // 3a. dock core helices onto the sheet along its TRUE surface normal. The
+      //     sheet is curled, so global-z is not the normal — offsetting in z would
+      //     drive a helix into the sheet's curve. We offset along the radial normal
+      //     instead; the helix axis lies in the tangent plane, crossing the strands
+      //     at ~40° (native HE angle). Helices alternate sides; extra helices on a
+      //     side stagger laterally (~11 Å) so several can pack together.
+      var nrm = vlen(V(0, sheetC.y, sheetC.z)) > 1e-3 ? vnorm(V(0, sheetC.y, sheetC.z)) : V(0, 0, 1);
+      var sdir = V(1, 0, 0);                                    // strands run ~along x
+      var tang = vnorm(vcross(nrm, sdir));                      // in-plane, perp to strands
+      var sideSlot = { p: 0, n: 0 };
+      coreHel.forEach(function (hh, hi) {
+        // helices dock on alternating faces at ~11 Å along the normal (native HE
+        // distance). Same-side helices stay PARALLEL (same crossing sense) and just
+        // shift laterally, so they never X-cross and collide; opposite faces are
+        // free to cross. Each crosses the strands at ~40°.
+        var side = hi % 2 === 0 ? 1 : -1, key = side > 0 ? 'p' : 'n', slot = sideSlot[key]++;
+        var lat = slot === 0 ? 0 : (slot % 2 ? 1 : -1) * Math.ceil(slot / 2) * 11;
+        var base = vadd(sheetC, vadd(vscale(nrm, side * 11),
+          vadd(vscale(tang, lat), vscale(sdir, (Math.random() * 2 - 1) * SSTEP))));
+        var cross = 0.7 * side;                                 // ~40°, parallel per face
+        var axis = vnorm(vadd(vscale(sdir, Math.cos(cross)), vscale(tang, Math.sin(cross))));
+        var cp = coilPts(base, axis, hh.len); hh.coords = cp.coords; hh.norms = cp.norms;
       });
     } else {
-      // 3b. α-helix bundle: up-down helices side by side, spaced ~10 Å so adjacent
-      //     helices pack together
-      helixEls.forEach(function (hh, hi) {
-        var xoff = (hi - (helixEls.length - 1) / 2) * 10.0, flip = hi % 2 === 0 ? 1 : -1;
-        hh.coords = coilPts(V(xoff, 0, 0), vnorm(V(0.05, flip, 0)), hh.len);
+      // 3b. α-helix bundle: helices arranged around a common axis (not a flat row),
+      //     alternating up/down, so each packs against its neighbours — a real
+      //     bundle with multiple helix–helix interactions. Ring radius set so
+      //     neighbours sit ~11 Å apart (native HH packing); a barrel for n ≥ 4.
+      var nb = coreHel.length, Rb = nb < 2 ? 0 : 5.5 / Math.sin(Math.PI / nb);
+      coreHel.forEach(function (hh, hi) {
+        var ang = nb < 2 ? 0 : (hi / nb) * 2 * Math.PI;
+        var flip = hi % 2 === 0 ? 1 : -1;
+        var base = V(Rb * Math.cos(ang), 0, Rb * Math.sin(ang));
+        var cp = coilPts(base, vnorm(V(0.06 * Math.cos(ang), flip, 0.06 * Math.sin(ang))), hh.len);
+        hh.coords = cp.coords; hh.norms = cp.norms;
       });
       var cc = V(0, 0, 0), ct = 0;
-      helixEls.forEach(function (hh) { hh.coords.forEach(function (p) { cc = vadd(cc, p); ct++; }); });
+      coreHel.forEach(function (hh) { hh.coords.forEach(function (p) { cc = vadd(cc, p); ct++; }); });
       sheetC = ct ? vscale(cc, 1 / ct) : cc;
     }
 
@@ -231,29 +325,32 @@
       gen(arr.length);
     })(idxs.slice());
 
-    // thread the chain along the best order; loops follow the (now short) 3D gaps
-    var P = [], T = [], lastPos = null;
+    // thread the chain along the best order; loops are kept minimal — just enough
+    //   residues to span the 3D gap between consecutive SSE termini (≈ one per
+    //   3.8 Å), arced gently outward. They only lengthen when the gap requires it.
+    var P = [], T = [], N = [], lastPos = null, lastN = V(0, 0, 1);
     best.order.forEach(function (oi) {
-      var c = elems[oi].coords.slice();
-      if (lastPos === null) { if (best.fr) c.reverse(); }
+      var c = elems[oi].coords.slice(), nrms = elems[oi].norms.slice();
+      if (lastPos === null) { if (best.fr) { c.reverse(); nrms.reverse(); } }
       else {
-        if (vlen(vsub(c[c.length - 1], lastPos)) < vlen(vsub(c[0], lastPos))) c.reverse();
-        var entry = c[0], gap = vlen(vsub(entry, lastPos));
-        var cntL = Math.max(2, Math.min(6, Math.round(gap / 3.5)));
+        if (vlen(vsub(c[c.length - 1], lastPos)) < vlen(vsub(c[0], lastPos))) { c.reverse(); nrms.reverse(); }
+        var entry = c[0], entryN = nrms[0], gap = vlen(vsub(entry, lastPos));
+        var cntL = Math.max(2, Math.min(8, Math.round(gap / 3.8)));
         for (var q = 1; q <= cntL; q++) {
-          var f = q / (cntL + 1), mid = vadd(vscale(lastPos, 1 - f), vscale(entry, f));
-          var out = vsub(mid, sheetC); out = vlen(out) > 0.001 ? vnorm(out) : V(0, 0, 1);
-          P.push(vadd(mid, vscale(out, Math.sin(f * Math.PI) * 2.5))); T.push('L');
+          var f = q / (cntL + 1), mp = vadd(vscale(lastPos, 1 - f), vscale(entry, f));
+          var out = vsub(mp, sheetC); out = vlen(out) > 0.001 ? vnorm(out) : V(0, 0, 1);
+          P.push(vadd(mp, vscale(out, Math.sin(f * Math.PI) * 2.2))); T.push('L');
+          N.push(vnorm(vadd(vscale(lastN, 1 - f), vscale(entryN, f))));   // loop normal: lerp flanks
         }
       }
-      for (var r2 = 0; r2 < c.length; r2++) { P.push(c[r2]); T.push(elems[oi].h ? 'H' : 'E'); }
-      lastPos = c[c.length - 1];
+      for (var r2 = 0; r2 < c.length; r2++) { P.push(c[r2]); T.push(elems[oi].h ? 'H' : 'E'); N.push(nrms[r2]); }
+      lastPos = c[c.length - 1]; lastN = nrms[nrms.length - 1];
     });
 
     // 5. derive contacts from the coordinates (this IS the structure's map):
     //    local helix (i,i+3/4), β pairing, and inter-element packing (helix-helix,
     //    helix-sheet) all fall out of the distance test
-    var n = P.length, CUT = 8.5, pairs = [];
+    var n = P.length, pairs = [];
     for (var i = 0; i < n; i++) for (var j = i + 3; j < n; j++) {
       if (vlen(vsub(P[i], P[j])) < CUT) {
         var kind = (T[i] === 'H' && T[j] === 'H' && j - i <= 5) ? 'helix'
@@ -266,8 +363,8 @@
     var ctr = V(0, 0, 0); P.forEach(function (p) { ctr = vadd(ctr, p); }); ctr = vscale(ctr, 1 / n);
     var maxr = 0, Pc = P.map(function (p) { var d = vsub(p, ctr); maxr = Math.max(maxr, vlen(d)); return d; });
     var s = 1 / (maxr || 1), pts = [];
-    for (i = 0; i < n; i++) pts.push({ p: vscale(Pc[i], s), t: T[i] });
-    return { pairs: pairs, pts: pts };
+    for (i = 0; i < n; i++) pts.push({ p: vscale(Pc[i], s), t: T[i], n: N[i] });  // n = ribbon face-normal
+    return { pairs: pairs, pts: pts, sep: SEP * s };   // inter-strand spacing (scaled) for ribbon width
   }
 
   // Contact map: ink backbone diagonal + the contacts derived from the fold,
@@ -304,8 +401,9 @@
   function vcross(a, b) { return V(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
   function rnd1() { return Math.random() * 2 - 1; }
 
-  function proteinTrace(pts, canvas) {
+  function proteinTrace(pts, canvas, sep) {
     var ctx = canvas.getContext('2d');
+    var SEPw = sep || 0.24;                 // scaled inter-strand spacing → ribbon width
     var DPR = Math.min(2, window.devicePixelRatio || 1);
     var BG = DARK ? [25, 21, 16] : [250, 247, 240];
     var COL = { H: [215, 90, 69], E: [78, 127, 196], L: DARK ? [150, 142, 126] : [140, 133, 118] };
@@ -322,27 +420,57 @@
     // smooth the Cα backbone into a cartoon tube whose width encodes SS
     // (β-strands taper to an arrowhead at their C-terminus). Reassignable so we
     // can swap in a freshly generated fold without re-adding listeners/loops.
+    function dot3(a, b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
     var fine = [];
-    function setFold(pp) {
-      var n = pp.length, WID = new Array(n), i;
+    function setFold(pp, sepArg) {
+      if (sepArg) SEPw = sepArg;
+      var n = pp.length, i, k;
+
+      // Face-normal per residue comes straight from buildFold (exact construction
+      //   geometry): strand → sheet normal, helix → rotating radial, loop → lerp.
+      //   No fragile re-derivation from near-straight Cα here.
+      var sp = pp.map(function (q) { return q.p; });
+      var Ns = pp.map(function (q) { return q.n || V(0, 0, 1); });
+
+      // ribbon half-width per residue, keyed to the inter-strand spacing so adjacent
+      //   β-strands meet edge-to-edge (their touching edges = the backbone H-bonds
+      //   of the sheet). Strands taper to an arrowhead at the C-terminus.
+      var body = SEPw * 0.34, shoulder = SEPw * 0.5, tip = SEPw * 0.04, hel = SEPw * 0.32, lp = SEPw * 0.1;
+      var WID = new Array(n);
       for (i = 0; i < n; i++) {
         var ty = pp[i].t;
-        if (ty === 'H') WID[i] = 0.05;
+        if (ty === 'H') WID[i] = hel;
         else if (ty === 'E') {
-          var e = i; while (e + 1 < n && pp[e + 1].t === 'E') e++;
-          var fe = e - i;
-          WID[i] = fe === 0 ? 0.012 : fe === 1 ? 0.05 : fe === 2 ? 0.066 : 0.042;
-        } else WID[i] = 0.018;
+          var e2 = i; while (e2 + 1 < n && pp[e2 + 1].t === 'E') e2++;
+          var fe = e2 - i;
+          WID[i] = fe === 0 ? tip : fe === 1 ? body * 0.85 : fe === 2 ? shoulder : body;
+        } else WID[i] = lp;
       }
-      var out = [], SUB = 8;
+
+      // subsample the spline, carrying width and interpolated face-normal
+      var out = [], SUB = 10;
       for (i = 0; i < n - 1; i++) {
-        var p0 = (pp[i - 1] || pp[i]).p, p1 = pp[i].p, p2 = pp[i + 1].p, p3 = (pp[i + 2] || pp[i + 1]).p;
-        for (var sIdx = 0; sIdx < SUB; sIdx++) {
-          var f = sIdx / SUB;
-          out.push({ p: cr(p0, p1, p2, p3, f), t: pp[i].t, w: WID[i] * (1 - f) + WID[i + 1] * f });
+        var p0 = sp[i - 1] || sp[i], p1 = sp[i], p2 = sp[i + 1], p3 = sp[i + 2] || sp[i + 1];
+        for (var s2 = 0; s2 < SUB; s2++) {
+          var f = s2 / SUB;
+          out.push({
+            p: cr(p0, p1, p2, p3, f), t: pp[i].t,
+            w: WID[i] * (1 - f) + WID[i + 1] * f,
+            n: vnorm(vadd(vscale(Ns[i], 1 - f), vscale(Ns[i + 1], f)))
+          });
         }
       }
-      out.push({ p: pp[n - 1].p, t: pp[n - 1].t, w: WID[n - 1] });
+      out.push({ p: sp[n - 1], t: pp[n - 1].t, w: WID[n - 1], n: Ns[n - 1] });
+
+      // width (side) vector per fine point = tangent × face-normal, for ALL types.
+      //   Strand: tangent ≈ strand axis, n = sheet normal ⇒ side = in-sheet
+      //     perpendicular ⇒ arrows widen toward neighbours, edge-to-edge, flat face
+      //     out of the sheet. Helix: n = radial ⇒ side = axial ⇒ winding ribbon.
+      for (i = 0; i < out.length; i++) {
+        var T = vnorm(vsub(out[Math.min(out.length - 1, i + 1)].p, out[Math.max(0, i - 1)].p));
+        var sd = vcross(T, out[i].n);
+        out[i].s = vlen(sd) < 1e-5 ? V(0, 1, 0) : vnorm(sd);
+      }
       fine = out;
     }
     setFold(pts);
@@ -361,23 +489,31 @@
     function draw(M) {
       var s = size();
       if (canvas.width !== Math.round(s * DPR)) { canvas.width = canvas.height = Math.round(s * DPR); }
-      var R = s * 0.9, cx = s / 2, cy = s / 2;
+      var R = s * 0.8, cx = s / 2, cy = s / 2, k;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, s, s);
-      var sc = fine.map(function (q) {
-        var p = q.p, x = M[0] * p.x + M[1] * p.y + M[2] * p.z,
-          y = M[3] * p.x + M[4] * p.y + M[5] * p.z,
-          z = M[6] * p.x + M[7] * p.y + M[8] * p.z, pe = 1 / (1.9 - z * 0.55);
-        return { x: cx + x * R * pe, y: cy - y * R * pe, z: z, t: q.t, w: q.w, pe: pe };
+      function rot(p) { return { x: M[0] * p.x + M[1] * p.y + M[2] * p.z, y: M[3] * p.x + M[4] * p.y + M[5] * p.z, z: M[6] * p.x + M[7] * p.y + M[8] * p.z }; }
+      function proj(v) { var pe = 1 / (1.9 - v.z * 0.55); return { x: cx + v.x * R * pe, y: cy - v.y * R * pe }; }
+      // project each fine point plus its two ribbon edges (± side × half-width)
+      var pr = fine.map(function (q) {
+        var rc = rot(q.p), rs = rot(q.s), w = q.w;
+        return {
+          L: proj({ x: rc.x + rs.x * w, y: rc.y + rs.y * w, z: rc.z + rs.z * w }),
+          Rr: proj({ x: rc.x - rs.x * w, y: rc.y - rs.y * w, z: rc.z - rs.z * w }),
+          z: rc.z, t: q.t
+        };
       });
-      var segs = [], k;
-      for (k = 0; k < sc.length - 1; k++) segs.push({ a: sc[k], b: sc[k + 1], z: (sc[k].z + sc[k + 1].z) / 2, t: sc[k + 1].t, w: (sc[k].w + sc[k + 1].w) / 2, pe: (sc[k].pe + sc[k + 1].pe) / 2 });
-      segs.sort(function (m, o) { return m.z - o.z; });
-      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      segs.forEach(function (g) {
+      // filled ribbon: one quad per fine segment, painted back-to-front
+      var quads = [];
+      for (k = 0; k < pr.length - 1; k++) quads.push({ a: pr[k], b: pr[k + 1], z: (pr[k].z + pr[k + 1].z) / 2, t: pr[k + 1].t });
+      quads.sort(function (m, o) { return m.z - o.z; });
+      ctx.lineJoin = 'round'; ctx.lineWidth = 1;
+      quads.forEach(function (g) {
         var near = (g.z + 1) / 2; near = near < 0 ? 0 : near > 1 ? 1 : near;
-        ctx.strokeStyle = shade(COL[g.t], near);
-        ctx.lineWidth = Math.max(1, g.w * s * g.pe);
-        ctx.beginPath(); ctx.moveTo(g.a.x, g.a.y); ctx.lineTo(g.b.x, g.b.y); ctx.stroke();
+        ctx.fillStyle = ctx.strokeStyle = shade(COL[g.t], near);
+        ctx.beginPath();
+        ctx.moveTo(g.a.L.x, g.a.L.y); ctx.lineTo(g.b.L.x, g.b.L.y);
+        ctx.lineTo(g.b.Rr.x, g.b.Rr.y); ctx.lineTo(g.a.Rr.x, g.a.Rr.y); ctx.closePath();
+        ctx.fill(); ctx.stroke();                                   // stroke closes hairline seams
       });
     }
     resize();
@@ -582,8 +718,8 @@
         var fold = buildFold();
         if (mapEl) { mapEl.textContent = ''; mapEl.appendChild(contactMap(fold.pairs, fold.pts.length, 7)); }
         if (canvas) {
-          if (!started) { proteinTrace(fold.pts, canvas); started = true; }
-          else if (canvas.__setFold) canvas.__setFold(fold.pts);   // swap fold, keep the running loop
+          if (!started) { proteinTrace(fold.pts, canvas, fold.sep); started = true; }
+          else if (canvas.__setFold) canvas.__setFold(fold.pts, fold.sep);   // swap fold, keep the running loop
         }
       }
       regen();
