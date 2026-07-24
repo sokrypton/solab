@@ -268,22 +268,21 @@
       //     drive a helix into the sheet's curve. We offset along the radial normal
       //     instead; the helix axis lies in the tangent plane, crossing the strands
       //     at ~40° (native HE angle). Helices alternate sides; extra helices on a
-      //     side stagger laterally (~11 Å) so several can pack together.
+      //     side stagger — along the in-plane direction PERPENDICULAR to the helix
+      //     axis (not tang), so the ~11 Å offset is fully a separation and the
+      //     helices don't end up nearly overlapping.
       var nrm = vlen(V(0, sheetC.y, sheetC.z)) > 1e-3 ? vnorm(V(0, sheetC.y, sheetC.z)) : V(0, 0, 1);
       var sdir = V(1, 0, 0);                                    // strands run ~along x
       var tang = vnorm(vcross(nrm, sdir));                      // in-plane, perp to strands
       var sideSlot = { p: 0, n: 0 };
       coreHel.forEach(function (hh, hi) {
-        // helices dock on alternating faces at ~11 Å along the normal (native HE
-        // distance). Same-side helices stay PARALLEL (same crossing sense) and just
-        // shift laterally, so they never X-cross and collide; opposite faces are
-        // free to cross. Each crosses the strands at ~40°.
         var side = hi % 2 === 0 ? 1 : -1, key = side > 0 ? 'p' : 'n', slot = sideSlot[key]++;
-        var lat = slot === 0 ? 0 : (slot % 2 ? 1 : -1) * Math.ceil(slot / 2) * 11;
-        var base = vadd(sheetC, vadd(vscale(nrm, side * 11),
-          vadd(vscale(tang, lat), vscale(sdir, (Math.random() * 2 - 1) * SSTEP))));
         var cross = 0.7 * side;                                 // ~40°, parallel per face
         var axis = vnorm(vadd(vscale(sdir, Math.cos(cross)), vscale(tang, Math.sin(cross))));
+        var perp = vnorm(vcross(nrm, axis));                    // in-plane, ⟂ the helix axis
+        var lat = slot === 0 ? 0 : (slot % 2 ? 1 : -1) * Math.ceil(slot / 2) * 10.5;
+        var base = vadd(sheetC, vadd(vscale(nrm, side * 11),
+          vadd(vscale(perp, lat), vscale(sdir, (Math.random() * 2 - 1) * 1.5))));
         var cp = coilPts(base, axis, hh.len); hh.coords = cp.coords; hh.norms = cp.norms;
       });
     } else {
