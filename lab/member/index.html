@@ -85,9 +85,16 @@
         var lk = person.querySelector('.links'); if (lk) linksEl.appendChild(lk.cloneNode(true));
       }
 
-      // author key: "Lastname Initial" (matches how the publications list authors)
-      var toks = name.split(/\s+/);
-      var key = toks[toks.length - 1] + ' ' + toks[0][0];
+      // author key(s): prefer the member card's explicit data-authors (pipe-separated,
+      // e.g. "Abulnaga M|Abulnaga SM"); fall back to "Lastname Initial" from the name.
+      var keys;
+      var da = person && person.getAttribute('data-authors');
+      if (da) {
+        keys = da.split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+      } else {
+        var toks = name.split(/\s+/);
+        keys = [toks[toks.length - 1] + ' ' + toks[0][0]];
+      }
 
       var mine = [];
       try {
@@ -95,7 +102,10 @@
         [].slice.call(pd.querySelectorAll('.pub')).forEach(function (p) {
           var a = (p.querySelector('.pub-auth') || {}).textContent || '';
           var authors = a.replace(/\./g, '').split(/,|\band\b/).map(function (s) { return s.trim(); }).filter(Boolean);
-          if (authors.some(function (t) { return t === key || t.indexOf(key) === 0; })) mine.push(p);
+          var hit = authors.some(function (t) {
+            return keys.some(function (k) { return t === k || t.indexOf(k) === 0; });
+          });
+          if (hit) mine.push(p);
         });
       } catch (e) {}
 
