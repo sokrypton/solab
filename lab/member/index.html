@@ -96,17 +96,37 @@
         keys = [toks[toks.length - 1] + ' ' + toks[0][0]];
       }
 
+      // full-name match: family must match, and a given name/initial must match.
+      // Full names (data-authors, from Crossref) disambiguate abbreviated collisions
+      // like two different "Zhang Z" (Zhidian vs Zetian).
+      var mtok = name.trim().split(/\s+/);
+      var mFam = mtok[mtok.length - 1].toLowerCase().replace(/\./g, '');
+      var mGiv = mtok[0].toLowerCase().replace(/\./g, '');
+      function nameMatch(full) {
+        var tk = full.trim().split(/\s+/);
+        if (tk.length < 2) return false;
+        if (tk[tk.length - 1].toLowerCase().replace(/\./g, '') !== mFam) return false;
+        for (var i = 0; i < tk.length - 1; i++) {
+          var t = tk[i].toLowerCase().replace(/\./g, '');
+          if (!t) continue;
+          if (t === mGiv) return true;
+          if (t.length <= 1 && t[0] === mGiv[0]) return true;  // author listed by initial
+        }
+        return false;
+      }
+
       var mine = [];
       try {
         var pd = await get('../../publications/');
         [].slice.call(pd.querySelectorAll('.pub')).forEach(function (p) {
           var hit;
           var dm = p.getAttribute('data-members');
-          if (dm !== null) {
-            // paper explicitly declares its solab-member authors — authoritative,
-            // resolves abbreviated-name collisions (e.g. two different "Zhang Z")
+          var dfull = p.getAttribute('data-authors');
+          if (dm !== null) {                              // manual override wins
             hit = dm.split('|').map(function (s) { return s.trim(); }).indexOf(name) > -1;
-          } else {
+          } else if (dfull) {                             // full names from Crossref
+            hit = dfull.split(';').some(function (s) { return nameMatch(s); });
+          } else {                                        // fallback: abbreviated keys
             var a = (p.querySelector('.pub-auth') || {}).textContent || '';
             var authors = a.replace(/\./g, '').split(/,|\band\b/).map(function (s) { return s.trim(); }).filter(Boolean);
             hit = authors.some(function (t) {
