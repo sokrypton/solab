@@ -253,7 +253,9 @@
           for (var tt = 0; tt < s.len; tt++) {
             var along = (tt - (s.len - 1) / 2) * SSTEP * dir;
             var pleat = Math.sin(along * 0.09) * 0.7;                          // gentle β-pleat
-            s.coords.push(vadd(V(0, cy, cz + pleat), vscale(ax, along)));
+            // pleat along the sheet NORMAL (not global z); otherwise on a curled
+            //   sheet it shifts the centreline sideways and the ribbon edges wobble
+            s.coords.push(vadd(vadd(V(0, cy, cz), vscale(ax, along)), vscale(Nrm, pleat)));
             s.norms.push(Nrm);
           }
         });
