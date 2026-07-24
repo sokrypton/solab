@@ -220,7 +220,7 @@
           var Nrm = vnorm(vcross(U, Vv)), md = (list.length - 1) / 2;   // layer normal ⟂ strand
           list.forEach(function (s, r) {
             var C = vadd(O, vscale(Vv, (r - md) * SEP)), dir = dirs[off + r], sm = (s.len - 1) / 2;
-            s.coords = []; s.norms = [];
+            s.coords = []; s.norms = []; s.axis = U;   // constant long axis → straight edges
             for (var tt = 0; tt < s.len; tt++) {
               var along = (tt - sm) * SSTEP * dir, pleat = Math.sin(along * 0.09) * 0.7;
               s.coords.push(vadd(vadd(C, vscale(U, along)), vscale(Nrm, pleat)));
@@ -244,7 +244,7 @@
           var radial = vnorm(V(0, cy, cz));
           var rda = radial.x * ax.x + radial.y * ax.y + radial.z * ax.z;
           var Nrm = vnorm(vsub(radial, vscale(ax, rda)));
-          s.coords = []; s.norms = [];
+          s.coords = []; s.norms = []; s.axis = ax;   // constant long axis → straight edges
           for (var tt = 0; tt < s.len; tt++) {
             var along = (tt - (s.len - 1) / 2) * SSTEP * dir;
             var pleat = Math.sin(along * 0.09) * 0.7;                          // gentle β-pleat
@@ -328,9 +328,9 @@
     // thread the chain along the best order; loops are kept minimal — just enough
     //   residues to span the 3D gap between consecutive SSE termini (≈ one per
     //   3.8 Å), arced gently outward. They only lengthen when the gap requires it.
-    var P = [], T = [], N = [], lastPos = null, lastN = V(0, 0, 1);
+    var P = [], T = [], N = [], U = [], lastPos = null, lastN = V(0, 0, 1);
     best.order.forEach(function (oi) {
-      var c = elems[oi].coords.slice(), nrms = elems[oi].norms.slice();
+      var c = elems[oi].coords.slice(), nrms = elems[oi].norms.slice(), ax = elems[oi].axis || null;
       if (lastPos === null) { if (best.fr) { c.reverse(); nrms.reverse(); } }
       else {
         if (vlen(vsub(c[c.length - 1], lastPos)) < vlen(vsub(c[0], lastPos))) { c.reverse(); nrms.reverse(); }
@@ -341,9 +341,10 @@
           var out = vsub(mp, sheetC); out = vlen(out) > 0.001 ? vnorm(out) : V(0, 0, 1);
           P.push(vadd(mp, vscale(out, Math.sin(f * Math.PI) * 2.2))); T.push('L');
           N.push(vnorm(vadd(vscale(lastN, 1 - f), vscale(entryN, f))));   // loop normal: lerp flanks
+          U.push(null);
         }
       }
-      for (var r2 = 0; r2 < c.length; r2++) { P.push(c[r2]); T.push(elems[oi].h ? 'H' : 'E'); N.push(nrms[r2]); }
+      for (var r2 = 0; r2 < c.length; r2++) { P.push(c[r2]); T.push(elems[oi].h ? 'H' : 'E'); N.push(nrms[r2]); U.push(ax); }
       lastPos = c[c.length - 1]; lastN = nrms[nrms.length - 1];
     });
 
@@ -363,7 +364,7 @@
     var ctr = V(0, 0, 0); P.forEach(function (p) { ctr = vadd(ctr, p); }); ctr = vscale(ctr, 1 / n);
     var maxr = 0, Pc = P.map(function (p) { var d = vsub(p, ctr); maxr = Math.max(maxr, vlen(d)); return d; });
     var s = 1 / (maxr || 1), pts = [];
-    for (i = 0; i < n; i++) pts.push({ p: vscale(Pc[i], s), t: T[i], n: N[i] });  // n = ribbon face-normal
+    for (i = 0; i < n; i++) pts.push({ p: vscale(Pc[i], s), t: T[i], n: N[i], u: U[i] });  // n = face-normal, u = strand axis
     return { pairs: pairs, pts: pts, sep: SEP * s };   // inter-strand spacing (scaled) for ribbon width
   }
 
@@ -434,17 +435,13 @@
 
       // ribbon half-width per residue, keyed to the inter-strand spacing so adjacent
       //   β-strands meet edge-to-edge (their touching edges = the backbone H-bonds
-      //   of the sheet). Strands taper to an arrowhead at the C-terminus.
-      var body = SEPw * 0.34, shoulder = SEPw * 0.5, tip = SEPw * 0.04, hel = SEPw * 0.32, lp = SEPw * 0.1;
+      //   of the sheet). Strands are a uniform-width flat ribbon (no arrowhead —
+      //   constant width keeps the edges perfectly straight and parallel).
+      var body = SEPw * 0.28, hel = SEPw * 0.32, lp = SEPw * 0.13;   // loop = round-tube radius
       var WID = new Array(n);
       for (i = 0; i < n; i++) {
         var ty = pp[i].t;
-        if (ty === 'H') WID[i] = hel;
-        else if (ty === 'E') {
-          var e2 = i; while (e2 + 1 < n && pp[e2 + 1].t === 'E') e2++;
-          var fe = e2 - i;
-          WID[i] = fe === 0 ? tip : fe === 1 ? body * 0.85 : fe === 2 ? shoulder : body;
-        } else WID[i] = lp;
+        WID[i] = ty === 'H' ? hel : ty === 'E' ? body : lp;
       }
 
       // subsample the spline, carrying width and interpolated face-normal
@@ -456,19 +453,21 @@
           out.push({
             p: cr(p0, p1, p2, p3, f), t: pp[i].t,
             w: WID[i] * (1 - f) + WID[i + 1] * f,
-            n: vnorm(vadd(vscale(Ns[i], 1 - f), vscale(Ns[i + 1], f)))
+            n: vnorm(vadd(vscale(Ns[i], 1 - f), vscale(Ns[i + 1], f))),
+            u: pp[i].u   // strand long axis (constant per strand); null for helix/loop
           });
         }
       }
-      out.push({ p: sp[n - 1], t: pp[n - 1].t, w: WID[n - 1], n: Ns[n - 1] });
+      out.push({ p: sp[n - 1], t: pp[n - 1].t, w: WID[n - 1], n: Ns[n - 1], u: pp[n - 1].u });
 
-      // width (side) vector per fine point = tangent × face-normal, for ALL types.
-      //   Strand: tangent ≈ strand axis, n = sheet normal ⇒ side = in-sheet
-      //     perpendicular ⇒ arrows widen toward neighbours, edge-to-edge, flat face
-      //     out of the sheet. Helix: n = radial ⇒ side = axial ⇒ winding ribbon.
+      // width (side) vector per fine point = along × face-normal.
+      //   Strand: `along` is the strand's CONSTANT long axis (from buildFold), so the
+      //     side vector doesn't wobble with the pleated spline → straight, parallel
+      //     ribbon edges lying flat in the sheet. Helix/loop: use the spline tangent
+      //     (n = radial for helix ⇒ side = axial ⇒ winding ribbon).
       for (i = 0; i < out.length; i++) {
-        var T = vnorm(vsub(out[Math.min(out.length - 1, i + 1)].p, out[Math.max(0, i - 1)].p));
-        var sd = vcross(T, out[i].n);
+        var along = out[i].u || vnorm(vsub(out[Math.min(out.length - 1, i + 1)].p, out[Math.max(0, i - 1)].p));
+        var sd = vcross(along, out[i].n);
         out[i].s = vlen(sd) < 1e-5 ? V(0, 1, 0) : vnorm(sd);
       }
       fine = out;
@@ -493,27 +492,42 @@
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0); ctx.clearRect(0, 0, s, s);
       function rot(p) { return { x: M[0] * p.x + M[1] * p.y + M[2] * p.z, y: M[3] * p.x + M[4] * p.y + M[5] * p.z, z: M[6] * p.x + M[7] * p.y + M[8] * p.z }; }
       function proj(v) { var pe = 1 / (1.9 - v.z * 0.55); return { x: cx + v.x * R * pe, y: cy - v.y * R * pe }; }
-      // project each fine point plus its two ribbon edges (± side × half-width)
+      // project each fine point: centreline C (+ its perspective) and the two ribbon
+      //   edges C ± side × half-width
       var pr = fine.map(function (q) {
-        var rc = rot(q.p), rs = rot(q.s), w = q.w;
+        var rc = rot(q.p), rs = rot(q.s), w = q.w, pe = 1 / (1.9 - rc.z * 0.55);
         return {
+          C: proj(rc), pe: pe, w: w, z: rc.z, t: q.t,
           L: proj({ x: rc.x + rs.x * w, y: rc.y + rs.y * w, z: rc.z + rs.z * w }),
-          Rr: proj({ x: rc.x - rs.x * w, y: rc.y - rs.y * w, z: rc.z - rs.z * w }),
-          z: rc.z, t: q.t
+          Rr: proj({ x: rc.x - rs.x * w, y: rc.y - rs.y * w, z: rc.z - rs.z * w })
         };
       });
-      // filled ribbon: one quad per fine segment, painted back-to-front
-      var quads = [];
-      for (k = 0; k < pr.length - 1; k++) quads.push({ a: pr[k], b: pr[k + 1], z: (pr[k].z + pr[k + 1].z) / 2, t: pr[k + 1].t });
-      quads.sort(function (m, o) { return m.z - o.z; });
-      ctx.lineJoin = 'round'; ctx.lineWidth = 1;
-      quads.forEach(function (g) {
+      // one primitive per fine segment, painted back-to-front. SSEs are filled
+      //   ribbons; loops are round tubes (a flat loop ribbon would twist between the
+      //   flanking SSE normals and read as detached — a tube has no face to twist and
+      //   its round caps merge into the ribbon ends).
+      var loopD = SEPw * 0.22;                      // constant loop-tube diameter
+      var prims = [];
+      for (k = 0; k < pr.length - 1; k++) {
+        var ty = pr[k + 1].t, z = (pr[k].z + pr[k + 1].z) / 2;
+        if (ty === 'L') prims.push({ tube: 1, a: pr[k].C, b: pr[k + 1].C, z: z, t: ty, lw: loopD * (pr[k].pe + pr[k + 1].pe) / 2 * R });
+        else prims.push({ a: pr[k], b: pr[k + 1], z: z, t: ty });
+      }
+      prims.sort(function (m, o) { return m.z - o.z; });
+      ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      prims.forEach(function (g) {
         var near = (g.z + 1) / 2; near = near < 0 ? 0 : near > 1 ? 1 : near;
         ctx.fillStyle = ctx.strokeStyle = shade(COL[g.t], near);
-        ctx.beginPath();
-        ctx.moveTo(g.a.L.x, g.a.L.y); ctx.lineTo(g.b.L.x, g.b.L.y);
-        ctx.lineTo(g.b.Rr.x, g.b.Rr.y); ctx.lineTo(g.a.Rr.x, g.a.Rr.y); ctx.closePath();
-        ctx.fill(); ctx.stroke();                                   // stroke closes hairline seams
+        if (g.tube) {
+          ctx.lineWidth = Math.max(1.5, g.lw);
+          ctx.beginPath(); ctx.moveTo(g.a.x, g.a.y); ctx.lineTo(g.b.x, g.b.y); ctx.stroke();
+        } else {
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(g.a.L.x, g.a.L.y); ctx.lineTo(g.b.L.x, g.b.L.y);
+          ctx.lineTo(g.b.Rr.x, g.b.Rr.y); ctx.lineTo(g.a.Rr.x, g.a.Rr.y); ctx.closePath();
+          ctx.fill(); ctx.stroke();                                 // stroke closes hairline seams
+        }
       });
     }
     resize();
