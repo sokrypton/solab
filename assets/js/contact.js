@@ -676,8 +676,32 @@
   //   and ask the 3D canvas to draw the through-space connector between them. The SVG
   //   is a square viewBox (n·pitch − gap) drawn xMinYMid/meet, so it scales uniformly:
   //   scale = min(rendered w,h)/W, left-aligned, vertically centred.
+  // Feedback on the map itself: an outline follows the hovered cell (and its mirror,
+  //   since the map is symmetric); clicking pins the pair so its connector stays until
+  //   you click it again (or hover elsewhere and click). The pinned cell reads solid.
   function wireHover(svg, n, cell, gap, canvas) {
     var pitch = cell + gap, W = n * pitch - gap;
+    var stroke = DARK ? '#f2ede3' : '#2a2320';
+    // two overlay markers per state (cell + its transpose), created once and moved.
+    function mkMarks(cls, sw, fillOp) {
+      return [0, 1].map(function () {
+        var r = document.createElementNS(NS, 'rect');
+        r.setAttribute('width', cell); r.setAttribute('height', cell); r.setAttribute('rx', '1.5');
+        r.setAttribute('fill', fillOp ? stroke : 'none');
+        if (fillOp) r.setAttribute('fill-opacity', fillOp);
+        r.setAttribute('stroke', stroke); r.setAttribute('stroke-width', sw);
+        r.setAttribute('pointer-events', 'none'); r.style.display = 'none';
+        svg.appendChild(r); return r;
+      });
+    }
+    var pinM = mkMarks('pin', 1.6, 0.22), hovM = mkMarks('hov', 1, 0);
+    function place(marks, p) {
+      if (!p) { marks[0].style.display = marks[1].style.display = 'none'; return; }
+      var a = marks[0], b = marks[1];
+      a.setAttribute('x', p.j * pitch); a.setAttribute('y', p.i * pitch); a.style.display = '';
+      b.setAttribute('x', p.i * pitch); b.setAttribute('y', p.j * pitch); b.style.display = p.i === p.j ? 'none' : '';
+    }
+    var pinned = null, hover = null;
     function cellAt(e) {
       var rect = svg.getBoundingClientRect();
       var scale = Math.min(rect.width, rect.height) / W;
@@ -685,18 +709,28 @@
       var vx = (e.clientX - rect.left) / scale;
       var vy = (e.clientY - rect.top - (rect.height - W * scale) / 2) / scale;
       var j = Math.floor(vx / pitch), i = Math.floor(vy / pitch);
-      if (i < 0 || j < 0 || i >= n || j >= n) return null;
+      if (i < 0 || j < 0 || i >= n || j >= n || i === j) return null;
       return { i: i, j: j };
     }
-    function move(e) {
-      if (!canvas.__highlight) return;
-      var p = cellAt(e);
-      if (p) canvas.__highlight(p.i, p.j); else canvas.__highlight(null, null);
+    function same(a, b) { return a && b && a.i === b.i && a.j === b.j; }
+    // A pin takes precedence over hover: once pinned, the 3D connector STAYS on that
+    //   pair no matter where the cursor roams on the map; hovering only outlines cells.
+    //   With nothing pinned, hovering shows a live preview connector.
+    function render() {
+      place(pinM, pinned);
+      place(hovM, same(hover, pinned) ? null : hover);   // don't double-mark the pinned cell
+      var t = pinned || hover;
+      if (canvas.__highlight) canvas.__highlight(t ? t.i : null, t ? t.j : null);
     }
-    svg.style.cursor = 'crosshair';
-    svg.addEventListener('pointermove', move);
-    svg.addEventListener('pointerdown', move);
-    svg.addEventListener('pointerleave', function () { if (canvas.__highlight) canvas.__highlight(null, null); });
+    svg.style.cursor = 'pointer';
+    svg.addEventListener('pointermove', function (e) { hover = cellAt(e); render(); });
+    svg.addEventListener('pointerleave', function () { hover = null; render(); });
+    svg.addEventListener('click', function (e) {
+      var p = cellAt(e);
+      if (!p) return;
+      pinned = same(pinned, p) ? null : p;   // click the pinned cell again to release
+      hover = p; render();
+    });
   }
 
   // ---- contact page: one fold drives the 3D trace (left) and its contact map (right)
@@ -717,7 +751,7 @@
       }
       if (canvas) {
         if (!started) { proteinTrace(fold.pts, canvas, fold.sep); started = true; }
-        else if (canvas.__setFold) { canvas.__setFold(fold.pts, fold.sep); if (canvas.__draw) canvas.__draw(); }
+        else if (canvas.__setFold) { canvas.__setFold(fold.pts, fold.sep); if (canvas.__highlight) canvas.__highlight(null, null); if (canvas.__draw) canvas.__draw(); }
       }
     }
     regen();
