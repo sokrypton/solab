@@ -689,16 +689,20 @@
   //   HOVER colour and previews its connector; clicking toggles the pair into a set of PINS
   //   drawn in the ACCENT colour. Multiple pairs can be pinned at once; click a pinned cell
   //   again to release it. Markers are rebuilt each change (counts are tiny).
-  function wireHover(svg, n, cell, gap, canvas) {
+  function wireHover(svg, n, cell, gap, canvas, contacts) {
     var pitch = cell + gap, W = n * pitch - gap;
     var ACC = DARK ? '#ffd23c' : '#c2481f', HOV = DARK ? '#8fb6ff' : '#2f6ea8';
     var layer = document.createElementNS(NS, 'g');
     layer.setAttribute('pointer-events', 'none'); svg.appendChild(layer);
+    // A cell that already shows a contact is only OUTLINED (its own colour stays visible);
+    //   an empty cell gets a light fill too so the marker reads against the background.
     function rectAt(i, j, col, sw, fillOp) {
+      var isContact = contacts && contacts[i + '_' + j];
       var r = document.createElementNS(NS, 'rect');
       r.setAttribute('x', j * pitch); r.setAttribute('y', i * pitch);
       r.setAttribute('width', cell); r.setAttribute('height', cell); r.setAttribute('rx', '1.5');
-      r.setAttribute('fill', col); r.setAttribute('fill-opacity', fillOp);
+      r.setAttribute('fill', isContact ? 'none' : col);
+      if (!isContact) r.setAttribute('fill-opacity', fillOp);
       r.setAttribute('stroke', col); r.setAttribute('stroke-width', sw);
       layer.appendChild(r);
     }
@@ -750,7 +754,10 @@
         mapEl.textContent = '';
         var mapSvg = contactMap(pairs, types, 7);
         mapEl.appendChild(mapSvg);
-        if (canvas) wireHover(mapSvg, types.length, 7, 1, canvas);
+        var cset = {};
+        pairs.forEach(function (c) { cset[c.i + '_' + c.j] = 1; cset[c.j + '_' + c.i] = 1; });
+        for (var ci = 0; ci < types.length - 1; ci++) { cset[ci + '_' + (ci + 1)] = 1; cset[(ci + 1) + '_' + ci] = 1; }   // backbone band drawn on the map
+        if (canvas) wireHover(mapSvg, types.length, 7, 1, canvas, cset);
       }
       if (canvas) {
         if (!started) { proteinTrace(fold.pts, canvas, fold.sep); started = true; }
