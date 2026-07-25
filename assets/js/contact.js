@@ -412,7 +412,9 @@
     function dot3(a, b) { return a.x * b.x + a.y * b.y + a.z * b.z; }
     var fine = [], caDbg = [], DEBUG_CA = false;   // DEBUG_CA: draw a sphere at every Cα (rendering vs geometry check)
     var cbDbg = [], DEBUG_CB = false;   // DEBUG_CB: draw the Cα→virtual-Cβ stick (the side-chain direction the contact test uses)
-    var hi = null;   // residue pair {i,j} to draw a through-space connector for (hovering the contact map)
+    // through-space connectors driven by the contact map: a set of PINNED pairs (clicked,
+    //   accent colour) plus one transient HOVER pair (preview, cooler colour).
+    var links = { pins: [], hover: null };
     function setFold(pp, sepArg) {
       if (sepArg) rawSep = sepArg;
       var n = pp.length, i, k;
@@ -502,11 +504,11 @@
     setFold(pts);
     canvas.__setFold = setFold;   // used by the regenerate button
     canvas.__draw = function () { draw(M); };   // force a repaint (e.g. live minimiser under reduced-motion)
-    // Highlight the through-space link between two residues (hovering their cell on the
-    //   contact map). Pass (null, null) to clear. Under reduced motion the auto-spin loop
-    //   isn't repainting, so force a draw.
-    canvas.__highlight = function (i, j) {
-      hi = (i == null || j == null || i === j) ? null : { i: i, j: j };
+    // Set the connectors: pins = array of {i,j} (pinned), hover = {i,j} or null (preview).
+    //   Under reduced motion the auto-spin loop isn't repainting, so force a draw.
+    canvas.__setLinks = function (pins, hover) {
+      links.pins = pins || [];
+      links.hover = (hover && hover.i !== hover.j) ? hover : null;
       if (reduce) draw(M);
     };
 
@@ -617,22 +619,29 @@
           ctx.beginPath(); ctx.arc(b2.x, b2.y, 1.6, 0, 6.2832); ctx.fill();
         }
       }
-      // Contact-map hover: a through-space connector between the two hovered residues,
-      //   painted last so it reads on top at any depth (halo + dashed accent + end knobs).
-      if (hi && caDbg[hi.i] && caDbg[hi.j]) {
-        var A = proj(rot(caDbg[hi.i].p)), B = proj(rot(caDbg[hi.j].p));
-        var accent = DARK ? '#ffd23c' : '#c2481f';
+      // Contact-map connectors: through-space links between residue pairs, painted last so
+      //   they read on top at any depth (halo + dashed colour + end knobs). Pinned pairs use
+      //   the accent colour; the hovered pair uses a cooler preview colour.
+      function drawLink(pair, col) {
+        if (!pair || !caDbg[pair.i] || !caDbg[pair.j]) return;
+        var A = proj(rot(caDbg[pair.i].p)), B = proj(rot(caDbg[pair.j].p));
         ctx.lineCap = 'round';
         ctx.lineWidth = 4.5; ctx.strokeStyle = DARK ? 'rgba(0,0,0,0.55)' : 'rgba(255,255,255,0.8)';
         ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
-        ctx.lineWidth = 1.8; ctx.strokeStyle = accent; ctx.setLineDash([4, 3]);
+        ctx.lineWidth = 1.8; ctx.strokeStyle = col; ctx.setLineDash([4, 3]);
         ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
         ctx.setLineDash([]);
         [A, B].forEach(function (P) {
           ctx.beginPath(); ctx.arc(P.x, P.y, 3.6, 0, 6.2832);
-          ctx.fillStyle = accent; ctx.fill();
+          ctx.fillStyle = col; ctx.fill();
           ctx.lineWidth = 1; ctx.strokeStyle = DARK ? '#000' : '#fff'; ctx.stroke();
         });
+      }
+      var ACC = DARK ? '#ffd23c' : '#c2481f', HOV = DARK ? '#8fb6ff' : '#2f6ea8';
+      links.pins.forEach(function (p) { drawLink(p, ACC); });
+      if (links.hover) {
+        var h = links.hover, dup = links.pins.some(function (p) { return p.i === h.i && p.j === h.j; });
+        if (!dup) drawLink(h, HOV);
       }
     }
     resize();
@@ -676,32 +685,29 @@
   //   and ask the 3D canvas to draw the through-space connector between them. The SVG
   //   is a square viewBox (n·pitch − gap) drawn xMinYMid/meet, so it scales uniformly:
   //   scale = min(rendered w,h)/W, left-aligned, vertically centred.
-  // Feedback on the map itself: an outline follows the hovered cell (and its mirror,
-  //   since the map is symmetric); clicking pins the pair so its connector stays until
-  //   you click it again (or hover elsewhere and click). The pinned cell reads solid.
+  // Feedback on the map itself: hovering outlines a cell (and its symmetric mirror) in the
+  //   HOVER colour and previews its connector; clicking toggles the pair into a set of PINS
+  //   drawn in the ACCENT colour. Multiple pairs can be pinned at once; click a pinned cell
+  //   again to release it. Markers are rebuilt each change (counts are tiny).
   function wireHover(svg, n, cell, gap, canvas) {
     var pitch = cell + gap, W = n * pitch - gap;
-    var stroke = DARK ? '#f2ede3' : '#2a2320';
-    // two overlay markers per state (cell + its transpose), created once and moved.
-    function mkMarks(cls, sw, fillOp) {
-      return [0, 1].map(function () {
-        var r = document.createElementNS(NS, 'rect');
-        r.setAttribute('width', cell); r.setAttribute('height', cell); r.setAttribute('rx', '1.5');
-        r.setAttribute('fill', fillOp ? stroke : 'none');
-        if (fillOp) r.setAttribute('fill-opacity', fillOp);
-        r.setAttribute('stroke', stroke); r.setAttribute('stroke-width', sw);
-        r.setAttribute('pointer-events', 'none'); r.style.display = 'none';
-        svg.appendChild(r); return r;
-      });
+    var ACC = DARK ? '#ffd23c' : '#c2481f', HOV = DARK ? '#8fb6ff' : '#2f6ea8';
+    var layer = document.createElementNS(NS, 'g');
+    layer.setAttribute('pointer-events', 'none'); svg.appendChild(layer);
+    function rectAt(i, j, col, sw, fillOp) {
+      var r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', j * pitch); r.setAttribute('y', i * pitch);
+      r.setAttribute('width', cell); r.setAttribute('height', cell); r.setAttribute('rx', '1.5');
+      r.setAttribute('fill', col); r.setAttribute('fill-opacity', fillOp);
+      r.setAttribute('stroke', col); r.setAttribute('stroke-width', sw);
+      layer.appendChild(r);
     }
-    var pinM = mkMarks('pin', 1.6, 0.22), hovM = mkMarks('hov', 1, 0);
-    function place(marks, p) {
-      if (!p) { marks[0].style.display = marks[1].style.display = 'none'; return; }
-      var a = marks[0], b = marks[1];
-      a.setAttribute('x', p.j * pitch); a.setAttribute('y', p.i * pitch); a.style.display = '';
-      b.setAttribute('x', p.i * pitch); b.setAttribute('y', p.j * pitch); b.style.display = p.i === p.j ? 'none' : '';
+    function mark(p, col, sw, fillOp) {
+      rectAt(p.i, p.j, col, sw, fillOp);
+      if (p.i !== p.j) rectAt(p.j, p.i, col, sw, fillOp);
     }
-    var pinned = null, hover = null;
+    var pins = [], hover = null;
+    function idxOf(p) { for (var k = 0; k < pins.length; k++) if (pins[k].i === p.i && pins[k].j === p.j) return k; return -1; }
     function cellAt(e) {
       var rect = svg.getBoundingClientRect();
       var scale = Math.min(rect.width, rect.height) / W;
@@ -712,15 +718,11 @@
       if (i < 0 || j < 0 || i >= n || j >= n || i === j) return null;
       return { i: i, j: j };
     }
-    function same(a, b) { return a && b && a.i === b.i && a.j === b.j; }
-    // A pin takes precedence over hover: once pinned, the 3D connector STAYS on that
-    //   pair no matter where the cursor roams on the map; hovering only outlines cells.
-    //   With nothing pinned, hovering shows a live preview connector.
     function render() {
-      place(pinM, pinned);
-      place(hovM, same(hover, pinned) ? null : hover);   // don't double-mark the pinned cell
-      var t = pinned || hover;
-      if (canvas.__highlight) canvas.__highlight(t ? t.i : null, t ? t.j : null);
+      layer.textContent = '';
+      pins.forEach(function (p) { mark(p, ACC, 1.6, 0.28); });
+      if (hover && idxOf(hover) < 0) mark(hover, HOV, 1.3, 0.2);   // don't double-mark a pinned cell
+      if (canvas.__setLinks) canvas.__setLinks(pins, hover);
     }
     svg.style.cursor = 'pointer';
     svg.addEventListener('pointermove', function (e) { hover = cellAt(e); render(); });
@@ -728,7 +730,8 @@
     svg.addEventListener('click', function (e) {
       var p = cellAt(e);
       if (!p) return;
-      pinned = same(pinned, p) ? null : p;   // click the pinned cell again to release
+      var k = idxOf(p);
+      if (k >= 0) pins.splice(k, 1); else pins.push(p);   // toggle this pair in/out of the pinned set
       hover = p; render();
     });
   }
@@ -751,7 +754,7 @@
       }
       if (canvas) {
         if (!started) { proteinTrace(fold.pts, canvas, fold.sep); started = true; }
-        else if (canvas.__setFold) { canvas.__setFold(fold.pts, fold.sep); if (canvas.__highlight) canvas.__highlight(null, null); if (canvas.__draw) canvas.__draw(); }
+        else if (canvas.__setFold) { canvas.__setFold(fold.pts, fold.sep); if (canvas.__setLinks) canvas.__setLinks([], null); if (canvas.__draw) canvas.__draw(); }
       }
     }
     regen();
