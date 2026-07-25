@@ -1,17 +1,23 @@
 # Contact-page fold generator — sandbox notes
 
-**This branch (`contact-fold-generator`) is a working sandbox. It is never merged
-into `main`.** Ideas are prototyped and measured here; only the ones that prove out
-get hand-ported into `main` as small, self-contained changes. This file is the index
-of what's here, whether it's proven, where it lives, and what we learned.
+**This branch (`sandbox`) is a working playground. It is never merged into `main`.**
+Ideas are prototyped and measured here; only the ones that prove out get hand-ported
+into `main` as small, self-contained changes. This file is the index of what's here,
+whether it's proven, where it lives, and what we learned.
 
-All the work is in `assets/js/msa.js` (the `buildFold` / `proteinTrace` / `contactMap`
-closures), with small hooks in `contact/index.html` (fold selector, ▶ button,
-cache-buster) and `assets/css/style.css` (selector/button styles).
+**Architecture (2026-07-25):** the branch now mirrors `main`'s split — all protein
+structure / contacts / visuals live in `assets/js/contact.js` (loaded only on
+`/contact/`), and `assets/js/msa.js` keeps only the site-wide header/sequence strips.
+`contact.js` includes the map hover/pin connectors ported to `main`.
 
-> The `?v=NN` query on the `msa.js` `<script>` tag in `index.html` is a cache-buster —
+> **Experimental generation** from the old monolith — the fold-type builders (β-barrel,
+> TIM barrel, bundle, layer, sandwich, jelly-roll), the compaction bias, and the live
+> Rg minimiser — is **preserved at commit `e97efeb`** (`git show e97efeb:assets/js/msa.js`)
+> and catalogued below. It is not in the working tree; re-port pieces as needed.
+
+> The `?v=NN` query on the `contact.js` `<script>` tag in `index.html` is a cache-buster —
 > Chrome heuristically caches assets with no `Cache-Control`, so bump it whenever you
-> edit `msa.js` or the browser may serve a stale copy.
+> edit `contact.js` or the browser may serve a stale copy.
 
 ---
 
