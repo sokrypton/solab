@@ -257,9 +257,341 @@
     });
   }
 
+  // ============================================================
+  // Easter Egg: Procedural AOE Sheep Mutating MSA Band
+  // ============================================================
+  function initAoeSheep() {
+    var footer = document.querySelector('.site-footer');
+    if (!footer || document.getElementById('aoe-sheep-wrap')) return;
+
+    var isToolsPage = location.pathname.indexOf('/tools') > -1 || location.pathname.indexOf('tools') > -1 || !!document.querySelector('#toolSearch');
+
+    var container = document.createElement('div');
+    container.id = 'aoe-sheep-wrap';
+    container.style.cssText = 'position:absolute;top:4px;left:-60px;z-index:99;user-select:none;display:flex;align-items:center;' + (isToolsPage ? 'cursor:pointer;' : 'cursor:default;');
+    
+    if (isToolsPage) {
+      container.setAttribute('title', 'Age of Epochs — Click to play!');
+    }
+
+    container.innerHTML = `
+      <canvas id="aoe-sheep-canvas" width="56" height="48" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35));"></canvas>
+    `;
+
+    footer.style.position = 'relative';
+    footer.appendChild(container);
+
+    var cv = container.querySelector('#aoe-sheep-canvas');
+    var ctx = cv.getContext('2d');
+
+    if (isToolsPage) {
+      container.addEventListener('click', function() {
+        window.open('http://ageofepochs.com/', '_blank');
+      });
+    }
+
+    // Procedural 2D Canvas Sheep Renderer (cloud body lifts UP, legs rock in unison when held)
+    function drawProceduralSheep(legOffset, isFlipped, isEating, isHeld, dangleFrame, squashFrame) {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.save();
+
+      if (isFlipped) {
+        ctx.translate(cv.width, 0);
+        ctx.scale(-1, 1);
+      }
+
+      // Ground Shadow (hidden completely when lifted!)
+      if (!isHeld) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+        ctx.beginPath();
+        ctx.ellipse(24, 41, 16, 3.2, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Landing impact compression & knee bend calculation
+      var bend = squashFrame > 0 ? Math.sin((squashFrame / 12) * Math.PI) * 4 : 0;
+      var bob = isHeld ? 6 : (isEating ? 1.5 : Math.abs(legOffset) * 0.3);
+      var bodyY = 24 - bob + bend; // Body compresses downward on landing!
+
+      // 4 Legs (bend outwards at knee joints on landing impact)
+      ctx.lineWidth = 2.8;
+      ctx.lineCap = 'round';
+
+      // Rhythmic pendulum leg rocking when held!
+      var rockAngle = isHeld ? Math.sin(dangleFrame * 0.15) * 5 : 0;
+      var legWalk = isHeld ? 0 : (isEating ? 0 : legOffset * 0.7);
+
+      var hipY = bodyY + 9;
+      var footY = isHeld ? hipY + 11 : 39;
+
+      function drawBentLeg(x1, y1, x2, y2, bendDir) {
+        ctx.beginPath();
+        if (bend > 0.2) {
+          var kX = (x1 + x2) / 2 + bendDir * (bend * 0.95);
+          var kY = (y1 + y2) / 2 + 1;
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(kX, kY);
+          ctx.lineTo(x2, y2);
+        } else {
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+        }
+        ctx.stroke();
+      }
+
+      // Back legs (standing X positions)
+      ctx.strokeStyle = '#241f18';
+      var bX1 = 14, bX2 = 29;
+      drawBentLeg(bX1, hipY, bX1 + rockAngle - legWalk, footY, -1);
+      drawBentLeg(bX2, hipY, bX2 + rockAngle + legWalk, footY, -1);
+
+      // Front legs (standing X positions)
+      ctx.strokeStyle = '#3a3428';
+      var fX1 = 19, fX2 = 33;
+      drawBentLeg(fX1, hipY, fX1 + rockAngle + legWalk, footY, 1);
+      drawBentLeg(fX2, hipY, fX2 + rockAngle - legWalk, footY, 1);
+
+      // Base wool body shape
+      ctx.fillStyle = '#f4efe4';
+      ctx.strokeStyle = '#ded7c5';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.ellipse(24, bodyY, 15, 10.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Cloud Puffs
+      var cloudPuffs = [
+        { x: 24, y: bodyY - 9, r: 7.8 }, // TOP CENTER BUMP
+        { x: 15, y: bodyY - 6, r: 6.2 },
+        { x: 31, y: bodyY - 5, r: 6.0 },
+        { x: 9,  y: bodyY - 1, r: 5.5 },
+        { x: 37, y: bodyY + 1, r: 5.2 },
+        { x: 33, y: bodyY + 4, r: 5.0 },
+        { x: 25, y: bodyY + 5, r: 5.5 },
+        { x: 17, y: bodyY + 4, r: 5.2 },
+        { x: 11, y: bodyY + 2, r: 4.8 },
+        { x: 22, y: bodyY - 1, r: 7.0 }
+      ];
+
+      ctx.fillStyle = '#ffffff';
+      cloudPuffs.forEach(function(p) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Dark Head — Lowers when eating, surprised look when held!
+      var headY = isHeld ? bodyY - 3 : (isEating ? bodyY + 6 : bodyY - 1);
+      var headX = isEating ? 39 : 36;
+
+      ctx.fillStyle = '#241f18';
+      ctx.beginPath();
+      ctx.ellipse(headX, headY, 5.2, 4.0, isEating ? 0.6 : (isHeld ? -0.2 : 0.2), 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ear - rocks with body when held!
+      var earAngle = isHeld ? -0.4 + rockAngle * 0.05 : -0.4;
+      ctx.fillStyle = '#3a3428';
+      ctx.beginPath();
+      ctx.ellipse(headX - 3, headY - 2, 3.0, 1.5, earAngle, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Eye - wide when held!
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(headX + 1.5, headY - 1, isHeld ? 1.25 : 0.85, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // Mutates MSA sequence cells under the sheep's mouth, querying ALL SVG tiles in the band
+    function mutateMsaAt(pX) {
+      var containerRect = container.getBoundingClientRect();
+      if (!containerRect) return;
+
+      var mouthScreenX = containerRect.left + ((direction === 1) ? 41 : 10);
+      var svgList = footer.querySelectorAll('.msa-band svg');
+      var colors = ['#6e9e4f', '#4e7fc4', '#e0a32e', '#d75a45', '#8e5b9f', '#c9c1ad'];
+
+      svgList.forEach(function(svgEl) {
+        var svgRect = svgEl.getBoundingClientRect();
+        if (!svgRect || svgRect.width === 0) return;
+
+        if (mouthScreenX >= svgRect.left - 20 && mouthScreenX <= svgRect.right + 20) {
+          var viewBoxAttr = svgEl.getAttribute('viewBox');
+          var viewBoxW = viewBoxAttr ? (parseFloat(viewBoxAttr.split(' ')[2]) || 1200) : 1200;
+          var scaleX = viewBoxW / svgRect.width;
+          var mouthSvgX = (mouthScreenX - svgRect.left) * scaleX;
+
+          var rects = svgEl.querySelectorAll('rect');
+          rects.forEach(function(rect) {
+            var rx = parseFloat(rect.getAttribute('x'));
+            if (Math.abs(rx - mouthSvgX) < 18) {
+              if (Math.random() < 0.35) {
+                rect.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
+                rect.setAttribute('opacity', '0.95');
+              }
+            }
+          });
+        }
+      });
+    }
+
+    var state = 'WALKING'; // 'WALKING', 'EATING', 'HELD', or 'FALLING'
+    var posX = 60;
+    var posY = 4;
+    var velY = 0;
+    var gravity = 0.8;
+    var speed = 0.85;
+    var direction = 1;
+    var walkFrame = 0;
+    var dangleFrame = 0;
+    var squashFrame = 0;
+    var stateTimer = 180;
+    var isDragging = false;
+
+    // Grab & Drop interaction on non-tool pages (2D Vertical Lifting + Gravity Drop)
+    if (!isToolsPage) {
+      container.style.cursor = 'grab';
+
+      function startDrag(e) {
+        isDragging = true;
+        state = 'HELD';
+        velY = 0;
+        container.style.cursor = 'grabbing';
+        e.preventDefault();
+      }
+
+      function moveDrag(e) {
+        if (!isDragging) return;
+        var pageX = e.touches ? e.touches[0].clientX : e.clientX;
+        var pageY = e.touches ? e.touches[0].clientY : e.clientY;
+        var footerRect = footer.getBoundingClientRect();
+
+        var newX = pageX - footerRect.left - 26;
+        var newY = pageY - footerRect.top - 20;
+
+        var maxX = footer.offsetWidth - 54;
+        newX = Math.max(10, Math.min(maxX, newX));
+
+        // Update facing direction dynamically based on drag movement!
+        if (newX > posX + 0.5) {
+          direction = 1; // Facing RIGHT
+        } else if (newX < posX - 0.5) {
+          direction = -1; // Facing LEFT
+        }
+
+        posX = newX;
+        posY = newY; // Unlimited page-wide lifting anywhere on the page!
+
+        container.style.left = posX + 'px';
+        container.style.top = posY + 'px';
+      }
+
+      function stopDrag() {
+        if (isDragging) {
+          isDragging = false;
+          container.style.cursor = 'grab';
+          if (posY < 4) {
+            state = 'FALLING';
+            velY = 0.5; // Initial drop velocity
+          } else {
+            state = 'EATING';
+            stateTimer = 90;
+            posY = 4;
+            container.style.top = '4px';
+          }
+        }
+      }
+
+      container.addEventListener('mousedown', startDrag);
+      window.addEventListener('mousemove', moveDrag);
+      window.addEventListener('mouseup', stopDrag);
+
+      container.addEventListener('touchstart', startDrag, { passive: false });
+      window.addEventListener('touchmove', moveDrag, { passive: false });
+      window.addEventListener('touchend', stopDrag);
+    }
+
+    function nextState() {
+      if (state === 'HELD' || state === 'FALLING') return;
+
+      if (state === 'WALKING') {
+        state = 'EATING';
+        stateTimer = 90 + Math.floor(Math.random() * 120); // Eat MSA for 1.5 - 3.5s
+      } else {
+        state = 'WALKING';
+        stateTimer = 180 + Math.floor(Math.random() * 240); // Walk for 3.0 - 7.0s
+        if (Math.random() < 0.45) {
+          direction *= -1; // Flip forward/backward
+        }
+      }
+    }
+
+    function updateSheep() {
+      var maxX = footer.offsetWidth - 54;
+      var minX = 10;
+
+      if (state === 'FALLING') {
+        velY += gravity;
+        if (velY > 22) velY = 22; // Terminal velocity cap
+        posY += velY;
+        dangleFrame += 1;
+
+        if (posY >= 4) {
+          posY = 4;
+          velY = 0;
+          state = 'EATING'; // Land on MSA band and immediately eat/mutate!
+          stateTimer = 90;
+          squashFrame = 12; // Trigger landing leg-bending impact bounce!
+        }
+        container.style.top = posY + 'px';
+      } else if (state !== 'HELD') {
+        container.style.top = '4px';
+        stateTimer--;
+        if (stateTimer <= 0) {
+          nextState();
+        }
+
+        if (state === 'WALKING') {
+          posX += speed * direction;
+          walkFrame += 0.22;
+
+          if (posX >= maxX) {
+            posX = maxX;
+            direction = -1;
+            state = 'EATING';
+            stateTimer = 90;
+          } else if (posX <= minX) {
+            posX = minX;
+            direction = 1;
+            state = 'EATING';
+            stateTimer = 90;
+          }
+        } else if (state === 'EATING') {
+          mutateMsaAt(posX);
+        }
+      } else {
+        dangleFrame += 1;
+      }
+
+      container.style.left = posX + 'px';
+      var legOffset = (state === 'WALKING') ? Math.sin(walkFrame) * 3.5 : 0;
+      drawProceduralSheep(legOffset, direction === -1, state === 'EATING', state === 'HELD' || state === 'FALLING', dangleFrame, squashFrame);
+
+      if (squashFrame > 0) squashFrame--;
+      requestAnimationFrame(updateSheep);
+    }
+
+    requestAnimationFrame(updateSheep);
+  }
+
   function inject() {
     colorizeBrand();
     wireMembers();
+    initAoeSheep();
     var word = sectionWord();
     // ambient MSA band in the footer on all pages, flush at top of site-footer
     [].forEach.call(document.querySelectorAll('.site-footer'), function (f) {
