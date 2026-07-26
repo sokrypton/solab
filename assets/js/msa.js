@@ -57,8 +57,13 @@
 
   function fillBand(band) {
     var rows = +band.getAttribute('data-rows') || 10;
-    var cell = 10, gap = 2;
-    var pitch = cell + gap;
+    // the band svg draws in CSS pixels (no viewBox), so the column pitch has to
+    // be derived from the band's real height or the lower rows get clipped —
+    // most visible on phones, where the footer band is only ~44px tall.
+    var bandH = band.clientHeight || band.offsetHeight || rows * 12;
+    var pitch = bandH / rows;
+    var gap = Math.max(0.75, Math.min(2, pitch * 0.17));
+    var cell = Math.max(1.5, pitch - gap);
     band.textContent = '';
 
     var svg = document.createElementNS(NS, 'svg');
@@ -127,14 +132,13 @@
         var svgRect = svg.getBoundingClientRect();
         if (!svgRect || svgRect.width === 0) return;
 
-        // Calculate mouth position in local stream coordinate space
-        var scaleX = (svgRect.width > 0) ? (bandW / svgRect.width) : 1;
-        var mouthStreamX = (mouthScreenX - svgRect.left) * scaleX + scrollX;
+        // the svg has no viewBox, so its local units are CSS pixels 1:1
+        var mouthStreamX = (mouthScreenX - svgRect.left) + scrollX;
 
         var colors = ['#6e9e4f', '#4e7fc4', '#e0a32e', '#d75a45', '#8e5b9f', '#c9c1ad'];
 
         columns.forEach(function(col) {
-          if (Math.abs(col.x - mouthStreamX) < 18) {
+          if (Math.abs(col.x - mouthStreamX) < pitch * 1.5) {
             col.rects.forEach(function(rect) {
               if (Math.random() < 0.35) {
                 rect.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
@@ -579,12 +583,28 @@
         if (Math.random() < 0.45) {
           direction *= -1; // Flip forward/backward
         }
+        // never set off into a wall: at either edge the sheep would bounce
+        // straight back into EATING and could sit there indefinitely
+        var maxX = Math.max(0, footer.offsetWidth - 56);
+        if (posX >= maxX - 1) direction = -1;
+        else if (posX <= 1) direction = 1;
       }
     }
 
     function updateSheep() {
+      try {
+        stepSheep();
+      } catch (err) {
+        // a throw here used to skip the rAF below and freeze the sheep for good
+        if (window.console) console.warn('sheep', err);
+      }
+      requestAnimationFrame(updateSheep);
+    }
+
+    function stepSheep() {
       var maxX = Math.max(0, footer.offsetWidth - 56);
       var minX = 0;
+      if (!isDragging && posX > maxX) posX = maxX;   // keep in frame after a resize/rotate
 
       if (state === 'FALLING') {
         velY += gravity;
@@ -634,7 +654,6 @@
       drawProceduralSheep(legOffset, direction === -1, state === 'EATING', state === 'HELD' || state === 'FALLING', dangleFrame, squashFrame);
 
       if (squashFrame > 0) squashFrame--;
-      requestAnimationFrame(updateSheep);
     }
 
     requestAnimationFrame(updateSheep);
