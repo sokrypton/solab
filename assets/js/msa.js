@@ -261,23 +261,14 @@
     colorizeBrand();
     wireMembers();
     var word = sectionWord();
-    var hero = document.querySelector('.hero-band');
-    if (hero && !hero.querySelector('.msa-band')) {
-      var hb = document.createElement('div');
-      hb.className = 'msa-band'; hb.setAttribute('data-rows', '10'); hb.setAttribute('aria-hidden', 'true');
-      hero.appendChild(hb);
-    }
-    // one ambient MSA per page: the big hero band on the home page, otherwise
-    // a smaller band in the footer (skip the footer band when a hero band exists)
-    if (!hero) {
-      [].forEach.call(document.querySelectorAll('.site-footer'), function (f) {
-        if (!f.querySelector('.msa-band')) {
-          var b = document.createElement('div');
-          b.className = 'msa-band'; b.setAttribute('data-rows', '8'); b.setAttribute('aria-hidden', 'true');
-          f.insertBefore(b, f.firstChild);
-        }
-      });
-    }
+    // ambient MSA band in the footer on all pages, flush at top of site-footer
+    [].forEach.call(document.querySelectorAll('.site-footer'), function (f) {
+      if (!f.querySelector('.msa-band')) {
+        var b = document.createElement('div');
+        b.className = 'msa-band'; b.setAttribute('data-rows', '8'); b.setAttribute('aria-hidden', 'true');
+        f.insertBefore(b, f.firstChild);
+      }
+    });
     [].forEach.call(document.querySelectorAll('.page-title'), function (h) {
       var prev = h.previousElementSibling;
       if (!prev || !prev.classList.contains('msa-mark')) {

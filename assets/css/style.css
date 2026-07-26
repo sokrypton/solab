@@ -202,8 +202,8 @@ main { flex: 1 0 auto; }
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 /* signature: live multiple-sequence-alignment graphics (generated in msa.js) */
-.msa-mark { display: block; height: 62px; margin-bottom: 16px; }
-.msa-mark svg { display: block; height: 100%; width: auto; }
+.msa-mark { display: block; height: 62px; max-width: 100%; margin-bottom: 16px; }
+.msa-mark svg { display: block; height: 100%; max-width: 100%; width: auto; }
 .msa-band {
   overflow: hidden;
   height: 108px;
@@ -211,8 +211,7 @@ main { flex: 1 0 auto; }
   border-bottom: 1px solid var(--line);
 }
 .msa-band[data-rows="8"] { height: 72px; }
-.hero-band .msa-band { height: 150px; }    /* one large ambient MSA on the home page */
-.site-footer .msa-band { height: 56px; }   /* smaller ambient MSA on other pages */
+.site-footer .msa-band { height: 56px; }   /* ambient MSA size across all pages, flush at footer top */
 .msa-row {
   display: inline-flex;
   height: 100%;
@@ -225,9 +224,10 @@ main { flex: 1 0 auto; }
   to   { transform: translateX(calc(-1 * var(--tile, 1200px))); }
 }
 @media (max-width: 700px) {
+  .msa-mark { height: auto; max-height: 52px; margin-bottom: 14px; }
+  .msa-mark svg { height: auto; max-height: 52px; max-width: 100%; width: auto; }
   .msa-band { height: 76px; }
   .msa-band[data-rows="8"] { height: 54px; }
-  .hero-band .msa-band { height: 104px; }
   .site-footer .msa-band { height: 44px; }
 }
 .page-intro {
@@ -782,56 +782,86 @@ a.pub-title:hover { color: var(--brand); text-decoration: none; }
 .route-card li { color: var(--ink-soft); font-size: 14px; line-height: 1.5; margin-bottom: 5px; }
 .route-card a { color: var(--brand); }
 
-/* ---------- Contact: the generated protein leads; info flows after the MSA mark ---------- */
-.contact-head { display: flex; align-items: flex-start; gap: 14px 20px; flex-wrap: wrap; }
-.info-boxes { display: flex; gap: 12px; flex-wrap: wrap; flex: 1 1 auto; }
+/* ---------- Contact: aligned layout (Title -> 3 Info Boxes -> 2 Interactive Boxes) ---------- */
+.contact-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.info-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 10px 0 16px;
+}
 .addr-box {
-  flex: 1 1 180px; min-width: 170px; text-align: left;
-  border: 1px solid var(--line); border-radius: 6px; background: var(--bg-soft);
-  padding: 12px 16px;
-  font-size: 13px; color: var(--ink-soft); line-height: 1.65;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-soft);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
 }
 .addr-label {
-  display: flex; align-items: center; gap: 7px; margin-bottom: 7px;
-  padding-bottom: 6px; border-bottom: 1px solid var(--line);
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
-.addr-label::before { content: ""; width: 9px; height: 9px; border-radius: 2px; }
+.addr-label::before { content: ""; width: 8px; height: 8px; border-radius: 2px; }
+.addr-label.pi::before { background: var(--res-green); }
 .addr-label.loc::before { background: var(--res-blue); }
 .addr-label.mail::before { background: var(--res-coral); }
-.id-box .who { display: block; font-size: 14px; color: var(--ink); margin-bottom: 9px; }
+.id-box .who { display: block; font-size: 13.5px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
 .id-box .contact-email {
-  display: inline-block; font-family: var(--font-mono); font-size: 12.5px; color: var(--brand);
-  padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--brand-light);
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--brand);
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--brand-light);
+  align-self: flex-start;
 }
 .id-box .contact-email:hover { text-decoration: none; border-color: var(--brand); }
 
-.viz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 26px auto 0; max-width: 860px; align-items: stretch; }
+.viz-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0; max-width: 100%; align-items: stretch; }
 .viz-pair figure {
-  margin: 0; padding: 18px 18px 14px;
-  border: 1px solid var(--line); border-radius: 14px; background: var(--bg-soft);
+  margin: 0; padding: 10px 12px 8px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft);
   display: flex; flex-direction: column; justify-content: center;
 }
 .struct-3d canvas { width: 100%; aspect-ratio: 1 / 1; height: auto; display: block; cursor: grab; }
 .contact-map svg { width: 100%; height: auto; display: block; }
 .struct-3d::after, .contact-map::after {
-  display: block; margin-top: 12px;
-  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .04em;
+  display: block; margin-top: 6px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
   color: var(--muted); text-align: center;
 }
 .struct-3d::after { content: "predicted structure · drag to rotate"; }
 .contact-map::after { content: "contact map"; }
-.viz-actions { text-align: center; margin-top: 18px; }
+.viz-actions { text-align: center; margin-top: 12px; }
 .regen-btn {
-  font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-soft);
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft);
   background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px;
-  padding: 8px 18px; cursor: pointer;
+  padding: 6px 14px; cursor: pointer;
   transition: color .15s ease, border-color .15s ease, background .15s ease;
 }
 .regen-btn:hover { color: var(--brand); border-color: var(--brand); background: var(--brand-light); }
 @media (max-width: 760px) {
-  .viz-pair { grid-template-columns: 1fr; gap: 22px; }
+  .info-boxes { grid-template-columns: 1fr; gap: 12px; }
+  .viz-pair { grid-template-columns: 1fr; gap: 14px; }
 }
 
 /* ---------- Coevolution: rail timeline ---------- */
