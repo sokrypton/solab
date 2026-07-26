@@ -58,18 +58,93 @@
   function fillBand(band) {
     var rows = +band.getAttribute('data-rows') || 10;
     var cell = 10, gap = 2;
-    var cols = Math.min(240, Math.ceil(window.innerWidth / 8) + 4);
+    var pitch = cell + gap;
     band.textContent = '';
-    var row = document.createElement('div');
-    row.className = 'msa-row';
-    var t = tile(cols, rows, cell, gap);
-    row.appendChild(t);
-    row.appendChild(t.cloneNode(true));
-    band.appendChild(row);
-    requestAnimationFrame(function () {
-      var w = t.getBoundingClientRect().width;
-      if (w) row.style.setProperty('--tile', w + 'px');
-    });
+
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('shape-rendering', 'geometricPrecision');
+    svg.style.cssText = 'display:block;width:100%;height:100%;overflow:hidden;';
+
+    var streamGroup = document.createElementNS(NS, 'g');
+    svg.appendChild(streamGroup);
+    band.appendChild(svg);
+
+    var scrollX = 0;
+    var nextColIndex = 0;
+    var columns = []; // Array of active columns: { index, x, group, rects }
+
+    function createColumn(cIndex) {
+      var g = document.createElementNS(NS, 'g');
+      var cX = cIndex * pitch;
+      var consensus = pick();
+      var cons = 0.5 + Math.random() * 0.45;
+      var rects = [];
+
+      for (var r = 0; r < rows; r++) {
+        if (Math.random() < 0.05) continue;
+        var fill = Math.random() < cons ? consensus : (Math.random() < 0.8 ? pick() : GRAY);
+        var rect = cellRect(cIndex, r, pitch, cell, fill);
+        g.appendChild(rect);
+        rects.push(rect);
+      }
+
+      return { index: cIndex, x: cX, group: g, rects: rects };
+    }
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var speed = reduce ? 0 : 0.6; // Ambient drift speed
+
+    function animateStream() {
+      var bandW = band.offsetWidth || window.innerWidth || 1200;
+
+      if (!reduce) {
+        scrollX += speed;
+        streamGroup.setAttribute('transform', 'translate(' + (-scrollX.toFixed(2)) + ', 0)');
+      }
+
+      // Append new columns on the right continuously as needed
+      while ((nextColIndex * pitch) - scrollX < bandW + 180) {
+        var col = createColumn(nextColIndex);
+        streamGroup.appendChild(col.group);
+        columns.push(col);
+        nextColIndex++;
+      }
+
+      // Prune off-screen columns on the left to keep DOM lightweight
+      while (columns.length > 0 && (columns[0].x + pitch) < scrollX - 60) {
+        columns[0].group.remove();
+        columns.shift();
+      }
+
+      requestAnimationFrame(animateStream);
+    }
+
+    requestAnimationFrame(animateStream);
+
+    // Attach stream controller to band element for sheep mutagenesis
+    band._msaStream = {
+      mutateAt: function(mouthScreenX) {
+        var svgRect = svg.getBoundingClientRect();
+        if (!svgRect || svgRect.width === 0) return;
+
+        // Calculate mouth position in local stream coordinate space
+        var scaleX = (svgRect.width > 0) ? (bandW / svgRect.width) : 1;
+        var mouthStreamX = (mouthScreenX - svgRect.left) * scaleX + scrollX;
+
+        var colors = ['#6e9e4f', '#4e7fc4', '#e0a32e', '#d75a45', '#8e5b9f', '#c9c1ad'];
+
+        columns.forEach(function(col) {
+          if (Math.abs(col.x - mouthStreamX) < 18) {
+            col.rects.forEach(function(rect) {
+              if (Math.random() < 0.35) {
+                rect.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
+                rect.setAttribute('opacity', '0.95');
+              }
+            });
+          }
+        });
+      }
+    };
   }
 
   // ---- spell a word into an alignment grid ----
@@ -268,7 +343,7 @@
 
     var container = document.createElement('div');
     container.id = 'aoe-sheep-wrap';
-    container.style.cssText = 'position:absolute;top:4px;left:-60px;z-index:99;user-select:none;display:flex;align-items:center;' + (isToolsPage ? 'cursor:pointer;' : 'cursor:default;');
+    container.style.cssText = 'position:absolute;top:4px;left:0px;z-index:99;user-select:none;touch-action:none;display:flex;align-items:center;' + (isToolsPage ? 'cursor:pointer;' : 'cursor:grab;');
     
     if (isToolsPage) {
       container.setAttribute('title', 'Age of Epochs — Click to play!');
@@ -406,41 +481,20 @@
       ctx.restore();
     }
 
-    // Mutates MSA sequence cells under the sheep's mouth, querying ALL SVG tiles in the band
+    // Mutates MSA sequence cells under the sheep's mouth on the continuous stream
     function mutateMsaAt(pX) {
       var containerRect = container.getBoundingClientRect();
       if (!containerRect) return;
 
       var mouthScreenX = containerRect.left + ((direction === 1) ? 41 : 10);
-      var svgList = footer.querySelectorAll('.msa-band svg');
-      var colors = ['#6e9e4f', '#4e7fc4', '#e0a32e', '#d75a45', '#8e5b9f', '#c9c1ad'];
-
-      svgList.forEach(function(svgEl) {
-        var svgRect = svgEl.getBoundingClientRect();
-        if (!svgRect || svgRect.width === 0) return;
-
-        if (mouthScreenX >= svgRect.left - 20 && mouthScreenX <= svgRect.right + 20) {
-          var viewBoxAttr = svgEl.getAttribute('viewBox');
-          var viewBoxW = viewBoxAttr ? (parseFloat(viewBoxAttr.split(' ')[2]) || 1200) : 1200;
-          var scaleX = viewBoxW / svgRect.width;
-          var mouthSvgX = (mouthScreenX - svgRect.left) * scaleX;
-
-          var rects = svgEl.querySelectorAll('rect');
-          rects.forEach(function(rect) {
-            var rx = parseFloat(rect.getAttribute('x'));
-            if (Math.abs(rx - mouthSvgX) < 18) {
-              if (Math.random() < 0.35) {
-                rect.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
-                rect.setAttribute('opacity', '0.95');
-              }
-            }
-          });
-        }
-      });
+      var band = footer.querySelector('.msa-band');
+      if (band && band._msaStream) {
+        band._msaStream.mutateAt(mouthScreenX);
+      }
     }
 
     var state = 'WALKING'; // 'WALKING', 'EATING', 'HELD', or 'FALLING'
-    var posX = 60;
+    var posX = 40;
     var posY = 4;
     var velY = 0;
     var gravity = 0.8;
@@ -454,8 +508,6 @@
 
     // Grab & Drop interaction on non-tool pages (2D Vertical Lifting + Gravity Drop)
     if (!isToolsPage) {
-      container.style.cursor = 'grab';
-
       function startDrag(e) {
         isDragging = true;
         state = 'HELD';
@@ -473,8 +525,8 @@
         var newX = pageX - footerRect.left - 26;
         var newY = pageY - footerRect.top - 20;
 
-        var maxX = footer.offsetWidth - 54;
-        newX = Math.max(10, Math.min(maxX, newX));
+        var maxX = Math.max(0, footer.offsetWidth - 56);
+        newX = Math.max(0, Math.min(maxX, newX));
 
         // Update facing direction dynamically based on drag movement!
         if (newX > posX + 0.5) {
@@ -531,8 +583,8 @@
     }
 
     function updateSheep() {
-      var maxX = footer.offsetWidth - 54;
-      var minX = 10;
+      var maxX = Math.max(0, footer.offsetWidth - 56);
+      var minX = 0;
 
       if (state === 'FALLING') {
         velY += gravity;
