@@ -347,7 +347,7 @@
 
     var container = document.createElement('div');
     container.id = 'aoe-sheep-wrap';
-    container.style.cssText = 'position:absolute;top:4px;left:0px;z-index:99;user-select:none;touch-action:none;display:flex;align-items:center;' + (isToolsPage ? 'cursor:pointer;' : 'cursor:grab;');
+    container.style.cssText = 'position:absolute;top:4px;left:0px;z-index:102;user-select:none;touch-action:none;display:flex;align-items:center;' + (isToolsPage ? 'cursor:pointer;' : 'cursor:grab;');
     
     if (isToolsPage) {
       container.setAttribute('title', 'Age of Epochs — Click to play!');
@@ -370,7 +370,7 @@
     }
 
     // Procedural 2D Canvas Sheep Renderer (cloud body lifts UP, legs rock in unison when held)
-    // s: { walking, walk, trip, flipped, eating, held, falling, swing, squash, chew, velY }
+    // s: { walking, walk, trip, chomp, flipped, eating, held, falling, swing, squash, chew, velY }
     function drawProceduralSheep(s) {
       var isFlipped = s.flipped, isEating = s.eating;
       var isHeld = s.held, swing = s.swing, squashFrame = s.squash;
@@ -398,6 +398,7 @@
       var plant = walking ? Math.max(0, Math.sin(walk * 2)) : 0;      // weight landing
       var waddle = walking ? Math.sin(walk) : 0;                       // side-to-side lurch
       var trip = s.trip;                                               // 0..1 stumble
+      var chomp = s.chomp;                                             // 0..1 bite of page text
 
       // Ground Shadow (hidden completely when lifted!)
       if (!isHeld) {
@@ -473,8 +474,8 @@
       // forward and rolls gently while grazing. Head is drawn outside this
       // transform so it keeps its shape and can lag behind the body.
       // walking: the wool settles on each footfall and the whole mass waddles
-      var sx = 1 + impact * 0.20 - stretch + plant * 0.025;
-      var sy = 1 - impact * 0.22 + stretch - plant * 0.03;
+      var sx = 1 + impact * 0.20 - stretch + plant * 0.025 + chomp * 0.03;
+      var sy = 1 - impact * 0.22 + stretch - plant * 0.03 - chomp * 0.04;
       var tilt = isEating ? 0.07 + graze * 0.035 : (s.falling ? -0.05 : waddle * 0.03 + trip * 0.07);
       var bodyX = 24 + (isEating ? graze * 1.6 : waddle * 0.7);
 
@@ -524,9 +525,11 @@
         headX = 36 - swing * 0.12;
         headRot = -0.55;
       } else if (isHeld) {
-        headY = bodyY - 3;
-        headX = 36 - swing * 0.18;                // head counter-swings in the hand
-        headRot = -0.2 + swing * 0.012;
+        // each letter it catches gets a proper chomp: lunge down and forward,
+        // then snap back, with the fleece bouncing a little behind it
+        headY = bodyY - 3 + chomp * 5.5;
+        headX = 36 - swing * 0.18 + chomp * 3.0;  // head counter-swings in the hand
+        headRot = -0.2 + swing * 0.012 + chomp * 0.95;
       } else if (isEating) {
         // muzzle reaches down into the alignment, but the skull stays tucked
         // into the fleece — the head is never a separate ball on a neck
@@ -563,7 +566,7 @@
       // Eye - wide when held!
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.arc(1.5, -1, isHeld ? 1.25 : 0.85, 0, Math.PI * 2);
+      ctx.arc(1.5, -1, (isHeld ? 1.25 : 0.85) * (1 - chomp * 0.55), 0, Math.PI * 2);   // squints mid-bite
       ctx.fill();
       ctx.restore();
 
@@ -584,6 +587,105 @@
       }
     }
 
+    // ---- page-text mutagenesis (only while the sheep is being carried) ----
+    // The muzzle drops point mutations into whatever text it passes over: one
+    // letter is swapped for a random residue and the displaced letter tumbles
+    // off the page. Kept deliberately cheap — a single caret hit-test every
+    // 150ms, and the falling glyph is a throwaway span animated on the
+    // compositor (transform/opacity only), never a per-frame scan of the page.
+    var AA = 'ACDEFGHIKLMNPQRSTVWY';
+    var MUT_EVERY = 150;
+    // Everything on the page is edible — headings, names, links, the lot. Only
+    // form fields (whose value is state, not prose) and the sheep's own sprite
+    // are off limits. Link hrefs are untouched either way; only the label bites.
+    var MUT_SKIP = 'input,textarea,select,#aoe-sheep-wrap';
+    var lastTextMut = 0;
+
+    var noAnim = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // The knocked-out letter, cloned where it stood and dropped off the page.
+    // Styled from the host element so it falls looking exactly like it did.
+    function dropLetter(rect, host, chr) {
+      if (noAnim || !rect || !rect.width) return;
+      var cs = window.getComputedStyle(host);
+      var el = document.createElement('span');
+      el.textContent = chr;
+      el.setAttribute('aria-hidden', 'true');
+      el.style.cssText = 'position:fixed;z-index:101;pointer-events:none;white-space:pre;' +
+        'left:' + rect.left.toFixed(1) + 'px;top:' + rect.top.toFixed(1) + 'px;' +
+        'color:' + cs.color + ';font-style:' + cs.fontStyle + ';font-weight:' + cs.fontWeight +
+        ';font-size:' + cs.fontSize + ';font-family:' + cs.fontFamily + ';line-height:1;';
+      document.body.appendChild(el);
+
+      var dx = Math.random() * 26 - 13;
+      var spin = Math.random() * 200 - 100;
+      var drop = 70 + Math.random() * 60;
+      var dur = 900 + Math.random() * 500;
+      var frames = [
+        { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
+        // knocked loose: a little hop before gravity takes over
+        { transform: 'translate(' + (dx * 0.3).toFixed(1) + 'px,-5px) rotate(' +
+            (spin * 0.15).toFixed(0) + 'deg)', opacity: 1, offset: 0.18 },
+        { transform: 'translate(' + dx.toFixed(1) + 'px,' + drop.toFixed(0) + 'px) rotate(' +
+            spin.toFixed(0) + 'deg)', opacity: 0 }
+      ];
+      var opts = { duration: dur, easing: 'cubic-bezier(.3,.05,.6,1)', fill: 'forwards' };
+      if (el.animate) {
+        var a = el.animate(frames, opts);
+        a.onfinish = function () { el.remove(); };
+        setTimeout(function () { el.remove(); }, dur + 400);   // belt and braces
+      } else {
+        el.remove();
+      }
+    }
+
+    // Hit-tests the exact character under the drawn muzzle (not the cursor) and
+    // swaps that one letter, so the sheep really is eating what it touches.
+    function mutateTextUnder() {
+      var now = Date.now();
+      if (now - lastTextMut < MUT_EVERY) return;
+      lastTextMut = now;
+
+      // muzzle position in the sprite, mirrored when the sheep faces left
+      var r = container.getBoundingClientRect();
+      var x = r.left + (direction === 1 ? 39 : cv.width - 39);
+      var y = r.top + 17;
+
+      container.style.pointerEvents = 'none';        // don't hit the sheep itself
+      var caret = document.caretRangeFromPoint ? document.caretRangeFromPoint(x, y)
+        : (document.caretPositionFromPoint ? document.caretPositionFromPoint(x, y) : null);
+      container.style.pointerEvents = '';
+      if (!caret) return;
+
+      var node = caret.startContainer || caret.offsetNode;
+      var off = caret.startOffset != null ? caret.startOffset : caret.offset;
+      if (!node || node.nodeType !== 3 || !node.data) return;
+      var host = node.parentElement;
+      if (!host || !host.closest || host.closest(MUT_SKIP)) return;
+
+      // the caret lands between characters — bite whichever side is a letter
+      var at = -1;
+      if (/[A-Za-z]/.test(node.data.charAt(off))) at = off;
+      else if (off > 0 && /[A-Za-z]/.test(node.data.charAt(off - 1))) at = off - 1;
+      if (at < 0) return;
+
+      var orig = node.data.charAt(at);
+      var ch = AA.charAt((Math.random() * AA.length) | 0);
+      if (orig === orig.toLowerCase()) ch = ch.toLowerCase();
+      if (ch === orig) return;
+
+      // measure the glyph before it is replaced, so the old letter can fall
+      // from exactly where it stood
+      var glyph = document.createRange();
+      glyph.setStart(node, at);
+      glyph.setEnd(node, at + 1);
+      var box = glyph.getBoundingClientRect();
+
+      node.data = node.data.slice(0, at) + ch + node.data.slice(at + 1);   // mutations stick
+      dropLetter(box, host, orig);
+      chompFrame = 11;                                                      // and it chews
+    }
+
     var state = 'WALKING'; // 'WALKING', 'EATING', 'HELD', or 'FALLING'
     var posX = 40;
     var posY = 4;
@@ -596,6 +698,7 @@
     var squashFrame = 0;
     var chewFrame = 0;
     var tripFrame = 0;   // counts down through a stumble
+    var chompFrame = 0;  // counts down through a bite of page text
     var stateTimer = 180;
     var isDragging = false;
 
@@ -640,6 +743,10 @@
 
         container.style.left = posX + 'px';
         container.style.top = posY + 'px';
+
+        // the muzzle drops a point mutation into whatever text it passes over
+        // (throttled inside, so this is ~6 hit-tests a second while dragging)
+        mutateTextUnder();
       }
 
       function stopDrag() {
@@ -777,6 +884,7 @@
         walking: state === 'WALKING',
         walk: walkFrame,
         trip: tripFrame > 0 ? Math.sin((tripFrame / 16) * Math.PI) : 0,
+        chomp: chompFrame > 0 ? Math.sin((chompFrame / 11) * Math.PI) : 0,
         flipped: direction === -1,
         eating: state === 'EATING',
         held: state === 'HELD' || state === 'FALLING',
@@ -788,6 +896,7 @@
       });
 
       if (squashFrame > 0) squashFrame--;
+      if (chompFrame > 0) chompFrame--;
     }
 
     requestAnimationFrame(updateSheep);
