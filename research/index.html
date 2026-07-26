@@ -206,6 +206,23 @@
       <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('.res-nav-item').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        var href = item.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            var headerOffset = 135;
+            var elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            var offsetPosition = elementPosition - headerOffset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
   <script defer src="../assets/js/msa.js"></script>
 </body>
 </html>

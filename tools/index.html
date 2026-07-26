@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tools — solab</title>
-  <meta name="description" content="Software and tools from the Ovchinnikov Lab (solab).">
+  <meta name="description" content="Open-source software, web servers, deep learning models, and Google Colab notebooks from the Ovchinnikov Lab (solab).">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="solab — Ovchinnikov Lab">
   <meta property="og:title" content="Tools — solab">
-  <meta property="og:description" content="Software and tools from the Ovchinnikov Lab (solab).">
+  <meta property="og:description" content="Open-source software, web servers, deep learning models, and Google Colab notebooks from the Ovchinnikov Lab (solab).">
   <meta property="og:image" content="https://solab.org/assets/img/hero.png">
   <meta property="og:url" content="https://solab.org/tools/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tools — solab">
-  <meta name="twitter:description" content="Software and tools from the Ovchinnikov Lab (solab).">
+  <meta name="twitter:description" content="Open-source software, web servers, deep learning models, and Google Colab notebooks from the Ovchinnikov Lab (solab).">
   <meta name="twitter:image" content="https://solab.org/assets/img/hero.png">
 </head>
 <body>
@@ -39,32 +39,332 @@
     <div class="container">
       <h1 class="page-title">Tools</h1>
 
-      <h2 class="section-title">Recent</h2>
-      <div class="card-list">
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/msa_pairformer.png" alt="MSA_Pairformer"><h3><a href="https://github.com/yoakiyama/MSA_Pairformer">MSA_Pairformer</a></h3><p>Scaling down protein language modeling with MSA Pairformer</p></div>
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/absolute_stability.png" alt="absolute-stability-predictor"><h3><a href="https://github.com/yehlincho/absolute-stability-predictor">absolute-stability-predictor</a></h3><p>Fine-tuned models (ESM3ΔG, SaProtΔG) that predict per-residue protein stability (ΔG) and mutational effects from structure</p></div>
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/protein_ebm.png" alt="ProteinEBM"><h3><a href="https://github.com/jproney/ProteinEBM">ProteinEBM</a></h3><p>Energy-based models of protein structure learned from sequence via denoising score matching</p></div>
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/protein_hunter.png" alt="Protein-Hunter"><h3><a href="https://github.com/yehlincho/Protein-Hunter">Protein-Hunter</a></h3><p>Exploiting structure hallucination within diffusion for protein design</p></div>
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/cirpin.png" alt="CIRPIN"><h3><a href="https://github.com/aidenkoloj/CIRPIN">CIRPIN</a></h3><p>Learning circular permutation-invariant representations to uncover putative protein homologs</p></div>
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/bindcraft.png" alt="BindCraft"><h3><a href="https://github.com/martinpacesa/BindCraft">BindCraft</a></h3><p>One-shot design of functional protein binders</p></div>
-        <div class="card"><img loading="lazy" class="card-img" src="../assets/img/tools/py2dmol.png" alt="py2Dmol"><h3><a href="https://github.com/sokrypton/py2Dmol">py2Dmol</a></h3><p>Visualizing protein, DNA, and RNA structures in 2D, for Google Colab and Jupyter</p></div>
+      <div class="tools-hero">
+        <p class="tools-lead">Open-source software, web servers, deep learning suites, and interactive Google Colab notebooks developed by the Ovchinnikov Lab.</p>
       </div>
 
-      <h2 class="section-title" style="margin-top:40px">All tools</h2>
-      <div class="card-list">
-        <div class="card"><h3><a href="https://github.com/sokrypton/ColabFold">ColabFold</a></h3><p>Making protein folding accessible to all via Google Colab</p></div>
-        <div class="card"><h3><a href="https://github.com/sokrypton/ColabDesign">ColabDesign</a></h3><p>Design proteins using TrRosetta, RosettaFold and AlphaFold</p></div>
-        <div class="card"><h3><a href="https://github.com/yehlincho/BoltzDesign1">BoltzDesign</a></h3><p>Inverting All-Atom Structure Prediction Model for Generalized Biomolecular Binder Design</p></div>
-        <div class="card"><h3><a href="https://github.com/spetti/SMURF">SMURF</a></h3><p>End-to-end learning of multiple sequence alignments with differentiable Smith-Waterman</p></div>
-        <div class="card"><h3><a href="https://github.com/jtrinquier/SoftAlign">SoftAlign</a></h3><p>End-to-end protein structures alignment</p></div>
-        <div class="card"><h3><a href="https://github.com/jproney/AF2Rank">AF2Rank</a></h3><p>State-of-the-Art Estimation of Protein Model Accuracy using AlphaFold</p></div>
-        <div class="card"><h3><a href="../publications/#prediction">AF2BIND</a></h3><p>Lightweight and fast prediction of ligand-binding sites</p></div>
-        <div class="card"><h3><a href="http://openseq.org">GREMLIN</a></h3><p>Web-server and database for predicting contacts. For source code see: <a href="https://github.com/sokrypton/GREMLIN_CPP">C++</a>, <a href="https://github.com/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb">Python (Tensorflow)</a>, <a href="https://github.com/sokrypton/laxy/blob/main/examples/gremlin_jax.ipynb">Python (Jax)</a></p></div>
-        <div class="card"><h3>CatJac</h3><p>Categorical Jacobian to uncover pairwise relationships in sequence models. Implemented for: <a href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/esm2.ipynb">ESM2</a>, <a href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/esm3.ipynb">ESM3</a>, <a href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/proteinmpnn.ipynb">ProteinMPNN</a>, Evo, gLM2</p></div>
-        <div class="card"><h3><a href="https://github.com/sokrypton/seqsal">seqsal</a></h3><p>What do generative models learn from protein sequences?</p></div>
-        <div class="card"><h3><a href="https://github.com/sokrypton/seqmodels">seqmodels</a></h3><p>Unified framework for modeling multivariate distributions in biological sequences</p></div>
-        <div class="card"><h3><a href="https://github.com/sokrypton/map_align">map_align</a></h3><p>contact map alignment</p></div>
+      <div class="pub-tools">
+        <input type="search" id="toolSearch" class="pub-search" placeholder="Search tools by name, method (Colab, AlphaFold, Jax), or category…" aria-label="Search tools" autocomplete="off">
+        <a class="pub-scholar" href="https://github.com/sokrypton" target="_blank" rel="noopener">Lab GitHub &#8599;</a>
       </div>
+
+      <!-- Sticky Category Filter Bar -->
+      <div class="subnav-filters" id="toolFilters">
+        <button type="button" class="filter-btn active" data-cat="all">All Tools</button>
+        <button type="button" class="filter-btn" data-cat="featured">Featured</button>
+        <button type="button" class="filter-btn" data-cat="design">Design &amp; Binders</button>
+        <button type="button" class="filter-btn" data-cat="folding">Folding &amp; Structure</button>
+        <button type="button" class="filter-btn" data-cat="evolution">Sequence &amp; Evolution</button>
+        <button type="button" class="filter-btn" data-cat="visualization">Visualization &amp; Utils</button>
+      </div>
+
+      <p class="pub-count" id="toolCount" hidden></p>
+      <p class="pub-empty" id="toolEmpty" hidden>No tools match your search criteria.</p>
+
+      <!-- Featured / Recent Showcase Grid -->
+      <section class="tool-sec" id="featured">
+        <h2 class="section-title">Featured Tools</h2>
+        <div class="tool-grid-featured">
+          
+          <div class="tool-card featured" data-cat="evolution featured" data-tags="msa pairformer language model interaction ppi python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/msa_pairformer.png" alt="MSA_Pairformer">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Evolution</span>
+                <span class="tool-tag">Python &bull; PyTorch</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/yoakiyama/MSA_Pairformer">MSA_Pairformer</a></h3>
+              <p class="tool-card-desc">Scaling down protein language modeling to protein-protein interactions with MSA Pairformer architecture.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/yoakiyama/MSA_Pairformer" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://www.cell.com/cell/fulltext/S0092-8674(26)00749-X" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card featured" data-cat="folding featured" data-tags="stability esm3 saprot delta g mutation structure python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/absolute_stability.png" alt="absolute-stability-predictor">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Folding &amp; Stability</span>
+                <span class="tool-tag">ESM3 &bull; SaProt</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/yehlincho/absolute-stability-predictor">absolute-stability-predictor</a></h3>
+              <p class="tool-card-desc">Fine-tuned models (ESM3ΔG, SaProtΔG) predicting per-residue protein stability (ΔG) and mutational effects from structure.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/yehlincho/absolute-stability-predictor" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card featured" data-cat="folding featured" data-tags="ebm energy score matching diffusion structure python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/protein_ebm.png" alt="ProteinEBM">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Structure &amp; EBM</span>
+                <span class="tool-tag">PyTorch &bull; EBM</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/jproney/ProteinEBM">ProteinEBM</a></h3>
+              <p class="tool-card-desc">Energy-based models of protein structure learned from sequence via denoising score matching.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/jproney/ProteinEBM" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card featured" data-cat="design featured" data-tags="diffusion hallucination protein hunter de novo binder python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/protein_hunter.png" alt="Protein-Hunter">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-design">Protein Design</span>
+                <span class="tool-tag">Diffusion &bull; PyTorch</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/yehlincho/Protein-Hunter">Protein-Hunter</a></h3>
+              <p class="tool-card-desc">Exploiting structure hallucination within diffusion for target-aware protein design.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/yehlincho/Protein-Hunter" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card featured" data-cat="evolution featured" data-tags="cirpin circular permutation homology embedding representations python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/cirpin.png" alt="CIRPIN">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Sequence &amp; Homology</span>
+                <span class="tool-tag">Embeddings</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/aidenkoloj/CIRPIN">CIRPIN</a></h3>
+              <p class="tool-card-desc">Learning circular permutation-invariant representations to uncover putative protein homologs.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/aidenkoloj/CIRPIN" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card featured" data-cat="design featured" data-tags="bindcraft one-shot binder design alphafold python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/bindcraft.png" alt="BindCraft">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-design">Binder Design</span>
+                <span class="tool-tag">One-Shot Design</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/martinpacesa/BindCraft">BindCraft</a></h3>
+              <p class="tool-card-desc">Automated one-shot computational design of functional, high-affinity protein binders.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/martinpacesa/BindCraft" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card featured" data-cat="visualization featured" data-tags="py2dmol 2d visualization colab jupyter rna dna python">
+            <img loading="lazy" class="tool-card-img" src="../assets/img/tools/py2dmol.png" alt="py2Dmol">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-visualization">Visualization</span>
+                <span class="tool-tag">Colab &bull; Jupyter</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/py2Dmol">py2Dmol</a></h3>
+              <p class="tool-card-desc">Visualizing protein, DNA, and RNA structures in 2D directly inside Google Colab and Jupyter Notebooks.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/py2Dmol" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://colab.research.google.com/github/sokrypton/py2Dmol/blob/main/py2Dmol.ipynb" target="_blank" rel="noopener">Colab Notebook</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- All Lab Tools Directory -->
+      <section class="tool-sec" id="all-tools">
+        <h2 class="section-title">Complete Tool Suite</h2>
+        <div class="tool-grid-standard">
+
+          <div class="tool-card" data-cat="folding" data-tags="colabfold alphafold msa fast folding colab python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Folding &amp; Structure</span>
+                <span class="tool-tag">AlphaFold2 &bull; MMseqs2</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/ColabFold">ColabFold</a></h3>
+              <p class="tool-card-desc">Accelerated, accessible protein folding via fast MSA generation (MMseqs2) and AlphaFold2 / RoseTTAFold.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/ColabFold" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb" target="_blank" rel="noopener">Colab Notebook</a>
+                <a class="pill" href="https://www.nature.com/articles/s41592-022-01488-1" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="design" data-tags="colabdesign trrosetta alphafold rosettafold binder hallucination colab python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-design">Protein Design</span>
+                <span class="tool-tag">Hallucination &bull; Jax</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/ColabDesign">ColabDesign</a></h3>
+              <p class="tool-card-desc">Flexible suite for back-propagation based protein design using TrRosetta, RoseTTAFold, and AlphaFold.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/ColabDesign" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://colab.research.google.com/github/sokrypton/ColabDesign/blob/main/af/examples/af_design.ipynb" target="_blank" rel="noopener">Colab Notebook</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="design" data-tags="boltzdesign binder all-atom structure prediction design python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-design">Binder Design</span>
+                <span class="tool-tag">All-Atom</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/yehlincho/BoltzDesign1">BoltzDesign</a></h3>
+              <p class="tool-card-desc">Inverting all-atom structure prediction models for generalized biomolecular binder design.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/yehlincho/BoltzDesign1" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://www.biorxiv.org/content/10.1101/2025.04.06.647261v1" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="evolution" data-tags="smurf msa smith waterman differentiable alignment python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Sequence &amp; Alignment</span>
+                <span class="tool-tag">Differentiable SW</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/spetti/SMURF">SMURF</a></h3>
+              <p class="tool-card-desc">End-to-end learning of multiple sequence alignments with differentiable Smith–Waterman optimization.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/spetti/SMURF" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btac724/6820925" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="folding" data-tags="softalign swampnn structure alignment python neural network">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Structure Alignment</span>
+                <span class="tool-tag">Neural Alignment</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/jtrinquier/SWAMPNN">SWAMPNN / SoftAlign</a></h3>
+              <p class="tool-card-desc">End-to-end neural protein structure alignment and fold-switching landscape evaluation.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/jtrinquier/SWAMPNN" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://www.mlsb.io/papers_2022/SWAMPNN_End_to_end_protein_structures_alignment.pdf" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="folding" data-tags="af2rank accuracy plddt alphafold ranking scoring python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Model Accuracy</span>
+                <span class="tool-tag">AlphaFold2 Scoring</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/jproney/AF2Rank">AF2Rank</a></h3>
+              <p class="tool-card-desc">State-of-the-art estimation of protein model accuracy and decoy ranking using un-modified AlphaFold.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/jproney/AF2Rank" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.129.238101" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="folding" data-tags="af2bind ligand binding site prediction alphafold colab python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Binding Prediction</span>
+                <span class="tool-tag">AlphaFold Pair-Rep</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/af2bind">AF2BIND</a></h3>
+              <p class="tool-card-desc">Lightweight and fast prediction of small-molecule binding sites using AlphaFold2 pair representations.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/af2bind" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://github.com/sokrypton/af2bind/blob/main/af2bind.ipynb" target="_blank" rel="noopener">Colab Notebook</a>
+                <a class="pill" href="https://www.nature.com/articles/s41592-026-03011-2" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="evolution" data-tags="gremlin coevolution contacts potts mrf web server c++ tensorflow jax">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Coevolution &amp; Contacts</span>
+                <span class="tool-tag">C++ &bull; Jax &bull; TF</span>
+              </div>
+              <h3 class="tool-card-title"><a href="http://openseq.org">GREMLIN</a></h3>
+              <p class="tool-card-desc">Generative Regularized Estimation of Mutational Landscapes for predicting contact maps and couplings.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="http://openseq.org" target="_blank" rel="noopener">Web Server</a>
+                <a class="pill" href="https://github.com/sokrypton/GREMLIN_CPP" target="_blank" rel="noopener">C++ GitHub</a>
+                <a class="pill" href="https://github.com/sokrypton/laxy/blob/main/examples/gremlin_jax.ipynb" target="_blank" rel="noopener">Jax Notebook</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="evolution" data-tags="catjac categorical jacobian esm2 esm3 proteinmpnn colab python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Interpretability</span>
+                <span class="tool-tag">ESM2 &bull; ESM3 &bull; MPNN</span>
+              </div>
+              <h3 class="tool-card-title">CatJac (Categorical Jacobian)</h3>
+              <p class="tool-card-desc">Extracting pairwise relationships and coevolutionary matrices directly from generative protein language models.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/esm2.ipynb" target="_blank" rel="noopener">ESM2 Colab</a>
+                <a class="pill" href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/esm3.ipynb" target="_blank" rel="noopener">ESM3 Colab</a>
+                <a class="pill" href="https://colab.research.google.com/github/sokrypton/ColabBio/blob/main/categorical_jacobian/proteinmpnn.ipynb" target="_blank" rel="noopener">MPNN Colab</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="evolution" data-tags="seqsal saliency generative sequence models python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Sequence Models</span>
+                <span class="tool-tag">Fitness Landscapes</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/seqsal">seqsal</a></h3>
+              <p class="tool-card-desc">Investigating structure-fitness landscapes and pairwise relations in generative sequence models.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/seqsal" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="evolution" data-tags="seqmodels multivariate distributions biological sequences python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-evolution">Sequence Models</span>
+                <span class="tool-tag">Multivariate Modeling</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/seqmodels">seqmodels</a></h3>
+              <p class="tool-card-desc">Unified framework for modeling multivariate probability distributions in biological sequence data.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/seqmodels" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tool-card" data-cat="folding" data-tags="map_align contact map alignment c++ python">
+            <div class="tool-card-body">
+              <div class="tool-card-head">
+                <span class="tool-badge badge-folding">Map Alignment</span>
+                <span class="tool-tag">C++ &bull; Alignment</span>
+              </div>
+              <h3 class="tool-card-title"><a href="https://github.com/sokrypton/map_align">map_align</a></h3>
+              <p class="tool-card-desc">Fast contact map alignment algorithm for identifying structural similarities without coordinates.</p>
+              <div class="tool-card-links">
+                <a class="pill" href="https://github.com/sokrypton/map_align" target="_blank" rel="noopener">GitHub</a>
+                <a class="pill" href="https://www.science.org/doi/10.1126/science.aah4043" target="_blank" rel="noopener">Paper</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
     </div>
   </main>
 
@@ -74,6 +374,83 @@
       <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
     </div>
   </footer>
+  
+  <script>
+    (function () {
+      var input = document.getElementById('toolSearch');
+      var filterBtns = Array.prototype.slice.call(document.querySelectorAll('#toolFilters .filter-btn'));
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.tool-card'));
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.tool-sec'));
+      var count = document.getElementById('toolCount');
+      var empty = document.getElementById('toolEmpty');
+      var currentCat = 'all';
+
+      function update() {
+        var q = input ? input.value.trim().toLowerCase() : '';
+        var shown = 0;
+
+        cards.forEach(function (c) {
+          var catAttr = c.getAttribute('data-cat') || '';
+          var tagAttr = c.getAttribute('data-tags') || '';
+          var catMatch = (currentCat === 'all' || catAttr.indexOf(currentCat) > -1);
+          var hay = (c.textContent + ' ' + tagAttr + ' ' + catAttr).toLowerCase();
+          var searchMatch = (q === '' || hay.indexOf(q) > -1);
+          var visible = catMatch && searchMatch;
+          c.classList.toggle('is-hidden', !visible);
+          if (visible) shown++;
+        });
+
+        sections.forEach(function (sec) {
+          var hasVisible = !!sec.querySelector('.tool-card:not(.is-hidden)');
+          sec.classList.toggle('is-hidden', !hasVisible);
+        });
+
+        var isFiltering = q !== '' || currentCat !== 'all';
+        if (count) {
+          count.hidden = !isFiltering;
+          if (isFiltering) {
+            var label = shown + (shown === 1 ? ' tool' : ' tools');
+            if (q) label += ' matching “' + input.value.trim() + '”';
+            if (currentCat !== 'all') {
+              var btn = document.querySelector('#toolFilters .filter-btn[data-cat="' + currentCat + '"]');
+              if (btn) label += ' in ' + btn.textContent.trim();
+            }
+            count.textContent = label;
+          }
+        }
+        if (empty) {
+          empty.hidden = !(isFiltering && shown === 0);
+        }
+      }
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentCat = btn.getAttribute('data-cat');
+          update();
+        });
+      });
+
+      if (input) {
+        input.addEventListener('input', update);
+      }
+
+      cards.forEach(function (card) {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('a')) return;
+          var mainLink = card.querySelector('h3.tool-card-title a') || card.querySelector('.tool-card-links a');
+          if (mainLink && mainLink.href) {
+            window.open(mainLink.href, '_blank');
+          }
+        });
+      });
+
+      update();
+    })();
+  </script>
   <script defer src="../assets/js/msa.js"></script>
 </body>
 </html>
