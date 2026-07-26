@@ -370,7 +370,10 @@
     }
 
     // Procedural 2D Canvas Sheep Renderer (cloud body lifts UP, legs rock in unison when held)
-    function drawProceduralSheep(legOffset, isFlipped, isEating, isHeld, dangleFrame, squashFrame) {
+    // s: { walking, walk, trip, flipped, eating, held, falling, swing, squash, chew, velY }
+    function drawProceduralSheep(s) {
+      var isFlipped = s.flipped, isEating = s.eating;
+      var isHeld = s.held, swing = s.swing, squashFrame = s.squash;
       ctx.clearRect(0, 0, cv.width, cv.height);
       ctx.save();
 
@@ -379,34 +382,53 @@
         ctx.scale(-1, 1);
       }
 
+      // Landing impact compression & knee bend calculation
+      var impact = squashFrame > 0 ? Math.sin((squashFrame / 12) * Math.PI) : 0;
+      var bend = impact * 3;
+      // falling stretches the wool the other way, harder the faster it drops
+      var stretch = s.falling ? Math.min(0.18, Math.abs(s.velY) * 0.012) : 0;
+      // grazing: a slow sweep along the band with a faster nibble on top
+      var graze = isEating ? Math.sin(s.chew * 0.085) : 0;
+      var nibble = isEating ? Math.sin(s.chew * 0.42) : 0;
+
+      // Walk cycle: a heavy four-beat plod. `walk` is the gait phase; the body
+      // drops onto each planted pair (twice a cycle) rather than bouncing, and
+      // rolls side to side, so the weight reads as lumbering, not trotting.
+      var walking = s.walking, walk = s.walk;
+      var plant = walking ? Math.max(0, Math.sin(walk * 2)) : 0;      // weight landing
+      var waddle = walking ? Math.sin(walk) : 0;                       // side-to-side lurch
+      var trip = s.trip;                                               // 0..1 stumble
+
       // Ground Shadow (hidden completely when lifted!)
       if (!isHeld) {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+        ctx.fillStyle = 'rgba(0, 0, 0, ' + (0.22 + plant * 0.03).toFixed(3) + ')';
         ctx.beginPath();
-        ctx.ellipse(24, 41, 16, 3.2, 0, 0, Math.PI * 2);
+        // shadow widens and darkens as the body flattens into the ground
+        ctx.ellipse(24 + graze * 1.2 + waddle * 0.5, 41,
+          16 + impact * 3 + plant * 0.5, 3.2 + impact * 0.6, 0, 0, Math.PI * 2);
         ctx.fill();
       }
-
-      // Landing impact compression & knee bend calculation
-      var bend = squashFrame > 0 ? Math.sin((squashFrame / 12) * Math.PI) * 4 : 0;
-      var bob = isHeld ? 6 : (isEating ? 1.5 : Math.abs(legOffset) * 0.3);
-      var bodyY = 24 - bob + bend; // Body compresses downward on landing!
+      var bob = isHeld ? 6 : (isEating ? 1.5 - nibble * 0.5 : -plant * 0.5);
+      var bodyY = 24 - bob + bend + trip * 1.4; // Body compresses downward on landing!
 
       // 4 Legs (bend outwards at knee joints on landing impact)
       ctx.lineWidth = 2.8;
       ctx.lineCap = 'round';
 
-      // Rhythmic pendulum leg rocking when held!
-      var rockAngle = isHeld ? Math.sin(dangleFrame * 0.15) * 5 : 0;
-      var legWalk = isHeld ? 0 : (isEating ? 0 : legOffset * 0.7);
+      // Legs hang as damped pendulums when lifted: `swing` is the physics
+      // offset (px at the hoof) integrated in stepSheep from the drag motion.
+      var rockAngle = isHeld ? swing : 0;
 
       var hipY = bodyY + 9;
-      var footY = isHeld ? hipY + 11 : 39;
+      // a hard swing shortens the vertical drop, as a real pendulum would
+      var swingDrop = isHeld ? Math.sqrt(Math.max(4, 121 - swing * swing)) : 11;
+      var groundY = 39;
 
-      function drawBentLeg(x1, y1, x2, y2, bendDir) {
+      function drawBentLeg(x1, y1, x2, y2, bendDir, kneeBend) {
         ctx.beginPath();
-        if (bend > 0.2) {
-          var kX = (x1 + x2) / 2 + bendDir * (bend * 0.95);
+        var k = bend + (kneeBend || 0);
+        if (k > 0.2) {
+          var kX = (x1 + x2) / 2 + bendDir * (k * 0.5);
           var kY = (y1 + y2) / 2 + 1;
           ctx.moveTo(x1, y1);
           ctx.lineTo(kX, kY);
@@ -418,17 +440,49 @@
         ctx.stroke();
       }
 
-      // Back legs (standing X positions)
+      // One leg: hangs from the hip when lifted, otherwise steps through the
+      // gait. `phase` staggers the four legs; short, heavy strides with a low
+      // hoof lift and a bent knee through the swing.
+      function drawLeg(hipX, hangSwing, phase, bendDir) {
+        if (isHeld) {
+          drawBentLeg(hipX, hipY, hipX + hangSwing, hipY + swingDrop, bendDir);
+          return;
+        }
+        if (!walking) { drawBentLeg(hipX, hipY, hipX, groundY, bendDir); return; }
+        var st = Math.sin(walk + phase);
+        var lift = Math.max(0, Math.sin(walk + phase + Math.PI / 2));   // hoof off the ground
+        var footX = hipX + st * 2.4 + trip * bendDir * 2;
+        var footY = groundY - lift * lift * 1.1 + trip * 1.0;
+        drawBentLeg(hipX + waddle * 0.35, hipY, footX, footY, bendDir, lift * 0.6 + trip * 1.8);
+      }
+
+      // Back legs (standing X positions) — lead the front pair by ~a third of a
+      // cycle, the way a heavy quadruped shoves its weight forward
       ctx.strokeStyle = '#241f18';
-      var bX1 = 14, bX2 = 29;
-      drawBentLeg(bX1, hipY, bX1 + rockAngle - legWalk, footY, -1);
-      drawBentLeg(bX2, hipY, bX2 + rockAngle + legWalk, footY, -1);
+      var bX1 = 14, bX2 = 29, backSwing = rockAngle * 0.82, frontSwing = rockAngle * 1.14;
+      drawLeg(bX1, backSwing, 0, -1);
+      drawLeg(bX2, backSwing, Math.PI, -1);
 
       // Front legs (standing X positions)
       ctx.strokeStyle = '#3a3428';
       var fX1 = 19, fX2 = 33;
-      drawBentLeg(fX1, hipY, fX1 + rockAngle + legWalk, footY, 1);
-      drawBentLeg(fX2, hipY, fX2 + rockAngle - legWalk, footY, 1);
+      drawLeg(fX1, frontSwing, Math.PI * 0.62, 1);
+      drawLeg(fX2, frontSwing, Math.PI * 1.62, 1);
+
+      // Wool mass: squashes flat on impact, stretches tall in freefall, leans
+      // forward and rolls gently while grazing. Head is drawn outside this
+      // transform so it keeps its shape and can lag behind the body.
+      // walking: the wool settles on each footfall and the whole mass waddles
+      var sx = 1 + impact * 0.20 - stretch + plant * 0.025;
+      var sy = 1 - impact * 0.22 + stretch - plant * 0.03;
+      var tilt = isEating ? 0.07 + graze * 0.035 : (s.falling ? -0.05 : waddle * 0.03 + trip * 0.07);
+      var bodyX = 24 + (isEating ? graze * 1.6 : waddle * 0.7);
+
+      ctx.save();
+      ctx.translate(bodyX, bodyY);
+      ctx.rotate(tilt);
+      ctx.scale(sx, sy);
+      ctx.translate(-24, -bodyY);
 
       // Base wool body shape
       ctx.fillStyle = '#f4efe4';
@@ -456,31 +510,62 @@
       ctx.fillStyle = '#ffffff';
       cloudPuffs.forEach(function(p) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        // outer puffs jiggle a beat behind the body on impact
+        var lag = impact * (p.y - bodyY) * 0.12;
+        ctx.arc(p.x, p.y + lag, p.r * (1 + impact * 0.06), 0, Math.PI * 2);
         ctx.fill();
       });
+      ctx.restore();
 
-      // Dark Head — Lowers when eating, surprised look when held!
-      var headY = isHeld ? bodyY - 3 : (isEating ? bodyY + 6 : bodyY - 1);
-      var headX = isEating ? 39 : 36;
+      // Dark Head — grazes down into the band, lags on landing, cranes up in freefall
+      var headY, headX, headRot;
+      if (isHeld && s.falling) {
+        headY = bodyY - 4 - stretch * 6;          // cranes upward as it drops
+        headX = 36 - swing * 0.12;
+        headRot = -0.55;
+      } else if (isHeld) {
+        headY = bodyY - 3;
+        headX = 36 - swing * 0.18;                // head counter-swings in the hand
+        headRot = -0.2 + swing * 0.012;
+      } else if (isEating) {
+        // muzzle reaches down into the alignment, but the skull stays tucked
+        // into the fleece — the head is never a separate ball on a neck
+        headY = bodyY + 9 + nibble * 1.4;
+        headX = 37.5 + graze * 1.8;
+        headRot = 0.85 + nibble * 0.12;
+      } else {
+        // walking: the head nods a beat behind the body, heavier than it bobs
+        var nod = walking ? Math.sin(walk - 0.8) : 0;
+        headY = bodyY - 1 - impact * 3 + nod * 0.7 + trip * 0.9;   // head keeps falling after the body stops
+        headX = 36 + impact * 1.5 + nod * 0.5 - trip * 0.9;
+        headRot = 0.2 + impact * 0.25 + nod * 0.05 + trip * 0.12;
+      }
+
+      ctx.save();
+      ctx.translate(headX, headY);
+      ctx.rotate(headRot);
 
       ctx.fillStyle = '#241f18';
       ctx.beginPath();
-      ctx.ellipse(headX, headY, 5.2, 4.0, isEating ? 0.6 : (isHeld ? -0.2 : 0.2), 0, Math.PI * 2);
+      ctx.ellipse(0, 0, 5.2, 4.0, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Ear - rocks with body when held!
-      var earAngle = isHeld ? -0.4 + rockAngle * 0.05 : -0.4;
+      // Ear - flicks while chewing, flaps in freefall, rocks with the swing
+      var earAngle = -0.4;
+      if (s.falling) earAngle = -0.4 + Math.sin(s.chew * 0.5) * 0.35;
+      else if (isHeld) earAngle = -0.4 + swing * 0.05;
+      else if (isEating) earAngle = -0.4 + nibble * 0.22;
       ctx.fillStyle = '#3a3428';
       ctx.beginPath();
-      ctx.ellipse(headX - 3, headY - 2, 3.0, 1.5, earAngle, 0, Math.PI * 2);
+      ctx.ellipse(-3, -2, 3.0, 1.5, earAngle, 0, Math.PI * 2);
       ctx.fill();
 
       // Eye - wide when held!
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.arc(headX + 1.5, headY - 1, isHeld ? 1.25 : 0.85, 0, Math.PI * 2);
+      ctx.arc(1.5, -1, isHeld ? 1.25 : 0.85, 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
 
       ctx.restore();
     }
@@ -490,7 +575,9 @@
       var containerRect = container.getBoundingClientRect();
       if (!containerRect) return;
 
-      var mouthScreenX = containerRect.left + ((direction === 1) ? 41 : 10);
+      // muzzle sweeps with the grazing motion, so the mutations follow it
+      var graze = Math.sin(chewFrame * 0.085) * 2.2 * direction;
+      var mouthScreenX = containerRect.left + ((direction === 1) ? 41 : 10) + graze;
       var band = footer.querySelector('.msa-band');
       if (band && band._msaStream) {
         band._msaStream.mutateAt(mouthScreenX);
@@ -502,13 +589,18 @@
     var posY = 4;
     var velY = 0;
     var gravity = 0.8;
-    var speed = 0.85;
+    var speed = 0.55;      // heavy: it shuffles rather than trots
     var direction = 1;
     var walkFrame = 0;
     var dangleFrame = 0;
     var squashFrame = 0;
+    var chewFrame = 0;
+    var tripFrame = 0;   // counts down through a stumble
     var stateTimer = 180;
     var isDragging = false;
+
+    // damped-pendulum state for the dangling legs (px offset at the hoof)
+    var swingAng = 0, swingVel = 0, dragVX = 0, dragVY = 0;
 
     // Grab & Drop interaction on non-tool pages (2D Vertical Lifting + Gravity Drop)
     if (!isToolsPage) {
@@ -538,6 +630,10 @@
         } else if (newX < posX - 0.5) {
           direction = -1; // Facing LEFT
         }
+
+        // hand velocity drives the pendulum: legs trail the direction of travel
+        dragVX = newX - posX;
+        dragVY = newY - posY;
 
         posX = newX;
         posY = newY; // Unlimited page-wide lifting anywhere on the page!
@@ -601,6 +697,18 @@
       requestAnimationFrame(updateSheep);
     }
 
+    // one step of a damped spring toward `target`, with a slow idle sway on top
+    function integrateSwing(target) {
+      dangleFrame += 1;
+      swingVel += (target - swingAng) * 0.16;   // stiffness
+      swingVel *= 0.86;                          // damping
+      swingAng += swingVel;
+      if (swingAng > 9) { swingAng = 9; swingVel *= -0.35; }   // leg is 11px long
+      if (swingAng < -9) { swingAng = -9; swingVel *= -0.35; }
+      dragVX *= 0.72;                            // hand velocity decays between moves
+      dragVY *= 0.72;
+    }
+
     function stepSheep() {
       var maxX = Math.max(0, footer.offsetWidth - 56);
       var minX = 0;
@@ -610,7 +718,8 @@
         velY += gravity;
         if (velY > 22) velY = 22; // Terminal velocity cap
         posY += velY;
-        dangleFrame += 1;
+        // falling: air drag pushes the legs up and outwards, more the faster it drops
+        integrateSwing(Math.min(9, velY * 0.55) * (direction === 1 ? -1 : 1));
 
         if (posY >= 4) {
           posY = 4;
@@ -628,8 +737,15 @@
         }
 
         if (state === 'WALKING') {
-          posX += speed * direction;
-          walkFrame += 0.22;
+          // heavy gait: it shuffles forward mostly while a pair is planted, and
+          // now and then catches a hoof and stumbles for a few frames
+          if (tripFrame > 0) tripFrame--;
+          else if (Math.random() < 0.002) tripFrame = 16;
+
+          var thrust = 0.75 + Math.abs(Math.sin(walkFrame * 2)) * 0.3;   // lurch per footfall
+          if (tripFrame > 0) thrust *= 0.35;
+          posX += speed * thrust * direction;
+          walkFrame += tripFrame > 0 ? 0.07 : 0.155;                     // slow, plodding cadence
 
           if (posX >= maxX) {
             posX = maxX;
@@ -646,12 +762,30 @@
           mutateMsaAt(posX);
         }
       } else {
-        dangleFrame += 1;
+        // held: legs trail the hand, plus a lazy idle sway once it settles
+        var idle = Math.sin(dangleFrame * 0.11) * 1.6;
+        integrateSwing(-dragVX * 1.5 - Math.abs(dragVY) * 0.25 + idle);
       }
 
       container.style.left = posX + 'px';
-      var legOffset = (state === 'WALKING') ? Math.sin(walkFrame) * 3.5 : 0;
-      drawProceduralSheep(legOffset, direction === -1, state === 'EATING', state === 'HELD' || state === 'FALLING', dangleFrame, squashFrame);
+      // the canvas is mirrored when facing left, so mirror the swing to keep it
+      // trailing in page space rather than sheep space
+      var swing = swingAng * (direction === -1 ? -1 : 1);
+      if (state === 'EATING') chewFrame += 1; else chewFrame = 0;
+      if (state !== 'WALKING') tripFrame = 0;
+      drawProceduralSheep({
+        walking: state === 'WALKING',
+        walk: walkFrame,
+        trip: tripFrame > 0 ? Math.sin((tripFrame / 16) * Math.PI) : 0,
+        flipped: direction === -1,
+        eating: state === 'EATING',
+        held: state === 'HELD' || state === 'FALLING',
+        falling: state === 'FALLING',
+        swing: swing,
+        squash: squashFrame,
+        chew: state === 'EATING' ? chewFrame : dangleFrame,
+        velY: velY
+      });
 
       if (squashFrame > 0) squashFrame--;
     }
