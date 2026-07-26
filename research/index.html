@@ -38,77 +38,165 @@
   <main>
     <div class="container">
       <h1 class="page-title">Research</h1>
-      <p class="page-intro">For billions of years, nature has been conducting the greatest experiment of all time. Imagine one-day gaining access to the detailed notes from these experiments. Today, with worldwide expeditions to collect samples from all habitats, single-cell sequencing of unculturable microbes and the rapid drop in sequencing costs, we can finally tap into nature and gain access to these notes.</p>
-      <p class="page-intro">Making use of this data, our lab is interested in:</p>
+      
+      <div class="research-hero">
+        <p class="research-lead">For billions of years, nature has been conducting the ultimate experiment. Today—with global sample collection, single-cell metagenomics, and massive sequence datasets—we can finally read the notes.</p>
+        <p class="page-intro">Our lab develops computational methods, deep learning models, and structural biology tools to explore three core frontiers:</p>
+      </div>
 
-      <section class="theme">
-        <span class="theme-num">01</span>
-        <div class="theme-content">
-        <h2 class="theme-statement">A unified statistical model of protein evolution — integrating phylogenetic, genomic, structural, and functional constraints.</h2>
-        <div class="theme-row">
-          <div>
-            <img loading="lazy" class="theme-fig" style="width:465px" src="../assets/img/research/research_1.jpg" alt="Coevolution, conservation, and phylogenetics: a unified model of protein evolution.">
-            <img loading="lazy" class="theme-fig" style="width:562px" src="../assets/img/research/research_2.jpg" alt="Learning the MRF (GREMLIN / Potts) through factored and standard attention.">
-          </div>
-          <div class="recent-pubs">
-            <h3>Recent Publications</h3>
-            <div class="rp"><a class="rtitle" href="https://www.cell.com/cell/fulltext/S0092-8674(26)00749-X">Expanding the scope of protein language modeling to protein-protein interactions with MSA Pairformer.</a><span class="meta">Akiyama Y, et al. 2026. <a class="pill" href="https://github.com/yoakiyama/MSA_Pairformer">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2025.11.16.688745">Hit or Miss: Understanding Emergence and Absence of Homo-oligomeric Contacts in Protein Language Models.</a><span class="meta">Zhang Z, et al. 2025.</span></div>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2023.07.23.550206v1">Differentiable Search of Evolutionary Trees from Leaves.</a><span class="meta">Hettiarachchi R, et al. 2023. <a class="pill" href="https://github.com/ramithuh/diff-evol-tree-search">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2023.04.07.536042v3">Genomic language model predicts protein co-regulation and function.</a><span class="meta">Hwang Y, et al. 2023. <a class="pill" href="https://github.com/y-hwang/gLM">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btac724/6820925">End-to-end learning of multiple sequence alignments with differentiable Smith–Waterman.</a><span class="meta">Petti S, et al. 2022. <a class="pill" href="https://github.com/spetti/SMURF">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.pnas.org/doi/10.1073/pnas.2406285121">Protein language models learn evolutionary statistics of interacting sequence motifs.</a><span class="meta">Zhang Z, Wayment-Steele HK, et al. 2024. <a class="pill" href="https://github.com/sokrypton/GREMLIN_LH">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2022.03.04.483009v1">Disentanglement of Entropy and Coevolution using Spectral Regularization.</a><span class="meta">Wang H, et al. 2022. <a class="pill" href="https://github.com/sokrypton/GREMLIN_LH">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://pubmed.ncbi.nlm.nih.gov/34890134/">Interpreting Potts and Transformer Protein Models Through the Lens of Simplified Attention.</a><span class="meta">Bhattacharya N, et al. 2021. <a class="pill" href="https://github.com/songlab-cal/factored-attention">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2020.11.29.402875v1">The structure-fitness landscape of pairwise relations in generative sequence models.</a><span class="meta">Marshall D, et al. 2020. <a class="pill" href="https://github.com/sokrypton/seqsal">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://arxiv.org/abs/1906.02598">Unified framework for modeling multivariate distributions in biological sequences.</a><span class="meta">Dauparas J, et al. 2019. <a class="pill" href="https://github.com/sokrypton/seqmodels">GitHub</a></span></div>
+      <!-- Quick Jump Sticky Subnav -->
+      <nav class="research-subnav" aria-label="Research Themes">
+        <a class="res-nav-item" href="#theme-1"><span class="dot dot-1"></span> 01. Protein Evolution</a>
+        <a class="res-nav-item" href="#theme-2"><span class="dot dot-2"></span> 02. Folding & Landscapes</a>
+        <a class="res-nav-item" href="#theme-3"><span class="dot dot-3"></span> 03. Metagenomic Dark Matter</a>
+      </nav>
+
+      <!-- Theme 01 -->
+      <section class="theme" id="theme-1">
+        <div class="theme-header">
+          <span class="theme-badge theme-badge-1">01 &bull; EVOLUTION &amp; SEQUENCE</span>
+          <h2 class="theme-statement">A unified statistical model of protein evolution — integrating phylogenetic, genomic, structural, and functional constraints.</h2>
+          <div class="theme-questions">
+            <span class="q-tag">How do evolutionary constraints shape generative sequence models?</span>
+            <span class="q-tag">Can we disentangle phylogenetic signal from true coevolutionary couplings?</span>
           </div>
         </div>
+
+        <div class="theme-row">
+          <div class="theme-figs">
+            <figure class="fig-card">
+              <img loading="lazy" class="theme-fig" src="../assets/img/research/research_1.jpg" alt="Coevolution, conservation, and phylogenetics: a unified model of protein evolution.">
+              <figcaption class="fig-caption">Unified framework: linking conservation, coevolution, and phylogenetic trees.</figcaption>
+            </figure>
+            <figure class="fig-card">
+              <img loading="lazy" class="theme-fig" src="../assets/img/research/research_2.jpg" alt="Learning the MRF (GREMLIN / Potts) through factored and standard attention.">
+              <figcaption class="fig-caption">Markov Random Fields &amp; Attention: learning sequence coevolution with Potts models.</figcaption>
+            </figure>
+          </div>
+
+          <div class="recent-pubs">
+            <h3>Recent Theme Publications</h3>
+            <div class="rp">
+              <a class="rtitle" href="https://www.cell.com/cell/fulltext/S0092-8674(26)00749-X">Expanding the scope of protein language modeling to protein-protein interactions with MSA Pairformer.</a>
+              <span class="meta"><span class="pub-yr">2026</span> Akiyama Y, et al. <a class="pill" href="https://github.com/yoakiyama/MSA_Pairformer">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2025.11.16.688745">Hit or Miss: Understanding Emergence and Absence of Homo-oligomeric Contacts in Protein Language Models.</a>
+              <span class="meta"><span class="pub-yr">2025</span> Zhang Z, et al.</span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://link.aps.org/doi/10.1103/PRXLife.2.023005">Disentanglement of Evolutionary Constraints in Statistical Models of Proteins.</a>
+              <span class="meta"><span class="pub-yr">2024</span> Wang H, et al. <a class="pill" href="https://github.com/sokrypton/GREMLIN_LH">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2023.07.23.550206v1">Differentiable Search of Evolutionary Trees from Leaves.</a>
+              <span class="meta"><span class="pub-yr">2023</span> Hettiarachchi R, et al. <a class="pill" href="https://github.com/ramithuh/diff-evol-tree-search">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2023.04.07.536042v3">Genomic language model predicts protein co-regulation and function.</a>
+              <span class="meta"><span class="pub-yr">2023</span> Hwang Y, et al. <a class="pill" href="https://github.com/y-hwang/gLM">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btac724/6820925">End-to-end learning of multiple sequence alignments with differentiable Smith–Waterman.</a>
+              <span class="meta"><span class="pub-yr">2022</span> Petti S, et al. <a class="pill" href="https://github.com/spetti/SMURF">GitHub</a></span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="theme">
-        <span class="theme-num">02</span>
-        <div class="theme-content">
-        <h2 class="theme-statement">Modeling the protein conformational and folding landscape for structure prediction and design.</h2>
-        <div class="theme-row">
-          <div>
-            <img loading="lazy" class="theme-fig" style="width:562px" src="../assets/img/research/research_3.jpg" alt="The protein conformational landscape: P(sequence | structure) and P(structure | sequence).">
-            <p class="fig-credit">image credit: <a href="https://twitter.com/BasileWicky">Basile Wicky</a></p>
-          </div>
-          <div class="recent-pubs">
-            <h3>Recent Publications</h3>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.64898/2025.12.09.693073v1">Protein Diffusion Models as Statistical Potentials.</a><span class="meta">Roney JP, et al. 2025. <a class="pill" href="https://github.com/jproney/ProteinEBM">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2024.12.20.629706v1">Implicit modeling of the conformational landscape and sequence allows scoring and generation of stable proteins.</a><span class="meta">Cho Y, et al. 2024. <a class="pill" href="https://github.com/yehlincho/Joint_Model_Stability">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.129.238101">State-of-the-Art estimation of protein model accuracy using AlphaFold.</a><span class="meta">Roney JP, et al. 2022. <a class="pill" href="https://github.com/jproney/AF2Rank">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.sciencedirect.com/science/article/pii/S1367593121001125">Structure-based protein design with deep learning.</a><span class="meta">Ovchinnikov S, et al. 2021.</span></div>
-            <div class="rp"><a class="rtitle" href="https://www.pnas.org/doi/10.1073/pnas.2017228118">Protein sequence design by conformational landscape optimization.</a><span class="meta">Norn C, et al. 2021. <a class="pill" href="https://github.com/gjoni/trDesign/tree/master/02-GD">GitHub</a></span></div>
+      <!-- Theme 02 -->
+      <section class="theme" id="theme-2">
+        <div class="theme-header">
+          <span class="theme-badge theme-badge-2">02 &bull; DIFFUSION &amp; LANDSCAPES</span>
+          <h2 class="theme-statement">Modeling the protein conformational and folding landscape for structure prediction and design.</h2>
+          <div class="theme-questions">
+            <span class="q-tag">Can we generate stable de novo proteins by jointly optimizing sequence &amp; structure landscapes?</span>
+            <span class="q-tag">How can generative diffusion models serve as effective statistical potentials?</span>
           </div>
         </div>
+
+        <div class="theme-row">
+          <div class="theme-figs">
+            <figure class="fig-card">
+              <img loading="lazy" class="theme-fig" src="../assets/img/research/research_3.jpg" alt="The protein conformational landscape: P(sequence | structure) and P(structure | sequence).">
+              <figcaption class="fig-caption">Conformational landscape: mapping joint distributions P(sequence | structure) &amp; P(structure | sequence). <span class="fig-credit">Image credit: <a href="https://twitter.com/BasileWicky" target="_blank" rel="noopener">Basile Wicky</a></span></figcaption>
+            </figure>
+          </div>
+
+          <div class="recent-pubs">
+            <h3>Recent Theme Publications</h3>
+            <div class="rp">
+              <a class="rtitle" href="https://www.biorxiv.org/content/10.64898/2025.12.09.693073v1">Protein Diffusion Models as Statistical Potentials.</a>
+              <span class="meta"><span class="pub-yr">2025</span> Roney JP, et al. <a class="pill" href="https://github.com/jproney/ProteinEBM">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.nature.com/articles/s41467-025-66526-w">Stable de novo protein design via joint conformational landscape and sequence optimization.</a>
+              <span class="meta"><span class="pub-yr">2025</span> Cho Y, et al. <a class="pill" href="https://github.com/yehlincho/Joint_Model_Stability">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.129.238101">State-of-the-Art estimation of protein model accuracy using AlphaFold.</a>
+              <span class="meta"><span class="pub-yr">2022</span> Roney JP, et al. <a class="pill" href="https://github.com/jproney/AF2Rank">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.sciencedirect.com/science/article/pii/S1367593121001125">Structure-based protein design with deep learning.</a>
+              <span class="meta"><span class="pub-yr">2021</span> Ovchinnikov S &amp; Huang PS.</span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.pnas.org/doi/10.1073/pnas.2017228118">Protein sequence design by conformational landscape optimization.</a>
+              <span class="meta"><span class="pub-yr">2021</span> Norn C, et al. <a class="pill" href="https://github.com/gjoni/trDesign/tree/master/02-GD">GitHub</a></span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="theme">
-        <span class="theme-num">03</span>
-        <div class="theme-content">
-        <h2 class="theme-statement">Mining metagenomic "dark matter" for new protein families, functions, and interactions — and probing the early evolution of multicellularity.</h2>
-        <div class="theme-row">
-          <div>
-            <img loading="lazy" class="theme-fig" style="width:267px" src="../assets/img/research/research_4.png" alt="Mining metagenomic dark matter: multiple sequence alignments, structures, and contact maps.">
-            <img loading="lazy" class="theme-fig" style="width:464px" src="../assets/img/research/research_5.png" alt="Interaction networks, symbiotic communities, and the evolution of multicellularity.">
-          </div>
-          <div class="recent-pubs">
-            <h3>Recent Publications</h3>
-            <div class="rp"><a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2025.11.18.689110v1">CIRPIN: Learning Circular Permutation-Invariant Representations to Uncover Putative Protein Homologs.</a><span class="meta">Kolodziej A, et al. 2025. <a class="pill" href="https://github.com/aidenkoloj/CIRPIN">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.nature.com/articles/s41586-023-06583-7">Unraveling the functional dark matter through global metagenomics.</a><span class="meta">Pavlopoulos GA, et al. 2023. <a class="pill" href="http://www.nmpfamsdb.org/">Database</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.mlsb.io/papers_2022/Predicting_conformational_landscapes_of_known_and_putative_fold_switching_proteins_using_AlphaFold2.pdf">SWAMPNN: End-to-end protein structures alignment.</a><span class="meta">Trinquier J, et al. 2022. <a class="pill" href="https://github.com/jtrinquier/SWAMPNN">GitHub</a></span></div>
-            <div class="rp"><a class="rtitle" href="https://www.science.org/doi/10.1126/science.aah4043">Protein structure determination using metagenome sequence data.</a><span class="meta">Ovchinnikov S, et al. 2017. <a class="pill" href="https://github.com/sokrypton/map_align">GitHub</a></span></div>
+      <!-- Theme 03 -->
+      <section class="theme" id="theme-3">
+        <div class="theme-header">
+          <span class="theme-badge theme-badge-3">03 &bull; METAGENOMICS &amp; DARK MATTER</span>
+          <h2 class="theme-statement">Mining metagenomic "dark matter" for new protein families, functions, and interactions — and probing the early evolution of multicellularity.</h2>
+          <div class="theme-questions">
+            <span class="q-tag">What unknown protein families and functional universe lie in uncultivated metagenomes?</span>
+            <span class="q-tag">How did early molecular complexes evolve to enable multicellular life?</span>
           </div>
         </div>
+
+        <div class="theme-row">
+          <div class="theme-figs theme-figs-dual">
+            <figure class="fig-card">
+              <img loading="lazy" class="theme-fig" src="../assets/img/research/research_4.png" alt="Mining metagenomic dark matter: multiple sequence alignments, structures, and contact maps.">
+              <figcaption class="fig-caption">Dark Matter Mining: MSAs, predicted 3D structures, and inter-residue contact maps.</figcaption>
+            </figure>
+            <figure class="fig-card">
+              <img loading="lazy" class="theme-fig" src="../assets/img/research/research_5.png" alt="Interaction networks, symbiotic communities, and the evolution of multicellularity.">
+              <figcaption class="fig-caption">Symbiotic networks: coevolutionary maps revealing the origins of multicellularity.</figcaption>
+            </figure>
+          </div>
+
+          <div class="recent-pubs">
+            <h3>Recent Theme Publications</h3>
+            <div class="rp">
+              <a class="rtitle" href="https://www.biorxiv.org/content/10.1101/2025.11.18.689110v1">CIRPIN: Learning Circular Permutation-Invariant Representations to Uncover Putative Protein Homologs.</a>
+              <span class="meta"><span class="pub-yr">2025</span> Kolodziej A, et al. <a class="pill" href="https://github.com/aidenkoloj/CIRPIN">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.nature.com/articles/s41586-023-06583-7">Unraveling the functional dark matter through global metagenomics.</a>
+              <span class="meta"><span class="pub-yr">2023</span> Pavlopoulos GA, et al. <a class="pill" href="http://www.nmpfamsdb.org/">Database</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.mlsb.io/papers_2022/SWAMPNN_End_to_end_protein_structures_alignment.pdf">SWAMPNN: End-to-end protein structures alignment.</a>
+              <span class="meta"><span class="pub-yr">2022</span> Trinquier J, et al. <a class="pill" href="https://github.com/jtrinquier/SWAMPNN">GitHub</a></span>
+            </div>
+            <div class="rp">
+              <a class="rtitle" href="https://www.science.org/doi/10.1126/science.aah4043">Protein structure determination using metagenome sequence data.</a>
+              <span class="meta"><span class="pub-yr">2017</span> Ovchinnikov S, et al. <a class="pill" href="https://github.com/sokrypton/map_align">GitHub</a></span>
+            </div>
+          </div>
         </div>
       </section>
 
-      <p><a href="../publications/">All Publications</a></p>
+      <div class="research-footer-link">
+        <a class="btn-all-pubs" href="../publications/">Explore All Publications &rarr;</a>
+      </div>
     </div>
   </main>
 
