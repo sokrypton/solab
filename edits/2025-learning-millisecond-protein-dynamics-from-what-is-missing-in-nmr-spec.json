@@ -1,0 +1,650 @@
+{
+ "slug": "2025-learning-millisecond-protein-dynamics-from-what-is-missing-in-nmr-spec",
+ "ops": [],
+ "retired": [
+  {
+   "op": "drop",
+   "id": "p1-356a19",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p2-da4b92",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p3-77de68",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p4-1b6453",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p5-ac3478",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-c1dfd9",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-902ba3",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-fe5dbb",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p9-0ade7c",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p10-b1d578",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p11-17ba07",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p12-7b5200",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-bd307a",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-fa35e1",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-f1abd6",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-1574bd",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-0716d9",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p18-9e6a55",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-b3f0c7",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p20-91032a",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p21-472b07",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p22-12c6fc",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p23-d435a6",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p24-4d134b",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-f6e112",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-887309",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p27-bc33ea",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p28-0a57cb",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p29-7719a1",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p30-22d200",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p31-632667",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p32-cb4e52",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p33-b6692e",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p34-f1f836",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p35-972a67",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p36-fc074d",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p37-cb7a1d",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p38-5b384c",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p39-ca3512",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p40-af3e13",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p41-761f22",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p42-92cfce",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p43-0286dd",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p44-98fbc4",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p45-fb6443",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p46-fe2ef4",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p47-827bfc",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p48-64e095",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p49-2e01e1",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p50-e1822d",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p51-b7eb6c",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p52-a93349",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p53-c5b76d",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p54-80e28a",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p55-8effee",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p56-54ceb9",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p57-9109c8",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p58-667be5",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p59-5a5b0f",
+   "why": "page folio (bottom-of-page page number) read as a section heading; 59 of these flooded the body and the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p4-09337b",
+   "to": "heading",
+   "why": "Results subsection heading, set bold in the PDF, read as prose",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p7-f05b0c",
+   "to": "heading",
+   "why": "Results subsection heading read as prose",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p9-1fbf11",
+   "to": "heading",
+   "why": "Results subsection heading read as prose; under 60 chars, so as prose it was dropped from the page entirely",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p12-9c9ffc",
+   "to": "heading",
+   "why": "Results subsection heading read as prose; under 60 chars, so as prose it was dropped from the page entirely",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p16-dbc97c",
+   "to": "heading",
+   "why": "Results subsection heading read as prose; under 60 chars, so as prose it was dropped from the page entirely",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p34-ecf3c0",
+   "to": "heading",
+   "why": "Methods subsection heading 'Curating the “RelaxDB” dataset.' read as prose and, being short, not rendered at all",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p34-ef1f7e",
+   "to": "heading",
+   "why": "Methods subsection heading 'BMRB entries.' lost: read as prose, then dropped as too short",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p35-8fc02e",
+   "to": "heading",
+   "why": "Methods subsection heading 'Data from literature.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p35-6c6a67",
+   "to": "heading",
+   "why": "Methods subsection heading 'Fitting data / assigning labels.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p35-cd32a6",
+   "to": "heading",
+   "why": "Methods subsection heading 'Generating MSAs.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p36-b63a5d",
+   "to": "heading",
+   "why": "Methods subsection heading 'Generating structure models.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p38-c0c744",
+   "to": "heading",
+   "why": "Methods subsection heading 'The “mBMRB” dataset' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p38-69f5e4",
+   "to": "heading",
+   "why": "Methods subsection heading 'Curating data.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p39-0360fa",
+   "to": "heading",
+   "why": "Methods subsection heading 'Comparing to structure models in PDB' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p39-f2fb61",
+   "to": "heading",
+   "why": "Methods subsection heading 'RelaxDB-CPMG curation' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p39-109717",
+   "to": "heading",
+   "why": "Methods subsection heading 'Complete dispersion data available' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p40-513417",
+   "to": "heading",
+   "why": "Methods subsection heading 'Complete dispersion data unavailable' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p42-1c4470",
+   "to": "heading",
+   "why": "Methods subsection heading 'Data splitting' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p43-b6fe7f",
+   "to": "heading",
+   "why": "Methods subsection heading 'Training' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p44-301737",
+   "to": "heading",
+   "why": "Methods subsection heading 'Adjusting logits to account for class imbalance.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p45-a784d7",
+   "to": "heading",
+   "why": "Methods subsection heading 'Uncertainty estimation.' lost the same way",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "level",
+   "id": "p4-09337b",
+   "to": 3,
+   "why": "subsection of Results, not a top-level section (auto-level made it 2 because it is over 60 characters)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "level",
+   "id": "p7-f05b0c",
+   "to": 3,
+   "why": "subsection of Results, not a top-level section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p7-f05b0c",
+   "text": "Curating labels for µs-ms exchange across thousands of proteins.",
+   "why": "stray space before the final period, an artifact of the bold run ending before the period",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p5-0a7fb1",
+   "to": "prose",
+   "why": "body prose describing Fig. 1c, not a caption: it continues into the next paragraph ('for four example proteins from RelaxDB...'). Typed caption only because the line starts with 'Fig.'",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p11-b2a5c6",
+   "to": "prose",
+   "why": "body prose describing Fig. 3e, continues into the following paragraph; not a caption",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p13-c6fb24",
+   "to": "prose",
+   "why": "body prose (tail of the preceding sentence about Extended Data Fig. 5), not a caption",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p13-3b0ce1",
+   "to": "prose",
+   "why": "body prose describing Fig. 4b, continues into the following paragraph; not a caption",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-fc9dbf",
+   "why": "the italic species word 'Aeolicus' from mid-sentence, lifted out as a section heading; folded back into the sentence via the set op below",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p17-67b712",
+   "text": "We applied this new processing pipeline to 6 datasets where we had CPMG dispersion data for all non-overlapped residues. This included CypA 48 , beta-lactamase 28 , Adenylate Kinase from Aquifex aeolicus",
+   "why": "restores the species name that extraction pulled out as a heading, so the sentence continues into '49 , Biliverdin reductase B 50 , ...'",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p22-a4b0e8",
+   "why": "second line of the Fig. 1 caption title, read as a section heading because it is set in the caption's bold face; merged into the figure caption below",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p22-e9ebcf",
+   "text": "Fig. 1. A benchmark of 133 protein NMR backbone relaxation measurements demonstrates residues with ps-ns motion are less conserved, and residues with µs-ms motion are more conserved.",
+   "why": "the caption's bold title was split across three nodes; this restores the whole sentence on the figure",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p22-5e005d",
+   "text": "(a) Many biological processes occur at a µs-ms time regime, yet experimental data in this regime have not existed at a suficient scale for machine learning. NMR R 1 , R 2 and heteronuclear NOE (hetNOE) measure ps to low ns motion, while millisecond timescale exchange causes increased R 2 (R ex ). (b) The “RelaxDB” benchmark we curated consists of 133 single-domain protein backbone datasets with associated labels for the nature of motion present at each residue.",
+   "why": "drops the leading word 'conserved.' now that the caption title above is complete, so the panel list starts at (a)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p50-ed6847",
+   "why": "colour key inside Extended Data Fig. 2 ('ps-ns motion / no labelled motion / ...'), read as a top-level heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p34-f41a42",
+   "why": "shard of the R 2 equation (\"!' [J(0) +\") promoted to a heading; unreadable as text and the equation cannot be reconstructed",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p45-5714ac",
+   "why": "shard of the logit-adjustment equation with substituted glyphs, promoted to a heading; unreadable",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p41-484151",
+   "text": "Identifying unsuppressed R 2,eff",
+   "why": "'eff' subscript mangled to '$'; the same subscript appears as 'e1' throughout this section (R 2,e1 vs nu CPMG), so the intended reading is R 2,eff",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p34-32be0d",
+   "why": "fragment of a display equation ('R ! =', 'A sum [', ...) promoted to a heading; unreadable and the equation cannot be reconstructed from the shards",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p34-6e1f13",
+   "why": "fragment of a display equation ('R ! =', 'A sum [', ...) promoted to a heading; unreadable and the equation cannot be reconstructed from the shards",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p36-14fb53",
+   "why": "fragment of a display equation ('R ! =', 'A sum [', ...) promoted to a heading; unreadable and the equation cannot be reconstructed from the shards",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p36-cc9019",
+   "why": "fragment of a display equation ('R ! =', 'A sum [', ...) promoted to a heading; unreadable and the equation cannot be reconstructed from the shards",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p45-522c24",
+   "why": "fragment of a display equation ('R ! =', 'A sum [', ...) promoted to a heading; unreadable and the equation cannot be reconstructed from the shards",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p45-0fe46a",
+   "why": "fragment of a display equation ('R ! =', 'A sum [', ...) promoted to a heading; unreadable and the equation cannot be reconstructed from the shards",
+   "retired_because": "node id no longer exists"
+  }
+ ]
+}

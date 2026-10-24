@@ -1,0 +1,489 @@
+{
+ "slug": "2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m",
+ "ops": [
+  {
+   "op": "set",
+   "id": "g3-62732e",
+   "text": "To hold specific metal ions in a stable and energetically favorable manner, metalloproteins across all species have evolved topologically similar metal-binding sites in their structures to meet the chemical and geometric bonding requirements 3 . Over the decades, both structural observations and theoretical calculations have accumulated detailed knowledge to accurately describe the rules of binding geometry and valence for different metal ions 4 . More recently, researchers have explored metal-binding proteins directly in proteomes using other experimental methods including inductively coupled plasma mass spectrometry (ICP-MS) 5 , activity-based protein profiling 6 and metal isotope native radio autography in gel electrophoresis 7 .",
+   "why": "GROBID truncated this Introduction paragraph at the page-1 column foot ('researchers have') and pasted the running head in its place; the real tail was misfiled into g10. Restored from .cache/doc_ours p1-62732e.",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner"
+  },
+  {
+   "op": "drop",
+   "id": "g11-55dded",
+   "why": "reading order: GROBID emitted Introduction paragraphs 3-5 and the whole 'Prediction of co-evolved metal-binding residue pairs' subsection AFTER the page-2 right-column Results text, so a reader hit 'The results suggested that…' straight out of the Introduction. Re-inserted in PDF order after g3.",
+   "at": "in light of the explosive growth of genome databases various bioinformatic methods"
+  },
+  {
+   "op": "drop",
+   "id": "g12-781c12",
+   "why": "reading order, see g11 — re-inserted after g3",
+   "at": "thanks to high throughput sequencing technologies we are now having access to"
+  },
+  {
+   "op": "drop",
+   "id": "g13-b7d21c",
+   "why": "reading order, see g11 — re-inserted after g3",
+   "at": "here we have developed a machine learning ml method named metalnet to"
+  },
+  {
+   "op": "drop",
+   "id": "g14-612e12",
+   "why": "reading order: 'Results' heading sat below the first three Results paragraphs — re-inserted after g3",
+   "at": "results"
+  },
+  {
+   "op": "drop",
+   "id": "g15-62e70e",
+   "why": "reading order: subsection heading sat below its own paragraphs — re-inserted after g3",
+   "at": "prediction of co evolved metal binding residue pairs"
+  },
+  {
+   "op": "drop",
+   "id": "g16-72b625",
+   "why": "reading order, see g11 — re-inserted after g3",
+   "at": "we first collected metalloproteins from the protein data bank pdb and crosschecked"
+  },
+  {
+   "op": "drop",
+   "id": "g17-595a46",
+   "why": "reading order, see g11 — re-inserted after g3",
+   "at": "we next analyzed co evolution signals from all the ten possible pairwise"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "heading",
+    "level": 2,
+    "text": "Results"
+   },
+   "why": "'Results' restored above the Results text (was g14)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "heading",
+    "level": 3,
+    "text": "Prediction of co-evolved metal-binding residue pairs"
+   },
+   "why": "first Results subsection heading restored above its own paragraphs (was g15)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner"
+  },
+  {
+   "op": "set",
+   "id": "g108-f5f2e3",
+   "text": "Fig. 1 | Predicting metal-binding residue pairs from co-evolution by ML. a, Classification of metal-chelating residues by amino acid types, showing CHED accounting for 91% of all the metal-chelating residues. b, Co-evolved residue pairs are more enriched with metal binding. For each of the ten CHED pairwise combinations, the percentage of co-evolved pairs observed with metal binding (blue bar) and the percentage of metal-binding pairs in randomly picked residue pairs (red bar) were calculated. Gray line shows the enrichment ratios. c, Percentage of CHED residue type, which is involved in metal-binding as observed in the training set. d, Scheme of predicting metal-binding residue pairs based on the co-evolution information using ML. Starting with MSA, all CHED co-evolved pairs were extracted from the contact map and their pairwise residue-composition frequency matrices were used to train a model to predict whether a co-evolved pair is metal-binding for every CHED co-evolved residue pair in the contact map. The 21 × 21 pairwise frequency matrix is calculated based on the residue-residue frequency profile observed in the homologous sequences.",
+   "why": "caption was cut at 'involved in metal-binding as'; the c/d panel text had been spliced into the middle of Results paragraph g23. Rejoined here.",
+   "at": "fig 1 fig 1 predicting metal binding residue pairs from co evolution"
+  },
+  {
+   "op": "set",
+   "id": "g10-147b88",
+   "text": "Interestingly, among the extracted co-evolution networks, we also observed different network patterns for sites with different types of metal bound (Fig. 2 ). We compiled such patterns from known metalloproteins to construct a metal-type-dependent architecture database of co-evolution networks ('co-evolution motif bank'; Supplementary Dataset 2). Because different metal ions have their preferred co-evolution network architecture, it should be possible to compare the residue compositions and topology of a predicted co-evolution network with existing patterns in the co-evolution motif bank and assign the possible type of metal ion bound (Fig. 2 ).",
+   "why": "GROBID glued the head of this paragraph to the lost tail of the Introduction paragraph g3, producing the false claim that co-evolution architecture makes it 'possible to compare explored metal-binding proteins directly in proteomes using ICP-MS…'. Real tail restored from .cache/doc_ours p2-8a91f2; the stranded copy is g18.",
+   "was": "g10-8a91f2",
+   "at": "interestingly among the extracted co evolution networks we also observed different network"
+  },
+  {
+   "op": "set",
+   "id": "g23-cdca51",
+   "text": "We applied MetalNet to predict metalloproteins in four prokaryotic proteomes, including Escherichia coli, Bacillus subtilis, Saccharolobus solfataricus and Halobacterium salinarum, which currently have 1,965 annotated metalloproteins. MetalNet predicted a total of 4,849 potential metalloproteins in these species (Fig. 3a and Supplementary Dataset 4). Moreover, MetalNet found 1,603 network clusters and we were able to match the co-evolution network patterns for 973 of them so that their metal types could be inferred by analogy to existing metalloproteins (Supplementary Dataset 4).",
+   "why": "the sentence broke off at 'MetalNet found 1,603 network clusters and' and the Fig. 1c/d caption was inserted in its place; the real continuation opened g24. Rejoined from .cache/doc_ours p3-5542a3.",
+   "at": "we applied metalnet to predict metalloproteins in four prokaryotic proteomes including escherichia"
+  },
+  {
+   "op": "set",
+   "id": "g24-469625",
+   "text": "We first sought direct structural evidence to support our predictions. For each of the predicted metalloproteins, we searched its homologs by PDB-BLAST 33 and found that 37% (1,810 of 4,849) of the predictions could be supported by experimental structures (Fig. 3b ). Among these predictions, we not only observed classical short sequence motifs such as C2H2 in zinc fingers and CXXCXXCC in certain iron-sulfur-binding proteins but also found cases with metal-chelating residues by >100 amino acids apart in sequence (Fig. 3c ) or with complexed co-evolved networks corresponding to multinuclear or multiple metal-binding sites (Fig. 3d , e ). Collectively, these examples highlighted the power of MetalNet in discovering complex metal-binding sites from proteins independent from 1D sequences or 3D structural motifs.",
+   "why": "paragraph began mid-clause ('we were able to match…'); that clause now sits back in g23 where it was printed",
+   "was": "g24-b87f54",
+   "at": "article we were able to match the co evolution network patterns for"
+  },
+  {
+   "op": "set",
+   "id": "g109-090d79",
+   "text": "Fig. 2 | Assembly of metal-binding residue pairs into a high-order connected co-evolution network by graph theory. Co-evolved metal-binding residue pairs predicted by ML model are assembled into a high-order co-evolution network, and the connected sub-networks are then detected by graph theory. The 'singleton' pairs are discarded, which can serve as a filter to increase the prediction precision. Finally, the predicted sub-network clusters are queried in a 'co-evolution motif bank' compiled from known metalloproteins (histidine in blue, cysteine in yellow, aspartic acid in purple and glutamic acid in pink), which will enable prediction of the type of metal ions bound. It should be noted that one metal type might have multiple corresponding network motifs in the bank.",
+   "why": "caption stopped at 'are queried'; the rest had been spliced into the middle of Results paragraph g27. Rejoined, and 'histidine i n blue' de-hyphenated.",
+   "at": "fig 2 fig 2 assembly of metal binding residue pairs into a"
+  },
+  {
+   "op": "set",
+   "id": "g27-d9bbdc",
+   "text": "We next investigated whether evolutionary information extracted from metagenome sequencing data can enhance MetalNet predictions. We started with the MSAs that were previously calculated by GREMLIN to guide the structural modeling of 1,116 Pfam families by Rosetta (ref. 22 ). MetalNet predicted 175 metalloproteins with clusters and 60 of them have overlapping Rosetta models (Fig. 4a and Supplementary Dataset 5). Analysis of these models showed that residues within 46 predicted metal-binding sites are proximal to each other (Supplementary Dataset 5 and Supplementary Fig. 1 ). Furthermore, the overall distribution of residue-residue distances was consistent with that calculated from known metalloproteins below 4.5 Å (Extended Data Fig. 7 ).",
+   "why": "the sentence broke off at 'the overall distribution of' and the Fig. 2 caption tail followed; the real ending opened g29. Restored from .cache/doc_ours p4-d9bbdc.",
+   "at": "we next investigated whether evolutionary information extracted from metagenome sequencing data can"
+  },
+  {
+   "op": "drop",
+   "id": "g28-4360c2",
+   "why": "'Article' is the Nature running head, read as a section heading — it appeared in the table of contents between two real Results subsections",
+   "at": "article"
+  },
+  {
+   "op": "set",
+   "id": "g29-6ecd3a",
+   "text": "We selected 21 MetalNet predictions for experimental validation, none of which has been reported with any metal-binding activities or homologs back then at that time. Five targets yielded reasonable expression in the initial screening including Rv3033, Desor_0198, SVEN_5263, cbrC and citX. Among them, Rv3033 (Uniprot code: I6YAY5 ) failed to be purified likely because it is predicted as an iron-sulfur cluster-binding protein. Purified Desor_0198 (UniProt code: G7W7J8 ) and SVEN_5263 (UniProt code: F2R5E5 ) showed zinc-binding signals by ICP-MS (Extended Data Fig. 8a , b ); however, their metal-binding site variants were unstable for purification. We therefore characterized the remaining two proteins, cbrC and citX, in detail by biochemical and/or structural methods.",
+   "why": "paragraph opened with a bare DOI running head plus the tail of g27's sentence; both now belong to g27",
+   "was": "g29-2e72c6",
+   "at": "residue residue distances was consistent with that calculated from known metalloproteins below"
+  },
+  {
+   "op": "set",
+   "id": "g30-1eaf74",
+   "text": "The protein cbrC (UniProt code: P31469, Pfam: PF03691) is a CreB-regulated gene C protein in E. coli 34 . MetalNet predicted two potential metal-binding sites (Site 1: C31, C33, C34, C56 and C59; Site 2: H125, C126, C182 and C185) (Extended Data Fig. 8c ). We purified the wild-type protein, the single variant of C56S or C182S, as well as the double variant (Extended Data Fig. 8c ). ICP-MS analysis showed that the wild-type protein was bound with zinc and the measured metal to protein ratio was close to two, which is highly consistent with the MetalNet prediction. The zinc/protein ratios of the single variants, C56S and C182S, were measured as 0.481 and 0.628, respectively, and for the double variant of C56S/C182S, its metal-binding activity was completely abolished (Extended Data Fig. 8c ). The protein citX (UniProt code: P0A6G5, Pfam: PF03802) was annotated as an apo-citrate lyase phosphoribosyl-dephospho-CoA transferase in E. coli 35 . MetalNet identified a co-evolution network consisting of three cysteines (C145, C148 and C155) and one histidine H161 in citX (Fig. 4b ), and the network topology confidently matches a zinc-binding site. We recombinantly overexpressed the wild-type citX and the single variants of the four metal-binding residues (C145S, C148S, C155S and H161S) in E. coli, and some of the single variants showed compromised solubility (Fig. 4c ). After purification (Extended Data Fig. 8d ), ICP-MS analysis confirmed that the wild-type protein specifically bound zinc but not iron or copper as expected from the prediction, and the measured metal to protein ratio was around 0.7 and none of the single variants showed detectable zinc-binding signals (Fig. 4d ). When the wild-type protein was treated with EDTA, a conventional metal-chelator, the thermal stability curve was shifted left compared with the sample treated with PBS, indicating the protein was destabilized upon metal extraction (Fig. 4e ). Circular dichroism analysis also showed that EDTA treatment would greatly perturb the protein's conformation (Fig. 4f ). Finally, we solved the structure of citX by X-ray crystallography (PDB code: 7DCM at 2.5 Å resolution determined by single-wavelength anomalous diffraction and PDB code: 7DCN at 1.7 Å resolution determined by molecular replacement; Supplementary Table 3 ). In the structure of 7DCN, distances between the zinc ion and the predicted chelating residues are 2.34 Å, 2.31 Å, 2.36 Å and 2.08 Å, which unambiguously proved that the predicted cysteines and histidine together form a tetrahedral zinc-binding site in citX (Fig. 4g ). The crystal structure also matches well with a structural model we built by Rosetta (Fig. 4h ). To investigate structural and dynamic characteristics of citX and its variants, we also performed molecular dynamic (MD) simulations and the results showed that all the four variants had greater conformational fluctuations at the zinc-binding site, suggesting that the metal ion has a stabilizing effect for the protein (Extended Data Fig. 9 ).",
+   "why": "the page-6/7 running head ('Article https://doi.org/10.1038/…') was pasted inside the sentence 'all the four | variants had greater conformational fluctuations'. Also spaced 'E.coli' -> 'E. coli'.",
+   "at": "the protein cbrc uniprot code p31469 pfam pf03691 is a creb regulated"
+  },
+  {
+   "op": "set",
+   "id": "g49-95d5ff",
+   "text": "We used AutoGluon ( https://auto.gluon.ai/stable/index.html ) to train a high-performance model. AutoGluon is an auto-machine-learning (AutoML) framework, which is developed by researchers in Amazon. Unlike existing AutoML frameworks that primarily focus on model/hyperparameter selection, AutoGluon-Tabular succeeds by ensembling multiple models, including XGBoost, Random Forest model, KNearestNeighbors model, neural network models and so on, and then stacking them in multiple layers. AutoGluon requires only a single line of Python to train highly accurate ML models on an unprocessed tabular dataset. The key parameters are shown as follows: time_limit = 600, metric = 'roc_auc', predictor = TabularPredictor(label = label, eval_metric = metric, verbosity = 0).fit(train_data, time_limit = time_limit, presets = 'best_quality').",
+   "why": "'The key parameters are shown as follows:' promised parameters that GROBID dropped entirely. Restored from .cache/doc_ours p9-c81ad0.",
+   "was": "g49-557c2c",
+   "at": "we used autogluon https auto gluon ai stable index html to train"
+  },
+  {
+   "op": "after",
+   "id": "g68-fd1a7e",
+   "node": {
+    "type": "heading",
+    "level": 3,
+    "text": "Direct structural evidence for MetalNet predictions"
+   },
+   "why": "Methods heading lost in extraction, leaving three paragraphs on homology searching filed under 'UniProt annotation'",
+   "at": "for a given species we downloaded from uniprot https ebi10 uni prot"
+  },
+  {
+   "op": "set",
+   "id": "g107-045b17",
+   "text": "The protein crystals were picked by cryo-loops and placed in the corresponding reservoir solution, containing 20% (vol/vol) glycerol and flash-frozen in liquid nitrogen. The X-ray data were collected at Beamline 17U1 and BL19U of Shanghai Synchrotron Radiation Facility at the Se peak wavelength 0.9792 Å with Eiger 16 M detector, and the samples were kept at 100 K during data collection. The initial model was determined by single-wavelength anomalous diffraction phasing using the anomalous signal from Se atoms with SHELX 53 using the peak data and finally refined to a resolution of 2.5 Å. Model building and refinement were carried out iteratively using Phenix 54 and Coot 55 . Then another higher-resolution structure was determined by molecular replacement with Phenix AutoMR using the initial model as the search model and finally refined to a resolution of 1.7 Å. Final structures were validated with the wwPDB server. The data processing and refinement statistics are summarized in Supplementary Table 3 (from coot).",
+   "why": "the paper's last Methods paragraph stopped mid-sentence at the page-11 foot ('containing 20% (vol/vol) glycerol'); GROBID lost everything after the page turn. Restored from .cache/doc_ours p11-3fbfd3.",
+   "at": "the protein crystals were picked by cryo loops and placed in the"
+  },
+  {
+   "op": "after",
+   "id": "g107-045b17",
+   "node": {
+    "type": "heading",
+    "level": 3,
+    "text": "Molecular dynamics"
+   },
+   "why": "the whole 'Molecular dynamics' Methods section (page 12) was lost with the page turn",
+   "at": "the protein crystals were picked by cryo loops and placed in the"
+  },
+  {
+   "op": "drop",
+   "id": "g111-b70315",
+   "why": "not a caption: PDB/e-value annotations printed inside Figure 3's panels c-e, plus a fragment of the running head. The information is already in the Fig. 3 caption.",
+   "at": "in bacsu tyrosine protein phosphatase ywqe pdb 5ean homolog of q9hprb in"
+  },
+  {
+   "op": "drop",
+   "id": "g113-7d8b27",
+   "why": "three unrelated Extended Data captions concatenated (ED Fig. 4's tail + all of ED Fig. 5 + all of ED Fig. 7), rendered as loose prose after the Methods. Each part is now on its own figure.",
+   "at": "figure a and b show the absolute count and normalized percentage respectively"
+  },
+  {
+   "op": "drop",
+   "id": "g110-43b3d5",
+   "why": "figure image wrong: gb-03.jpg is a single embedded raster from GROBID showing only one protein cartoon, not the five-panel Figure 3. Our page crop fig-03.jpg has the whole figure.",
+   "at": "fig 3 fig 3 predictions and analyses of metalloproteins from representative prokaryotic"
+  },
+  {
+   "op": "after",
+   "id": "g23-cdca51",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-3",
+    "label": "Fig. 3 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-03.jpg",
+    "text": "Fig. 3 | Predictions and analyses of metalloproteins from representative prokaryotic species. a, The percentage of predicted metalloproteins by MetalNet (blue) and annotated proteins by UniProt (pink) within each proteome. The overlapping proteins are highlighted in the white-patch pattern. ECOLI: E. coli; BACUS: B. subtilis; SACS2: S. solfataricus; HALSA: H. salinarum. b, Part of MetalNet predictions can be supported by either direct structural evidence or indirect evidence from various sources, which include UniProt annotations, Gene Ontology annotations and Pfam annotations. c, Example of a predicted mononuclear iron-sulfur cluster binding protein from H. salinarum, which is supported by its structural homolog (PDB code: 5EAN). d, Example of a predicted multinuclear site in YwqE from B. subtilis, which is supported by the structure in PDB (code: 3QY7). e, Example of three separate zinc-binding sites, which is supported by its structural homolog (PDB code: 6J2L). In c-e, crystal structures of corresponding metalloprotein are shown in cartoon and the predicted metal-binding sites are shown as network. Metal-chelating residues are shown in sticks and metals bound are shown in either sticks (iron-sulfur cluster in yellow and brown) or spheres (magnesium in green, iron in brown and zinc in gray)."
+   },
+   "why": "Figure 3 with the correct full-figure crop, moved from the 'Assembling…' subsection to the paragraph that first cites Fig. 3a",
+   "at": "we applied metalnet to predict metalloproteins in four prokaryotic proteomes including escherichia"
+  },
+  {
+   "op": "drop",
+   "id": "g112-1156cb",
+   "why": "figure image wrong: gb-04.jpg is a single embedded raster showing only the panel-g zinc-site zoom, not the eight-panel Figure 4. Our page crop fig-04.jpg has the whole figure.",
+   "at": "fig 4 fig 4 biochemical and structural characterization of citx as a"
+  },
+  {
+   "op": "after",
+   "id": "g29-6ecd3a",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-4",
+    "label": "Fig. 4 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-04.jpg",
+    "text": "Fig. 4 | Biochemical and structural characterization of citX as a zinc-binding protein. a, Scheme of predicting metalloproteins from the Pfam families that lack existing structural homologs using metagenome-enhanced co-evolution. b, The predicted zinc-binding co-evolved network in citX by MetalNet. c, Variant of some of the predicted metal-binding residues compromised citX's solubility. The wild-type and all four variants (C145S, C148S, C155S and H161S) showed similar protein abundance as demonstrated by Coomassie blue staining (highlighted in the black box). The experiment was repeated twice independently with similar results. d, Variant of the predicted metal-binding residues abolished the zinc-binding in citX as measured by ICP-MS. e, Treatment of EDTA, a zinc ion chelator, decreased citX's thermal stability as measured by the thermal shift assay. In d and e, error bars represent mean and s.d. (n = 3 biologically independent samples). f, Circular dichroism measurement of the purified citX in presence of various concentrations of EDTA. g, Crystal structure of citX (PDB code: 7DCN) and the zoom-in view of the zinc-binding site confirms the prediction of MetalNet. h, Structural models of citX built by Rosetta with (right) and without (left) the predicted zinc-binding site into consideration."
+   },
+   "why": "Figure 4 with the correct full-figure crop, moved next to the citX characterization it illustrates",
+   "was": "g29-2e72c6",
+   "at": "we selected 21 metalnet predictions for experimental validation none of which has"
+  },
+  {
+   "op": "drop",
+   "id": "g905-c6e742",
+   "why": "wrong artwork: fig-05.png is Extended Data Fig. 1's bar chart, not the ED Fig. 5 workflow diagram (that is fig-09.jpg). Crop numbering is sequential over all 14 figures; the label number is not an index into it.",
+   "at": "extended data fig 5 overall workflow of metalnet starting with the information"
+  },
+  {
+   "op": "after",
+   "id": "g905-c6e742",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-5",
+    "label": "Extended Data Fig. 5 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-09.jpg",
+    "text": "Extended Data Fig. 5 | Overall workflow of MetalNet. Starting with the information from coevolution analysis, MetalNet uses a machine learning (ML)-based classifier that has been trained by a benchmark of known metalloproteins to predict whether an individual CHED coevolved residue pair is metal-binding or not. It then employs a graph-based approach to identify high-order coevolution network clusters formed by these coevolved CHED pairs to generate reliable predictions of metal-binding sites in the query protein. In certain cases when the coevolution network topology can be matched to that of known metal-binding sites, the method can also infer the information on the type of metal bound in the predicted site. The method does not use any sequence (1D) or structural (3D) homology information to make predictions."
+   },
+   "why": "ED Fig. 5 with its own artwork and its full caption (the tail was stranded in g113)",
+   "at": "extended data fig 5 overall workflow of metalnet starting with the information"
+  },
+  {
+   "op": "drop",
+   "id": "g906-80d7bf",
+   "why": "wrong artwork: fig-06.png is ED Fig. 2's network clusters, not the MetalNet-vs-MIB tables (fig-10.jpg)",
+   "at": "extended data fig 6 comparation of the performance between metalnet and mib"
+  },
+  {
+   "op": "after",
+   "id": "g906-80d7bf",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-6",
+    "label": "Extended Data Fig. 6 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-10.jpg",
+    "text": "Extended Data Fig. 6 | Comparation of the performance between MetalNet and MIB. a, Evaluation of the performance of MetalNet and MIB on a 'prospective' metalloprotein dataset that were deposited in PDB after 2016/08. b, Evaluation of the performance of MetalNet and MIB on this prospective metalloprotein dataset after proteins with one single sidechain as the liganding group were removed. In a and b, the calculated precision, recall and F1-scores for MetalNet and MIB are shown on the left in the table format, and the Venn diagrams of the predictions are shown on the right."
+   },
+   "why": "ED Fig. 6 with its own artwork",
+   "at": "extended data fig 6 comparation of the performance between metalnet and mib"
+  },
+  {
+   "op": "drop",
+   "id": "g907-6bab71",
+   "why": "wrong artwork: fig-07.png is ED Fig. 3's node-degree histogram, not the pair-distance distribution (fig-11.png)",
+   "at": "extended data fig 7 distribution of the minimal distances between the metal"
+  },
+  {
+   "op": "after",
+   "id": "g907-6bab71",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-7",
+    "label": "Extended Data Fig. 7 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-11.png",
+    "text": "Extended Data Fig. 7 | Distribution of the minimal distances between the metal-binding residue pairs predicted by MetalNet. The blue block shows the distribution of residue-residue pairwise distances for metal-binding residues from known metalloproteins in the PDB database. Black solid lines show the distribution of mean distances in GREMLIN models for the metal-binding coevolved sites predicted by MetalNet. The distributions generally agree well with each other until 4.5 Å, suggesting that a large portion of MetalNet predictions indeed have metal-binding residues in proximity with each other. Since GREMLIN does not take metal-binding into consideration during structural modeling, the disagreement after 4.5 Å may come from either false positive prediction by MetalNet, or some errors in structural modeling by GREMLIN."
+   },
+   "why": "ED Fig. 7 with its own artwork and its full caption (the tail was stranded in g113)",
+   "at": "extended data fig 7 distribution of the minimal distances between the metal"
+  },
+  {
+   "op": "drop",
+   "id": "g908-c98845",
+   "why": "wrong artwork: fig-08.png is ED Fig. 4's stacked bars, not the four-protein ICP-MS panel (fig-12.jpg)",
+   "at": "extended data fig 8 validation of metal binding in purified desor 0198"
+  },
+  {
+   "op": "after",
+   "id": "g908-c98845",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-8",
+    "label": "Extended Data Fig. 8 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-12.jpg",
+    "text": "Extended Data Fig. 8 | Validation of metal binding in purified Desor_0198 (a), SVEN_5263 (b), CbrC (c) and CitX (d) by ICP-MS. For a and b, the coevolved metal-binding cluster predicted by MetalNet are shown on the left, SDS-PAGE of the purified wild-type protein in the middle and ICP-MS measurement of metal binding of the purified protein are shown on the right. Both proteins are validated with zinc-binding activity. c, The coevolved metal-binding cluster predicted by MetalNet are shown on the left, SDS-PAGE of the purified wild-type protein, two single mutants (C56S or C182S) and the double mutant (C56S&C182S) in the middle and ICP-MS analysis of zinc binding in the purified wild-type cbrC and mutants on the right. d, SDS-PAGE of the purified wild-type citX and its four variants."
+   },
+   "why": "ED Fig. 8 with its own artwork",
+   "at": "extended data fig 8 validation of metal binding in purified desor 0198"
+  },
+  {
+   "op": "drop",
+   "id": "g909-09f1a3",
+   "why": "wrong artwork: fig-09.jpg is the ED Fig. 5 workflow diagram, not the RMSF traces (fig-13.png)",
+   "at": "extended data fig 9 molecular dynamic md simulations of citx and its"
+  },
+  {
+   "op": "after",
+   "id": "g909-09f1a3",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-9",
+    "label": "Extended Data Fig. 9 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-13.png",
+    "text": "Extended Data Fig. 9 | Molecular dynamic (MD) simulations of citX and its mutants. MD simulations were performed to calculate root mean square fluctuation (RMSF) for citX (PDB ID: 7DCN ) and its mutants (C145S, C148S, C155S and H161S)."
+   },
+   "why": "ED Fig. 9 with its own artwork",
+   "at": "extended data fig 9 molecular dynamic md simulations of citx and its"
+  },
+  {
+   "op": "drop",
+   "id": "g910-c7fb09",
+   "why": "wrong artwork: fig-10.jpg is the ED Fig. 6 comparison tables, not the spliceosome figure (fig-14.jpg)",
+   "at": "extended data fig 10 prediction of metal binding sites in the human"
+  },
+  {
+   "op": "after",
+   "id": "g910-c7fb09",
+   "node": {
+    "type": "figure",
+    "anchor": "figure-10",
+    "label": "Extended Data Fig. 10 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-14.jpg",
+    "text": "Extended Data Fig. 10 | Prediction of metal-binding sites in the human spliceosome. a, Scheme of predicting metal-binding sites in the human spliceosome using coevolution obtained by deepMSA and MSA transformer. b, Highlight of the zinc-binding sites in the human spliceosome predicted by MetalNet that match well with the experimental structures in PDB."
+   },
+   "why": "ED Fig. 10 with its own artwork",
+   "at": "extended data fig 10 prediction of metal binding sites in the human"
+  },
+  {
+   "op": "set",
+   "id": "g5-85dd16",
+   "text": "To systematically formulate this approach, we generated a 'pairwise frequency matrix' for every CHED co-evolved residue pair in the contact map. The 21 × 21 matrix is calculated based on the residue-residue frequency profile observed in the homologous sequences for this given pair (20 amino acids and one more position gap). We averaged the matrices for all the metal-binding and nonbinding residue pairs, respectively, and observed very distinct patterns between them (Fig. 1d ). For example, the metal-binding pairs have much more enriched signals in the CHED region whereas signals for the nonbinding pairs are dispersed throughout the whole matrix. We reasoned that such pattern differences can be transformed into a classification problem that is addressable by ML.",
+   "why": "Nature's closing quote comes through as U+02BC with the following space eaten: 'pairwise frequency matrixʼfor'. Normalised the pair of quotes and restored the space.",
+   "was": "g5-c70ee1",
+   "at": "to systematically formulate this approach we generated a pairwise frequency matrix for"
+  },
+  {
+   "op": "set",
+   "id": "g8-1c6b21",
+   "text": "During investigating the co-evolution network of proteins in the benchmark, we observed that many metal-binding co-evolved pairs assemble to form an integrated network (Extended Data Fig. 2 ). This is consistent with a previous report that residues within a functional site have the tendency to cluster together in a co-evolution network 29 . To quantify whether metal-binding residues are more frequently engaged in a connected co-evolution network, we calculated the number of co-evolved connections ('node degree') for every CHED residue. The results showed that the metal-binding residues indeed have higher node degrees on average than the nonbinding ones (Extended Data Fig. 3 ). We reasoned that detecting such networks should help improve the precision of our prediction (Fig. 2 ). We therefore implemented a graph-based approach to detect co-evolution network clusters from the predicted metal-binding residue pairs by trimming off those 'singleton' pairs (Methods). As expected, applying the graph filter resulted in an improved F1 score of the prediction (Supplementary Table 2 ).",
+   "why": "same U+02BC quote defect glued 'singletonʼpairs'",
+   "was": "g8-1ad78b",
+   "at": "during investigating the co evolution network of proteins in the benchmark we"
+  }
+ ],
+ "retired": [
+  {
+   "op": "set",
+   "id": "g131-822786",
+   "text": ".",
+   "why": "bibliography entry 18 was the article's own DOI, mis-parsed as a reference. 'drop' does not reach reference nodes in build_papers, so this shortens it below the 25-character floor that render_entries applies.",
+   "at": "doi 10 1038 s41589 022 01223 z",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "g18-713e60",
+   "why": "orphan half-sentence starting 'the residue compositions and topology of…' — it is the tail of g10, now restored there",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g6-d88ea6",
+   "node": {
+    "type": "figure",
+    "label": "Extended Data Fig. 1 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-05.png",
+    "text": "Extended Data Fig. 1 | Distribution of the metal types of the metalloproteins in the training set. ZN: zinc; CA: calcium; MG: magnesium; MN: manganese; FE: iron; SF4: [FE4-S4] iron-sulfur clusters; NI: nickel; CU: copper; CO: cobalt; FES: [FE2-S2] iron-sulfur clusters."
+   },
+   "why": "Extended Data Fig. 1 was never rendered although its crop and caption both exist; inserted where the text first cites it",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g8-1ad78b",
+   "node": {
+    "type": "figure",
+    "label": "Extended Data Fig. 2 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-06.png",
+    "text": "Extended Data Fig. 2 | Examples of the coevolved CHED network clusters detected in the PDB data. Metal-binding residues in these sites have the tendency to coevolve with each other and cluster together in a high-order coevolution network. The PDB ID and type of the metal ion bound are listed below the corresponding coevolved network."
+   },
+   "why": "Extended Data Fig. 2 was never rendered although its crop and caption both exist; inserted where the text cites it",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g8-1ad78b",
+   "node": {
+    "type": "figure",
+    "label": "Extended Data Fig. 3 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-07.png",
+    "text": "Extended Data Fig. 3 | Distribution of the number of coevolved connections ('node degree') for each residue among all the coevolved CHED pairs in the training set. The CHED residues involved in metal binding (blue) have more node degrees on average than those non-metal-binding residues in the coevolved networks (red)."
+   },
+   "why": "Extended Data Fig. 3 was never rendered although its crop and caption both exist; inserted where the text cites it",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g9-2a2fd4",
+   "node": {
+    "type": "figure",
+    "label": "Extended Data Fig. 4 |",
+    "image": "assets/papers/2023-co-evolution-based-prediction-of-metal-binding-sites-in-proteomes-by-m/fig-08.png",
+    "text": "Extended Data Fig. 4 | Composition of metal-chelating CHED sidechains within the coordination sphere around each specific metal ion. The statistic is calculated based on metalloprotein structures in the benchmark. Figure a and b show the absolute count and normalized percentage, respectively. ZN: zinc; CA: calcium; MG: magnesium; MN: manganese; NI: nickel; FE: iron; CU: copper; SF4: [FE4-S4] iron-sulfur clusters; CO: cobalt; FES: [FE2-S2] iron-sulfur clusters."
+   },
+   "why": "Extended Data Fig. 4 was never rendered although its crop exists; its caption tail was stranded at the head of g113",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "prose",
+    "text": "In light of the explosive growth of genome databases, various bioinformatic methods have also been developed to predict metal-binding sites based on the sequence or/and structural information. For example, zinc-binding proteins in human proteome have been systematically predicted by a combination of sequence and structural homology to known metalloproteins 8 . More sophisticated algorithms such as support vector machines and neural networks were used to identify cysteines and histidines in transition-metal-binding sites from protein primary sequences [9] [10] [11] . Moreover, knowledge of canonical chelating geometries could also be utilized to predict metal-binding sites from apoprotein structures 12 . Lastly, web servers such as MIB 13 and COFACTOR 14 have been developed to enable automated annotation for metal-binding sites or ligand-binding sites in proteins 14 . However, it still remains challenging to computationally discover new classes of metalloproteins without sequence or structural homology in proteomes 3 ."
+   },
+   "why": "Introduction paragraph 3, restored to its printed position (was g11)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "prose",
+    "text": "Thanks to high-throughput sequencing technologies, we are now having access to genome information for a rapidly growing list of species. Alignment of sequences for a given protein of interest (POI) from multiple species enables the construction of its comprehensive evolution history, containing not only highly conserved residues but also pairs of residues with strong covariances. Such co-evolution information, which is often represented in the so-called 'contact map', has been extracted for precise detection of long-range interactions in sequence [15] [16] [17] [18] [19] [20] . More recently, co-evolution signals were harnessed to enable landmark successes in structural predictions for globular proteins [21] [22] [23] , protein complexes 24, 25 and structured states of disordered regions 26 . Co-evolution analyses have also been implemented to define functional sites in proteins in several approaches [27] [28] [29] [30] ; however, its use for systematic prediction of metal-binding sites has not been explored."
+   },
+   "why": "Introduction paragraph 4, restored to its printed position (was g12)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "prose",
+    "text": "Here we have developed a machine-learning (ML) method named 'MetalNet' to predict metal-binding proteins in proteomes with site-specific resolution using co-evolution. We applied MetalNet to several representative prokaryotic proteomes and predicted nearly 5,000 potential metalloproteins. We biochemically and structurally validated several MetalNet predictions that were previously unannotated, including one zinc-binding site from the apo-citrate lyase phosphoribosyl-dephospho-CoA transferase citX. In addition, MetalNet also successfully predicted all known zinc-binding sites from the human spliceosome complex. This unique computational pipeline will provide a useful tool for exploring unknown metalloproteomes and studying metal biology."
+   },
+   "why": "Introduction paragraph 5, restored to its printed position (was g13)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "prose",
+    "text": "We first collected metalloproteins from the Protein Data Bank (PDB) and crosschecked with the sequence culling database PISCES 31 to get a list of metalloproteins 32 . We also extracted the contact maps for these proteins using the MSA-transformer model (Methods). Classification of the metal-chelating residues showed that cysteine (C), histidine (H), glutamic acid (E) and aspartic acid (D) (together referred as 'CHED') appear much more frequently in metal-binding sites, accounting for 91% of all the metal-chelating residues (Fig. 1a ). For simplicity, we focused only on these four types of amino acids as potential metal-binding residues for following analyses."
+   },
+   "why": "first Results paragraph, restored above 'The results suggested…' which refers back to it (was g16)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g3-62732e",
+   "node": {
+    "type": "prose",
+    "text": "We next analyzed co-evolution signals from all the ten possible pairwise combinations from CHED and observed that many of them showed enriched co-evolution signals compared to those pairs randomly picked from proteomes (Fig. 1b ). For example, 53% of the co-evolved CC residue pairs are involved in metal binding (Fig. 1b ), which is tenfold more enriched than a random CC pair if considering that only 23% of the cysteines in proteomes are chelating metals (Fig. 1c ). "
+   },
+   "why": "second Results paragraph; 'The results suggested…' (g4) is its continuation (was g17)",
+   "at": "to hold specific metal ions in a stable and energetically favorable manner",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g107-045b17",
+   "node": {
+    "type": "prose",
+    "text": "Molecular dynamics (MD) simulations were performed to calculate root mean square fluctuation (RMSF) for citX (PDB code: 7DCN ) and its variants. We utilized the GROMACS 2019.3 package and its analytical tools 56 . 'Mutagenesis' tool within PyMOL 57 was used for constructing the citX variants. Each system was solvated in a cubic box filled with TIP3P water model and neutralized by Na + ions. Each system was then minimized and two equilibration steps were set up under constant temperate (NVT) and constant pressure (NPT) for 0.1 ns, respectively. For production runs, the temperature was coupled with V-rescale method and the pressure was coupled with the Parrinello-Rahman method 58 . The Particle Mesh Ewald method was used for calculation of long-range electrostatics 59 . Each system was simulated for 40 ns and the last 10 ns trajectory was used for RMSF calculation."
+   },
+   "why": "restores the MD Methods paragraph, the only place refs 56-59 are cited. From .cache/doc_ours p12-b13cb9.",
+   "at": "the protein crystals were picked by cryo loops and placed in the",
+   "retired_because": "node already hidden by extraction"
+  }
+ ]
+}

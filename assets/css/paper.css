@@ -1,0 +1,453 @@
+/* ============================================================
+   solab.org — per-paper reading view
+   Loaded only on papers/<slug>/. Inherits the palette and type
+   from style.css; everything here is about long-form reading:
+   a measure that stays comfortable, figures that breathe.
+   ============================================================ */
+
+/* The rest of the site is set in one monospace face, which suits a lab's
+   pages but fights a 10,000-word paper: uniform character widths, no text
+   rhythm, and 80 characters a line. The reading view therefore switches the
+   *prose* to a text face and keeps the mono for headings, captions and
+   apparatus — so a paper still looks like solab, but reads like a paper.
+   System faces only: no webfont, nothing to download. */
+:root {
+  --font-read: 'Charter', 'Iowan Old Style', 'Source Serif 4', 'Sitka Text',
+               Georgia, 'Times New Roman', serif;
+}
+
+.paper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 24px 64px;
+}
+
+.paper-eyebrow {
+  font-size: 12.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+.paper-eyebrow a { color: inherit; text-decoration: none; }
+.paper-eyebrow a:hover { color: var(--brand); }
+
+.paper-title {
+  font-family: var(--font-display);
+  font-size: clamp(25px, 3.4vw, 35px);
+  font-weight: 700;
+  line-height: 1.24;
+  letter-spacing: -.02em;
+  margin: 0 0 18px;
+  color: var(--ink);
+}
+
+.paper-authors {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+.paper-authors a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+.paper-authors a:hover { color: var(--brand); text-decoration-color: currentColor; }
+
+.paper-meta {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin: 0 0 18px;
+}
+
+.paper-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 30px; }
+
+.paper-abstract {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin: 0 0 36px;
+}
+.paper-abstract h2 {
+  font-size: 12.5px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+  font-weight: 600;
+}
+.paper-abstract p {
+  margin: 0;
+  font-family: var(--font-read);
+  font-size: 17.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ---------- body ---------- */
+
+.paper-body {
+  font-family: var(--font-read);
+  font-size: 18.5px;
+  line-height: 1.58;               /* a serif needs less leading than the mono */
+  color: var(--ink);
+}
+.paper-body p {
+  margin: 0 0 22px;
+  /* ~68 characters: the measure a reader's eye returns from reliably. Figures
+     and tables stay full width below. */
+  max-width: 34em;
+  hyphens: none;
+}
+/* numbers, gene names and sequences belong to the mono voice even inside prose */
+.paper-body code, .paper-body kbd, .paper-body samp,
+.paper-body .paper-tex, .paper-body math {
+  font-family: var(--font-mono);
+  font-size: .92em;
+}
+
+/* Headings stay in the site's monospace while the prose is set in a text face,
+   so hierarchy comes from that contrast as well as from weight, spacing and a
+   residue-coloured marker — the same grid vocabulary as the MSA graphics,
+   cycling through the palette down the page. */
+.paper-body h2, .paper-body h3, .paper-body h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  line-height: 1.28;
+  letter-spacing: -.015em;
+}
+
+/* h2 follows the site's own section-title: 23px/600 over a hairline rule,
+   preceded by three alignment cells — the 6px rounded squares the MSA
+   graphics are built from (see cellRect in msa.js). */
+.paper-body h2 {
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin: 56px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.paper-body h2::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 1.5px;
+  margin-bottom: 14px;
+  background: var(--res-green);
+  box-shadow: 8px 0 0 var(--res-gold), 16px 0 0 var(--res-blue);
+}
+.paper-body h2:nth-of-type(4n+2)::before {
+  background: var(--res-blue);
+  box-shadow: 8px 0 0 var(--res-coral), 16px 0 0 var(--res-green);
+}
+.paper-body h2:nth-of-type(4n+3)::before {
+  background: var(--res-gold);
+  box-shadow: 8px 0 0 var(--res-plum), 16px 0 0 var(--res-coral);
+}
+.paper-body h2:nth-of-type(4n+4)::before {
+  background: var(--res-plum);
+  box-shadow: 8px 0 0 var(--res-green), 16px 0 0 var(--res-gold);
+}
+
+/* h3 matches the site's plain h3 (18px/600), tagged with a single cell */
+.paper-body h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 38px 0 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.paper-body h3::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 1.5px;
+  background: var(--brand);
+  transform: translateY(-3px);
+}
+
+.paper-body h4 {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 30px 0 9px;
+}
+
+/* the first heading should not push a huge gap under the abstract */
+.paper-body > h2:first-child { margin-top: 8px; border-top: 0; padding-top: 0; }
+
+/* Prose reconstructed from a PDF or from GROBID: same reading face as the rest,
+   just a touch more air between paragraphs, since its paragraph breaks carry
+   more of the structure than a publisher's own markup would. */
+.paper-body--plain p { margin-bottom: 24px; }
+
+/* ---------- figures ---------- */
+
+.paper-fig {
+  margin: 34px 0;
+  padding: 0;
+}
+.paper-fig img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.paper-fig figcaption {
+  font-size: 13.5px;
+  line-height: 1.6;
+  max-width: 42em;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+.paper-fig figcaption b { color: var(--ink); font-weight: 700; }
+
+/* a caption whose artwork could not be located in the PDF: still worth
+   reading, but it should not look like body prose */
+.paper-orphan-caption {
+  font-size: 13px;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  border-left: 2px solid var(--line);
+  padding-left: 14px;
+  margin: 26px 0;
+}
+
+/* ---------- citation neighbours ---------- */
+
+.paper-related {
+  margin-top: 52px;
+  padding-top: 22px;
+  border-top: 2px solid var(--line);
+}
+.paper-related h2 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+.paper-related ul { list-style: none; margin: 0; padding: 0; }
+.paper-related li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 14.5px;
+}
+.paper-related li:last-child { border-bottom: 0; }
+.paper-related a { color: var(--ink); text-decoration: none; }
+.paper-related a:hover { color: var(--brand); text-decoration: underline; }
+.paper-related .yr { color: var(--muted); font-size: 13px; flex: none; }
+
+@media (max-width: 600px) {
+  .paper { padding: 24px 18px 48px; }
+  .paper-body { font-size: 17px; }
+  .paper-body p { max-width: none; }   /* the viewport is already the measure */
+  .paper-fig { margin: 26px 0; }
+}
+
+/* ---------- citations and bibliography ---------- */
+
+.paper-body sup a {
+  color: var(--brand);
+  text-decoration: none;
+  padding: 0 1px;
+}
+.paper-body sup a:hover { text-decoration: underline; }
+
+.paper-refs {
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.paper-refs h2 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+.paper-refs ol { margin: 0; padding-left: 26px; }
+.paper-refs li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 9px;
+  scroll-margin-top: 90px;      /* clear the sticky header when jumped to */
+}
+.paper-refs li:target { background: var(--brand-light); border-radius: 3px; }
+.paper-refs .ref-authors { color: var(--ink); }
+.paper-refs .ref-src { color: var(--muted); font-style: italic; }
+.paper-refs .ref-doi { color: var(--brand); text-decoration: none; }
+.paper-refs .ref-doi:hover { text-decoration: underline; }
+
+/* ---------- maths ---------- */
+
+.paper-body math { font-size: 1.02em; }
+.paper-math {
+  display: block;
+  margin: 22px 0;
+  text-align: center;
+  overflow-x: auto;          /* long equations scroll rather than break the page */
+}
+.paper-tex {
+  font-family: var(--font-mono);
+  font-size: .95em;
+  background: var(--bg-soft);
+  border-radius: 3px;
+  padding: 0 4px;
+}
+
+/* ---------- contents rail ---------- */
+
+.paper-layout { display: block; }
+.paper-layout.paper--with-toc {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 760px);
+  gap: 40px;
+  justify-content: center;
+  align-items: start;
+}
+.paper-layout.paper--with-toc .paper { margin: 0; max-width: 760px; }
+
+.paper-toc {
+  position: sticky;
+  top: 84px;                       /* clear the sticky site header */
+  max-height: calc(100vh - 104px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 30px 0 28px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.paper-toc::-webkit-scrollbar { width: 6px; }
+.paper-toc::-webkit-scrollbar-thumb {
+  background: var(--line); border-radius: 3px;
+}
+
+/* Sub-sections stay folded away until you are reading their section, so the
+   rail cannot outgrow the viewport on a paper with 24 headings. */
+.paper-toc li[data-parent] { display: none; }
+.paper-toc li[data-parent].is-open { display: block; }
+.paper-toc-head {
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.paper-toc ul { list-style: none; margin: 0; padding: 0; }
+.paper-toc li { margin: 0 0 2px; }
+.paper-toc a {
+  display: block;
+  padding: 5px 10px 5px 11px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  border-radius: 0 3px 3px 0;
+}
+.paper-toc a:hover { color: var(--ink); background: var(--bg-soft); }
+.paper-toc .lvl3 a { padding-left: 22px; font-size: 12px; color: var(--muted); }
+.paper-toc .lvl4 a { padding-left: 32px; font-size: 11.5px; color: var(--muted); }
+.paper-toc a.is-active {
+  color: var(--brand);
+  border-left-color: var(--brand);
+  background: var(--bg-soft);
+}
+
+.paper-body h2, .paper-body h3, .paper-body h4 { scroll-margin-top: 84px; }
+
+@media (max-width: 1080px) {
+  /* not enough room for a rail beside the text — the headings are still
+     in the document, so nothing is lost by dropping it */
+  .paper-layout.paper--with-toc { display: block; }
+  .paper-toc { display: none; }
+}
+
+/* ---------- inline links ---------- */
+
+.paper-body a[href^="http"], .paper-abstract a[href^="http"], .paper-refs a[href^="http"] {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-color: var(--brand-light);
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;      /* long DOIs must not push the column wide */
+}
+.paper-body a[href^="http"]:hover,
+.paper-abstract a[href^="http"]:hover,
+.paper-refs a[href^="http"]:hover { text-decoration-color: currentColor; }
+
+/* ---------- citations, equations ---------- */
+
+/* An inline citation or figure mention that GROBID marked up: readable as text,
+   obviously clickable on hover, never a wall of blue. */
+.paper-cite {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--line-strong, var(--line));
+  cursor: pointer;
+}
+.paper-cite:hover { color: var(--brand); border-bottom-color: currentColor; }
+
+/* A display equation: the PDF's layout is gone, so present it plainly in the
+   mono voice rather than pretending it is typeset maths. */
+.paper-equation {
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  border-left: 2px solid var(--line);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 12px 16px;
+  margin: 24px 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.paper-refs li:target { background: var(--brand-light); border-radius: 3px; }
+
+/* a transcribed equation, rendered as MathML: give it room and let a long one
+   scroll rather than overflow the column */
+.paper-equation--math {
+  font-family: var(--font-read);
+  font-size: 17px;
+  background: transparent;
+  border-left: 0;
+  padding: 4px 0;
+  text-align: center;
+}
+.paper-equation--math math { font-size: 1.05em; }
+
+/* MathML sets its own faces for identifiers and operators; the mono of the
+   plain-text fallback must not leak into it */
+.paper-equation--math,
+.paper-equation--math math,
+.paper-equation--math mi,
+.paper-equation--math mn,
+.paper-equation--math mtext { font-family: var(--font-read); }
+.paper-eqline { margin: 10px 0; }
+.paper-eqline:first-child { margin-top: 0; }
+.paper-eqline:last-child { margin-bottom: 0; }

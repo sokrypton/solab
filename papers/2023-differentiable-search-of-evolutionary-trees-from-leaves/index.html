@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Differentiable Search of Evolutionary Trees from Leaves — solab</title>
+  <meta name="description" content="Abstract Inferring the most probable evolutionary tree given leaf nodes is an important problem in computational biology that reveals the evolutionary relationships between species">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/paper.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="solab — Ovchinnikov Lab">
+  <meta property="og:title" content="Differentiable Search of Evolutionary Trees from Leaves — solab">
+  <meta property="og:description" content="Abstract Inferring the most probable evolutionary tree given leaf nodes is an important problem in computational biology that reveals the evolutionary relationships between species">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../../">solab</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../lab/">Lab</a></li>
+        <li><a href="../../research/">Research</a></li>
+        <li><a href="../../publications/" class="active">Publications</a></li>
+        <li><a href="../../tools/">Tools</a></li>
+        <li><a href="../../resources/">Resources</a></li>
+        <li><a href="../../contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="paper-layout paper--with-toc">
+      <nav class="paper-toc" aria-label="Contents">
+        <p class="paper-toc-head">Contents</p>
+        <ul>
+          <li class="lvl2" data-section="sec-1-1-introduction"><a href="#sec-1-1-introduction">1 Introduction</a></li>
+          <li class="lvl2" data-section="sec-2-2-notation-and-background"><a href="#sec-2-2-notation-and-background">2 Notation and background</a></li>
+          <li class="lvl3" data-parent="sec-2-2-notation-and-background"><a href="#sec-3-2-1-maximum-parsimony-problem-find-tree">2.1 Maximum parsimony problem (find tree and ancestors)</a></li>
+          <li class="lvl3" data-parent="sec-2-2-notation-and-background"><a href="#sec-4-2-2-complexity">2.2 Complexity</a></li>
+          <li class="lvl3" data-parent="sec-2-2-notation-and-background"><a href="#sec-5-2-2-small-parsimony-problem-find-ancesto">2.2 Small parsimony problem (find ancestors)</a></li>
+          <li class="lvl2" data-section="sec-6-3-methodology"><a href="#sec-6-3-methodology">3 Methodology</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-7-3-1-relaxations">3.1 Relaxations</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-8-sequence-representation">Sequence representation</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-9-tree-representation">Tree representation</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-10-3-2-tree-enforcing-loss-function">3.2 Tree enforcing loss function</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-11-3-3-differentiable-soft-parsimony-score">3.3 Differentiable soft parsimony score calculation</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-12-3-4-bi-level-optimization">3.4 Bi-level optimization</a></li>
+          <li class="lvl3" data-parent="sec-6-3-methodology"><a href="#sec-13-3-5-evaluation">3.5 Evaluation</a></li>
+          <li class="lvl2" data-section="sec-14-4-results"><a href="#sec-14-4-results">4 Results</a></li>
+          <li class="lvl3" data-parent="sec-14-4-results"><a href="#sec-15-4-1-small-parsimony-find-ancestors-given">4.1 Small Parsimony (find ancestors given tree)</a></li>
+          <li class="lvl3" data-parent="sec-14-4-results"><a href="#sec-16-4-2-maximum-parsimony-find-ancestors-and">4.2 Maximum Parsimony (find ancestors and tree)</a></li>
+          <li class="lvl3" data-parent="sec-14-4-results"><a href="#sec-17-4-3-ablation-of-optimization-methods">4.3 Ablation of optimization methods</a></li>
+          <li class="lvl2" data-section="sec-18-5-discussion-and-future-work"><a href="#sec-18-5-discussion-and-future-work">5 Discussion and Future Work</a></li>
+          <li class="lvl2" data-section="sec-19-a-appendix"><a href="#sec-19-a-appendix">A Appendix</a></li>
+          <li class="lvl3" data-parent="sec-19-a-appendix"><a href="#sec-20-a-1-groundtruth-data-generation">A.1 Groundtruth data generation</a></li>
+          <li class="lvl2"><a href="#references">References</a></li>
+        </ul>
+      </nav>
+    <article class="paper">
+      <p class="paper-eyebrow"><a href="../../publications/#evolution">Unified Model of Protein Evolution</a></p>
+      <h1 class="paper-title">Differentiable Search of Evolutionary Trees from Leaves</h1>
+      <p class="paper-authors">Hettiarachchi R, Swartz A and <a href="../../lab/member/?name=Sergey_Ovchinnikov">Ovchinnikov S.</a></p>
+      <p class="paper-meta">2023 · bioRxiv, pp.2023-07. GitHub</p>
+      <p class="paper-links"><a class="pill" href="https://doi.org/10.1101/2023.07.23.550206">DOI</a> <a class="pill" href="https://www.biorxiv.org/content/10.1101/2023.07.23.550206v1">Publisher</a></p>
+      <section class="paper-abstract"><h2>Abstract</h2><p>Abstract Inferring the most probable evolutionary tree given leaf nodes is an important problem in computational biology that reveals the evolutionary relationships between species. Due to the exponential growth of possible tree topologies, finding the best tree in polynomial time becomes computationally infeasible. In this work, we propose a novel differentiable approach as an alternative to traditional heuristic-based combinatorial tree search methods in phylogeny. The optimization objective of interest in this work is to find the most parsimonious tree (i.e., to minimize the total number of evolutionary changes in the tree). We empirically evaluate our method using randomly generated trees of up to 128 leaves, with each node represented by a 256-length protein sequence. Our method exhibits promising convergence (&amp;lt; 1% error for trees up to 32 leaves, &amp;lt; 8% error up to 128 leaves, given only leaf node information), illustrating its potential in much broader phylogenetic inference problems and possible integration with end-to-end differentiable models. The code to reproduce the experiments in this paper can be found at <a href="https://github.ramith.io/diff-evol-tree-search">https://github.ramith.io/diff-evol-tree-search</a> .</p></section>
+      <div class="paper-body paper-body--plain">
+<h2 id="sec-1-1-introduction" data-node="b3-327bb5">1 Introduction</h2>
+<p data-node="b4-cd96f5">Evolutionary trees (or phylogenetic trees) provide biologists with a structured, hierarchical representation of how current species are related through hypothetical ancestors that are probably extinct at present. Beyond theoretical constructs, they have practical applications in various fields of biology and medicine. For instance, phylogenetic techniques are crucial in the decision-making process when responding to emerging viruses Attwood et al. (2022) .</p>
+<p data-node="b5-2b4c31">Parsimony methods are one of many methods (such as distance methods, maximum likelihood, maximum compatibility) for constructing evolutionary trees. The parsimony principle states that the most acceptable explanation of an occurrence is the one that requires the minimum number of assumptions or explanations Sober (1981) . Thus, inferring the most parsimonious tree given leaf nodes requires finding the tree topology and its corresponding ancestral representations that explains the data with minimum number of evolutionary steps. This combinatorial problem was shown to be NP-Complete Foulds &amp; Graham (1982) ; Steel (1992) .</p>
+<p data-node="b6-77831e">Due to the complexity of the problem, existing methods consider heuristic search techniques by limiting the search space. Although this does not guarantee that the algorithm will find the optimal solution, they do facilitate exploration of a vast number of tree topologies, starting from an initial guess and iteratively refining it. These methods can be broadly categorized into 1) tree rearrangement methods 2) branch and bound methods 3) neighbor joining methods Saitou &amp; Nei (1987) ; Giribet (2007) ; Felsenstein (2004) .</p>
+<p data-node="b7-bd2e3a">With the growth of deep learning methods, there have been several new directions in constructing evolutionary trees. Zhu &amp; Cai (2021) et al. propose an alignment-free method in which an attention model Vaswani et al. (2017) is trained through reinforcement learning to reconstruct evolutionary trees. However, this method requires algorithmic post-processing to produce the final tree, thus, prevents it from being end-to-end differentiable. Azouri et al. (2023) demonstrate a deep-Q-learning agent on empirical data consisting of up to 20 leaves.</p>
+<p data-node="b8-c690ce">With the success of using hyperbolic geometry for hierarchical data, there has been work on obtaining continuous embeddings for trees Monath et al. (2019) ; Chami et al. (2020) ; Corso et al. (2021) . Subsequently, optimization in the hyperbolic space for phylogeny Wilson (2021) , developing new metrics Matsumoto et al. (2021) and addressing the phylogenetic placement problem Jiang et al. (2022) have been explored. Given the challenge of scalability in traditional Bayesian phylogenetics, methods based on variational inference have been proposed Zhang &amp; Matsen (2019) ; Dang &amp; Kishino (2019) . Recently, Zhang (2023) proposed a topological feature learning framework for phylogenetic inference using graph neural networks.</p>
+<p data-node="b9-78133e">In contrast to previous work, our approach circumvents the discreteness of the raw tree and sequence representations in the first place and models their relationship in a differentiable manner. By doing so, we obtain a soft-parsimony score that can be optimized in an end-to-end differentiable manner, without the need for any prior training data.</p>
+<p data-node="b10-a0e7a0">We perform experiments for tree topologies up to 128 leaves and analyze our method for 3 tasks. 1) find the tree given all sequences, 2) find the ancestors given the tree topology and leaves (small parsimony), and 3) find the tree and the ancestors given leaves (maximum parsimony). For the small parsimony problem we achieve the ≈0% mean error for all leaf counts experimented, meaning that our approach can find the optimal ancestral sequences if the tree topology is known. For the maximum parsimony problem, we achieve &lt; 1% error for trees up to 32 leaves, &lt; 8% error up to 128 leaves.</p>
+<p data-node="b11-ce39b1">Our work opens up new realms for integration with models with more complex cost functions that go beyond site-independence assumption. For example, the cost function can integrate pseudo-likelihood between nodes using protein language models or those conditioned on protein structure.</p>
+<h2 id="sec-2-2-notation-and-background" data-node="b12-52dc0c">2 Notation and background</h2>
+<h3 id="sec-3-2-1-maximum-parsimony-problem-find-tree" data-node="b13-998b73">2.1 Maximum parsimony problem (find tree and ancestors)</h3>
+<p data-node="b14-6e486a">A rooted phylogenetic tree is a directed acyclic graph (DAG) G = ( V, E ). Given a set of N leaves, the maximum parsimony problem intends to find the phylogenetic tree (𝒯) and ancestor nodes that describe the given data with minimum number of evolutionary steps Carmel et al. (2014) ; Kannan &amp; Wheeler (2012) . For a fixed alphabet 𝒜 = {1, …, c }, each node in this DAG can be represented by an l dimensional vector s = ( s 1 , …, s l ) such that s ∈ 𝒜 l . We consider the Hamming distance d on the node representation d (( s 1 , …, s l ), that describes the number of indices i such that d ( u, v ) represent the total number of evolutionary changes in the tree 𝒯. The maximum parsimony problem is then to find the tree that minimizes δ (𝒯).</p>
+<h3 id="sec-4-2-2-complexity" data-node="b15-eb604e">2.2 Complexity</h3>
+<p data-node="b16-5bb203">The maximum parsimony problem has been comprehensivey studied in the literature as a special case of the Steiner tree problem Hwang &amp; Richards (1992) . Further Foulds &amp; Graham (1982) showed that even when |𝒜| = 2, the problem of finding the tree with the minimum number of evolutionary steps is NP-Complete. Given N leaves, the number of rooted bifurcating tree topologies that exists can be calculated as (2 N −3)!! Cavalli-Sforza &amp; Edwards (1967) . Thus, even for a tree with only 12 leaves, there are more than 13 billion tree topologies in total.</p>
+<h3 id="sec-5-2-2-small-parsimony-problem-find-ancesto" data-node="b17-4ebfb9">2.2 Small parsimony problem (find ancestors)</h3>
+<p data-node="b18-bc16fd">The small parsimony problem Carmel et al. (2014) is a much simplified version of the problem in which the phylogenetic tree topology 𝒯 is already given. Therefore, the task is to find the best possible ancestors. There are a number of dynamic programming (DP) algorithms proposed to solve this problem in polynomial such as the Fitch’s algorithm Fitch (1971) and the Sankoff’s algorithm Sankoff (1975) .</p>
+<h2 id="sec-6-3-methodology" data-node="b19-af0565">3 Methodology</h2>
+<p data-node="b20-14c425">In the following subsections, we consider how the discrete aspects of the problem are relaxed and how gradient-based optimization can be performed.</p>
+<h3 id="sec-7-3-1-relaxations" data-node="b21-a8166b">3.1 Relaxations</h3>
+<p data-node="b22-fd9749">There are two aspects to this problem that make it inherently non-differentiable. First, each element of the sequence is combinatorial. Second, considering the adjacency matrix, the space of valid and meaningful tree topologies is sparse.</p>
+<h3 id="sec-8-sequence-representation" data-node="b23-be75ec">Sequence representation</h3>
+<p data-node="b24-12ad5b">In both the small and maximum parsimony problems, the ancestor sequences are unknown. We denote learnable parameters ϕ seq ∈ ℝ (2 N −1)× l × c to represent the ancestors to be optimized. To obtain a continuous relaxation of the categorical nature of amino acid types, we transform the real tensor into a tensor , where each element represents a probability distribution over the character space for each position of the sequence. This transformation is done using the softmax function Jang et al. (2017) , with the sharpness of the distribution controlled by the temperature parameter τ 2 .</p>
+<p data-node="b25-9ede90">This probability tensor representing ancestors, combined with the one-hot encoding of known leaves results in the node representation tensor S .</p>
+<h3 id="sec-9-tree-representation" data-node="b26-50b491">Tree representation</h3>
+<p data-node="b27-00379a">Since the adjacency matrix of any DAG can be permuted to be a strictly upper triangular matrix Nicholson (1975) ; Li et al. (2022) ; Charpentier et al. (2022) , we ensure the acyclicity of the graphs represented by the adjacency matrix ( A ) by enforcing it to be strictly upper triangular. Furthermore, since leaves cannot be connected to each other, we ensure that the first N columns of A are zero. The remaining positions are parameterized as θ T .</p>
+<p data-node="b28-3def81">Due to the irregular structure of the adjacency matrix representation and to speed up the implementation, we first set the non-parameterized region of the adjacency matrix to −inf, and then apply the softmax function for each row. This ensures that the parameterized positions of the adjacency matrix will be represented by the correct probability. Thus, the i th row of A represents the probabilities of node i being a child of all other nodes, respectively.</p>
+<h3 id="sec-10-3-2-tree-enforcing-loss-function" data-node="b29-1e28d7">3.2 Tree enforcing loss function</h3>
+<p data-node="b30-8c51e1">With the relaxation of the adjacency matrix, optimizing parameters to reduce L cost does not explicitly guide the optimization towards a bifurcating tree. Therefore, we enforce the following regularization constraint to maintain the bifurcating property. This regularization forces tree nodes to have exactly two child node connections.</p>
+<h3 id="sec-11-3-3-differentiable-soft-parsimony-score" data-node="b31-a108ea">3.3 Differentiable soft parsimony score calculation</h3>
+<p data-node="b32-a3e0c1">To calculate the number of evolutionary steps that have occurred in the DAG, we formulate the evolutionary cost calculation as follows. The transposed node representation tensor is constructed by representing the characters of the alphabet as its first dimension.</p>
+<p data-node="b33-8da756">In this equation, the adjacency matrix A describes the connection of each node to its parent in the tree structure. The matrix S pk , considers k th character of the alphabet at a time. Thus, in the matrix S pk , ( S pk ) ij = 1 iff i th sequence has j th position equal to the k th character in the alphabet 𝒜. The matrix multiplication A × S pk serves as a lookup of the sequence table ( S pk ) and returns the parent corresponding to each node in the tree. Thus, the difference between the matrices | S pk − A × S pk | represents the distance between each child and its parent in the k th character space. By summing these differences over all dimensions, the cost function captures the overall evolutionary cost. For a visual depiction of this calculation, refer to the Appendix Figure 6 .</p>
+<h3 id="sec-12-3-4-bi-level-optimization" data-node="b34-9ebfb0">3.4 Bi-level optimization</h3>
+<p data-node="b35-8fb82d">In the maximum parsimony problem, we need to traverse both the tree and sequence spaces, and there is a dependency between these two. Note that for each tree topology, there is a best set of sequences that define how good each topology is. And once the topology changes, these sequences are no longer valid. Thus, for this task, we formulate the optimization procedure as a bi-level optimization problem. Experimentally, we obtain better results with this formulation than optimizing both of the parameters independently (see Section 4.3 for the ablation study).</p>
+<p data-node="b36-90485a">During implementation, we perform k gradient descent iterations for the inner objective ( Eq. 6 ). Gradient descent is performed for both objectives using the Adam optimizer Kingma &amp; Ba (2015) . Furthermore, we use the JAXopt library to optimize multiple initialization seeds as a batch and obtain the best result Blondel et al. (2021) .</p>
+<h3 id="sec-13-3-5-evaluation" data-node="b37-4d2710">3.5 Evaluation</h3>
+<p data-node="b38-548c8b">In order to evaluate our method, we first generate known evolutionary trees (each consisting of 4− 128 leaves, 256 sequence length, alphabet size c = 20). Therefore, we generate complete binary trees starting with a random sequence as the root, make two copies of the sequence at each node and generate two random sets of indices, each with m = 50 elements that are mutated to a different character. For each leaf count, we perform 10 random initializations for the leaf sequences to generate examples. Further details on ground truth generation are included in Appendix A.</p>
+<h2 id="sec-14-4-results" data-node="b39-20f45a">4 Results</h2>
+<p data-node="b40-70a8e7">We first analyze a simpler task in which all nodes S (leaves and ancestors) are known, but the tree topology is unknown. For all leaf counts ( N = 4 to 128), the adjacency matrix converged to the groundtruth tree. This task is similar to a hierarchical clustering task, where all the nodes are known, and we need to establish a hierarchical dependency between them.</p>
+<h3 id="sec-15-4-1-small-parsimony-find-ancestors-given" data-node="b41-f2d5ad">4.1 Small Parsimony (find ancestors given tree)</h3>
+<p data-node="b42-a0329c">The ground-truth ancestor solutions for the known tree topology is obtained by the Sankoff algorithm. Table 1 shows the results as number of leaves increases. For all cases, the error between ours and the optimal parsimony score is ≈ 0.</p>
+<h3 id="sec-16-4-2-maximum-parsimony-find-ancestors-and" data-node="b43-103868">4.2 Maximum Parsimony (find ancestors and tree)</h3>
+<p data-node="b44-b76684">In this task, only the leaf sequences are known, and we need to optimize towards the best tree topology and ancestors. As shown in Figure 3 and Table 2 , the mean error increases as the number of leaves increases. Note that for up to N = 8 the possible tree topologies are even enumerable, as they result in only 135,135 combinations. Thus, our method also converges to optimal solutions. However, from N = 16 to 128 leaves, the number of possible tree topologies grows from ≈10 15 to 10 250 possibilities and our method converges to local optima. We intend to explore methods to simplify the loss landscape and gradually increase the complexity in order to discover better solutions. Figure 4 depicts the start and end of the optimization process for the maximum parsimony task given randomly initialized N = 32 leaves.</p>
+<figure class="paper-fig" data-node="b45-878f71">
+  <img loading="lazy" src="../../assets/papers/2023-differentiable-search-of-evolutionary-trees-from-leaves/bx-01.jpg" alt="Figure 1">
+  <figcaption><b>Figure 1</b> Visual depiction of the constructed adjacency matrix and the node representation using learnable parameters θ T and ϕ seq</figcaption>
+</figure>
+<figure class="paper-fig" data-node="b46-d6cc38">
+  <img loading="lazy" src="../../assets/papers/2023-differentiable-search-of-evolutionary-trees-from-leaves/bx-02.jpg" alt="Figure 2">
+  <figcaption><b>Figure 2</b> Search for evolutionary tree ( N = 32, l = 256) left : sequences (leaves and ancestors), right : tree topology. A) random initialization, B) converged solution. optimal solution cost = 2913</figcaption>
+</figure>
+<figure class="paper-fig" data-node="b47-22a1df">
+  <img loading="lazy" src="../../assets/papers/2023-differentiable-search-of-evolutionary-trees-from-leaves/bx-03.jpg" alt="Figure 3">
+  <figcaption><b>Figure 3</b> Evaluation on the maximum parsimony problem (find both the tree and ancestors, given leaves). Error is calculated w.r.t Sankoff algorithm solutions on the groundtruth tree topology</figcaption>
+</figure>
+<figure class="paper-fig" data-node="b48-b77cc3">
+  <img loading="lazy" src="../../assets/papers/2023-differentiable-search-of-evolutionary-trees-from-leaves/bx-04.jpg" alt="Figure 4">
+  <figcaption><b>Figure 4</b> Search for evolutionary tree ( N = 32, l = 256) left : sequences, right : tree topology. A) random initialization, B) converged solution. optimal solution cost = 2913</figcaption>
+</figure>
+<h3 id="sec-17-4-3-ablation-of-optimization-methods" data-node="b49-99610b">4.3 Ablation of optimization methods</h3>
+<p data-node="b50-b80535">As mentioned in Section 3.4 , we compare the bi-level optimization procedure with an independent alternative optimization scheme. In this formulation, we treat the tree parameters and sequence parameters independently and alternatively perform gradient descent using the Adam optimizer. We find that, even though this procedure works similarly well for trees with fewer leaves ( N ≤ 16), it accumulates high error as the tree grows. The results are shown in Table 3 .</p>
+<h2 id="sec-18-5-discussion-and-future-work" data-node="b51-f40bc9">5 Discussion and Future Work</h2>
+<p data-node="b52-4612c8">Our work establishes a new direction for generating evolutionary trees by traversing a soft tree and sequence space. Although here we focused on minimizing the parsimony cost as the objective (with unit cost for any change), our general optimization method can be coupled with various loss functions. For example, the parsimony cost assumes site-independence, which means that any position-wise evolutionary dependence in amino acids is ignored. Thus, if the tree is known, this independence property can be utilized to develop a dynamic programming algorithm that can derive the most optimal ancestral sequences (i.e. Sankoff algorithm Sankoff (1975) ). Therefore, our method can be most beneficial when this condition is lifted (e.g. integration of pseudo-likelihood between nodes using protein language models or those conditioned on protein structure).</p>
+<p data-node="b53-b152c9">Even though the error increases as the number of leaves grows, future work could explore an iterative procedure to combine subtrees gradually (e.g. for 128 leaves, breaking down the problem to two sets of 64 leaves or 4 sets of 32 leaves and running gradient descent, then using these answers as a better initialization for the original problem).</p>
+<p data-node="b54-d3421c">Although our current work is primarily focused on solving the maximum parsimony problem (i.e. finding the parsimonious tree given only leaves), in the future, we plan to explore the application of our method within the context of Bayesian phylogenetic inference, inspired by recent advances in the field Swanepoel et al. (2022) ; Fourment et al. (2023) ; Zhang (2020) ; Zhang &amp; Matsen (2019) ; Moretti et al. (2021) .</p>
+<h2 id="sec-19-a-appendix" data-node="b55-8461a6">A Appendix</h2>
+<h3 id="sec-20-a-1-groundtruth-data-generation" data-node="b56-1b3fe4">A.1 Groundtruth data generation</h3>
+<p data-node="b57-3eec6f">We generate complete binary trees starting with a random sequence as root, make two copies of the sequence at each node, and generate two random sets of indices each with m = 50. These two sets of random indices are mutated into two copies, so that a new random amino acid is introduced at each index. It should be noted that this process does not necessarily mean that the generated complete binary trees are the trees with minimum number of evolutionary steps for the reached leaves (for these leaves there could be a better tree topology and ancestors). However, since mutations are introduced only at 50/256 ≈20% of the sequence length, the probability of the existence of better topologies is low, yet we find the best ancestors for this topology by applying the Sankoff algorithm, and this serves us as the groundtruth. Therefore, these serve as test samples to assess whether the optimization procedure converges to tree and its corresponding ancestors with evolutionary steps that are sufficiently close to the generated groundtruth.</p>
+<figure class="paper-fig" data-node="b58-739ac7">
+  <img loading="lazy" src="../../assets/papers/2023-differentiable-search-of-evolutionary-trees-from-leaves/bx-05.jpg" alt="Figure 5">
+  <figcaption><b>Figure 5</b> Number of rooted bifurcating tree topologies for N leaves (blue) and number of possible amino acid sequences (red) for a single 256-residue protein (i.e. 20 256 ≈ 1.16 × 10 333 )</figcaption>
+</figure>
+<figure class="paper-fig" data-node="b59-9a007a">
+  <img loading="lazy" src="../../assets/papers/2023-differentiable-search-of-evolutionary-trees-from-leaves/bx-06.jpg" alt="Figure 6">
+  <figcaption><b>Figure 6</b> Explanation of parsimony cost calculation. A) considering one character dimension at a time. B) The matrix multiplication A × S pk serves as a look-up of the sequence table ( S pk ). C) Difference between the child and parent sequence in the k th character space</figcaption>
+</figure>
+      </div>
+      <section class="paper-refs" id="references">
+        <h2>References</h2>
+        <ol>
+        <li>↵ Attwood , S. W. , Hill , S. C. , Aanensen , D. M. , Connor , T. R. , and Pybus , O. G. Phylogenetic and phylodynamic approaches to understanding and combating the early SARS-CoV-2 pandemic , 2022 . ISSN 14710064 .</li>
+        <li>↵ Azouri , D. , Granit , O. , Alburquerque , M. , Mansour , Y. , Pupko , T. , and Mayrose , I. The tree reconstruction game: phylogenetic reconstruction using reinforcement learning . arXiv preprint arXiv: 2303.06695 , 2023 .</li>
+        <li>↵ Blondel , M. , Berthet , Q. , Cuturi , M. , Frostig , R. , Hoyer , S. , Llinares-López , F. , Pedregosa , F. , and Vert , J.-P. Efficient and modular implicit differentiation . arXiv preprint arXiv: 2105.15183 , 2021 .</li>
+        <li>↵ Carmel , A. , Musa-Lempel , N. , Tsur , D. , and Ziv-Ukelson , M. The worst case complexity of maximum parsimony . Journal of computational biology : a journal of computational molecular cell biology , 21 ( 11 ), 2014 . ISSN 15578666 . doi: 10.1089/cmb.2014.0128 . OpenUrl CrossRef</li>
+        <li>↵ Cavalli-Sforza , L. L. and Edwards , A. W. Phylogenetic analysis. Models and estimation procedures . American Journal of Human Genetics , 19 ( 3 ), 1967 . ISSN 00029297 . doi: 10.2307/2406616 . OpenUrl CrossRef PubMed Web of Science</li>
+        <li>↵ Chami , I. , Gu , A. , Chatziafratis , V. , and Ré , C. From trees to continuous embeddings and back: Hyperbolic hierarchical clustering . In Advances in Neural Information Processing Systems , volume 2020-December, 2020 .</li>
+        <li>↵ Charpentier , B. , Kibler , S. , and Günnemann , S. Differentiable DAG Sampling . In ICLR 2022 - 10th International Conference on Learning Representations , 2022 .</li>
+        <li>↵ Corso , G. , Ying , R. , Pandy , M. , Veličković , P. , Leskovec , J. , and Lio , P. Neural Distance Embeddings for Biological Sequences . In Advances in Neural Information Processing Systems , volume 22 , 2021 .</li>
+        <li>↵ Dang , T. and Kishino , H. Stochastic variational inference for Bayesian phylogenetics: A case of CAT model . Molecular Biology and Evolution , 36 ( 4 ), 2019 . ISSN 15371719 . doi: 10.1093/molbev/msz020 . OpenUrl CrossRef</li>
+        <li>↵ Felsenstein , J. Inferring phylogenies , volume 2 . Sinauer associates Sunderland, MA , 2004 .</li>
+        <li>↵ Fitch , W. M. Toward defining the course of evolution: Minimum change for a specific tree topology . Systematic Biology , 20 ( 4 ), 1971 . ISSN 1076836X . doi: 10.1093/sysbio/20.4.406 . OpenUrl CrossRef PubMed</li>
+        <li>↵ Foulds , L. R. and Graham , R. L. The steiner problem in phylogeny is NP-complete . Advances in Applied Mathematics , 3 ( 1 ), 1982 . ISSN 10902074 . doi: 10.1016/S0196-8858(82)80004-3 . OpenUrl CrossRef</li>
+        <li>↵ Fourment , M. , Swanepoel , C. J. , Galloway , J. G. , Ji , X. , Gangavarapu , K. , Suchard , M. A. , and Matsen Frederick A , I. Automatic Differentiation is no Panacea for Phylogenetic Gradient Computation . Genome Biology and Evolution , 06 2023 . ISSN 1759-6653 . doi: 10.1093/gbe/evad099 . URL <a href="https://doi.org/10.1093/gbe/evad099.evad099">https://doi.org/10.1093/gbe/evad099.evad099</a> . OpenUrl CrossRef</li>
+        <li>↵ Giribet , G. Efficient tree searches with available algorithms . Evolutionary Bioinformatics , 3 : 117693430700300014, 2007 .</li>
+        <li>↵ Hwang , F. K. and Richards , D. S. Steiner tree problems . Networks , 22 ( 1 ), 1992 . ISSN 10970037 . doi: 10.1002/net.3230220105 . OpenUrl CrossRef Web of Science</li>
+        <li>↵ Jang , E. , Gu , S. , and Poole , B. Categorical reparameterization with gumbel-softmax . In 5th International Conference on Learning Representations, ICLR 2017 - Conference Track Proceedings , 2017 .</li>
+        <li>↵ Jiang , Y. , Tabaghi , P. , and Mirarab , S. Learning Hyperbolic Embedding for Phylogenetic Tree Placement and Updates . Biology , 11 ( 9 ), 2022 . ISSN 20797737 . doi: 10.3390/biology11091256 . OpenUrl CrossRef</li>
+        <li>↵ Kannan , L. and Wheeler , W. C. Maximum Parsimony on Phylogenetic networks . Algorithms for Molecular Biology , 7 ( 1 ), 2012 . ISSN 17487188 . doi: 10.1186/1748-7188-7-9 . OpenUrl CrossRef PubMed</li>
+        <li>↵ Kingma , D. P. and Ba , J. L. Adam: A method for stochastic optimization . In 3rd International Conference on Learning Representations, ICLR 2015 - Conference Track Proceedings , 2015 .</li>
+        <li>↵ Li , X. , Cai , Y. , Sun , M. , and Li , P. Causal discovery via cholesky factorization . 2022 .</li>
+        <li>↵ Matsumoto , H. , Mimori , T. , and Fukunaga , T. Novel metric for hyperbolic phylogenetic tree embeddings . Biology Methods and Protocols , 6 ( 1 ), 2021 . ISSN 23968923 . doi: 10.1093/biomethods/bpab006 . OpenUrl CrossRef</li>
+        <li>↵ Monath , N. , Zaheer , M. , Silva , D. , McCallum , A. , and Ahmed , A. Gradient-based hierarchical clustering using continuous representations of trees in hyperbolic space . In Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining , 2019 . doi: 10.1145/3292500.3330997 . OpenUrl CrossRef</li>
+        <li>↵ Moretti , A. K. , Zhang , L. , Naesseth , C. A. , Venner , H. , Blei , D. , and Pe’er , I. Variational Combinatorial Sequential Monte Carlo Methods for Bayesian Phylogenetic Inference . In 37th Conference on Uncertainty in Artificial Intelligence, UAI 2021 , 2021 .</li>
+        <li>↵ Nicholson , V. A. Matrices with permanent equal to one . Linear Algebra and Its Applications , 12 ( 2 ), 1975 . ISSN 00243795 . doi: 10.1016/0024-3795(75)90067-1 . OpenUrl CrossRef</li>
+        <li>↵ Saitou , N. and Nei , M. The neighbor-joining method: a new method for reconstructing phylogenetic trees . Molecular biology and evolution , 4 ( 4 ), 1987 . ISSN 07374038 . doi: 10.1093/oxfordjournals.molbev.a040454 . OpenUrl CrossRef PubMed Web of Science</li>
+        <li>↵ Sankoff , D. Minimal Mutation Trees of Sequences . SIAM Journal on Applied Mathematics , 28 ( 1 ), 1975 . ISSN 00361399 . doi: 10.1137/0128004 . OpenUrl CrossRef PubMed Web of Science</li>
+        <li>↵ Sober , E. The principle of parsimony . British Journal for the Philosophy of Science , 32 ( 2 ), 1981 . ISSN 00070882 . doi: 10.1093/bjps/32.2.145 . OpenUrl CrossRef</li>
+        <li>↵ Steel , M. The complexity of reconstructing trees from qualitative characters and subtrees . Journal of Classification , 9 ( 1 ), 1992 . ISSN 01764268 . doi: 10.1007/BF02618470 . OpenUrl CrossRef</li>
+        <li>↵ Swanepoel , C. , Fourment , M. , Ji , X. , Nasif , H. , Suchard , M. A. , Matsen IV , F. A. , and Drummond , A. Treeflow: probabilistic programming and automatic differentiation for phylogenetics . arXiv preprint arXiv: 2211.05220 , 2022 .</li>
+        <li>↵ Vaswani , A. , Shazeer , N. , Parmar , N. , Uszkoreit , J. , Jones , L. , Gomez , A. N. , Kaiser , Ł. , and Polosukhin , I. Attention is all you need . In Advances in Neural Information Processing Systems , volume 2017-December, 2017 .</li>
+        <li>↵ Wilson , B. Learning phylogenetic trees as hyperbolic point configurations . arXiv preprint arXiv: 2104.11430 , 2021 .</li>
+        <li>↵ Zhang , C. Improved variational Bayesian phylogenetic inference with normalizing flows . In Advances in Neural Information Processing Systems , volume 2020-December, 2020 .</li>
+        <li>↵ Zhang , C. Learnable topological features for phylogenetic inference via graph neural networks . In The Eleventh International Conference on Learning Representations , 2023 . URL <a href="https://openreview.net/forum?id=hVVUY7p64WL">https://openreview.net/forum?id=hVVUY7p64WL</a> .</li>
+        <li>↵ Zhang , C. and Matsen , F. A. Variational Bayesian phylogenetic inference . In 7th International Conference on Learning Representations, ICLR 2019 , 2019 .</li>
+        <li>↵ Zhu , T. and Cai , Y. Applying Neural Network to Reconstruction of Phylogenetic Tree . In ACM International Conference Proceeding Series , 2021 . doi: 10.1145/3457682.3457704 . OpenUrl CrossRef</li>
+        </ol>
+      </section>
+
+    </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span><a href="https://web.mit.edu/">Massachusetts Institute of Technology</a></span>
+      <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
+    </div>
+  </footer>
+  <script defer src="../../assets/js/msa.js"></script>
+  <script defer src="../../assets/js/paper.js"></script>
+</body>
+</html>

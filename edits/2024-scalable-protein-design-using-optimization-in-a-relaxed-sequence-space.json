@@ -1,0 +1,24 @@
+{
+ "slug": "2024-scalable-protein-design-using-optimization-in-a-relaxed-sequence-space",
+ "ops": [],
+ "retired": [
+  {
+   "op": "drop",
+   "id": "p8-c9bc3d",
+   "why": "Science's \"Editor's summary\" is journal front matter, not the paper",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-c2b952",
+   "why": "the editor's summary text itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-3b3308",
+   "why": "reprints and permissions boilerplate from the article footer",
+   "retired_because": "node already hidden by extraction"
+  }
+ ]
+}

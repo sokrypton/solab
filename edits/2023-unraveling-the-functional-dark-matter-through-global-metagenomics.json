@@ -1,0 +1,354 @@
+{
+ "slug": "2023-unraveling-the-functional-dark-matter-through-global-metagenomics",
+ "ops": [],
+ "retired": [
+  {
+   "op": "drop",
+   "id": "p1-b42465",
+   "why": "cover title with Nature's \"Article\" label glued on; the page already has the title, and the \"Article\" prefix stops the builder's running-title filter from catching it",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-461e90",
+   "why": "first author name from the cover byline, lifted into a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-8d0a5f",
+   "why": "cover sidebar furniture (the article DOI) read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-b8e6f4",
+   "why": "cover sidebar furniture (the received date) read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-e1ab46",
+   "why": "cover sidebar furniture (the accepted date) read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-e2cf2e",
+   "why": "cover sidebar furniture (the published-online date) read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-f24a90",
+   "why": "cover sidebar furniture (the \"Open access\" badge) read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-736b90",
+   "why": "cover sidebar furniture (the \"Check for updates\" badge) read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "set",
+   "id": "p3-d8536f",
+   "text": "Environmental dataset — 570,198,677 proteins for clustering. By cluster size (≥3 / ≥25 / ≥50 / ≥75 / ≥100 members): clusters (NMPFs) 64,149,288 / 1,501,861 / 428,910 / 200,075 / 106,198; datasets 24,477 / 23,208 / 21,447 / 20,274 / 19,326; scaffolds 349,547,957 / 71,910,494 / 39,593,021 / 27,041,114 / 17,280,119; proteins 400,241,252 / 77,892,505 / 42,280,078 / 28,621,670 / 19,986,348; percentage of proteins 70.19 / 13.66 / 7.41 / 5.02 / 3.5.",
+   "why": "Table 1 came out as fourteen one-line headings, one per cell row, with the row-group labels (\"Environmental dataset\", \"Reference genomes\") and the column header separated from the numbers. Collapsed the environmental-dataset half of the table into a single labelled block here so the numbers survive with their column meaning; the rows it absorbs are dropped below",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p3-d8536f",
+   "to": "prose",
+   "why": "and it is table data, not a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "set",
+   "id": "p3-a3e472",
+   "text": "Reference genomes — 71,312,320 proteins for clustering. By cluster size (≥3 / ≥25 / ≥50 / ≥75 / ≥100 members): clusters 4,572,038 / 415,591 / 197,965 / 128,324 / 92,909; datasets 80,896 / 77,611 / 76,294 / 75,145 / 74,134; proteins 64,427,269 / 38,509,539 / 31,100,303 / 26,906,094 / 23,860,313; percentage of proteins 90.34 / 54.00 / 43.61 / 37.73 / 33.46.",
+   "why": "same for the reference-genome half of Table 1",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p3-a3e472",
+   "to": "prose",
+   "why": "and it is table data, not a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-159a1d",
+   "why": "Table 1 cell row read as a section heading (row-group label \"Environmental dataset\"); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-7e0320",
+   "why": "Table 1 cell row read as a section heading (\"Proteins for clustering 570,198,677\"); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-1aeee9",
+   "why": "Table 1 cell row read as a section heading (the \"Cluster size\" column header); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-ec6db5",
+   "why": "Table 1 cell row read as a section heading (the ED \"Datasets\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-ecf2e8",
+   "why": "Table 1 cell row read as a section heading (the ED \"Scaffolds\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-af0587",
+   "why": "Table 1 cell row read as a section heading (the ED \"Proteins\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-9e2abc",
+   "why": "Table 1 cell row read as a section heading (the ED \"Percentage of proteins\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-f5baa7",
+   "why": "Table 1 cell row read as a section heading (row-group label \"Reference genomes\"); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-cf3b90",
+   "why": "Table 1 cell row read as a section heading (\"Proteins for clustering 71,312,320\"); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-d2b8a8",
+   "why": "Table 1 cell row read as a section heading (the reference-genome \"Clusters\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-19f06c",
+   "why": "Table 1 cell row read as a section heading (the reference-genome \"Datasets\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-9465dc",
+   "why": "Table 1 cell row read as a section heading (the reference-genome \"Percentage of proteins\" row); its numbers are now carried by p3-d8536f / p3-a3e472",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p4-13e2ac",
+   "to": "caption",
+   "why": "second half of the Fig. 2 caption, split off from the figure node and rendered as a body paragraph in the middle of the text",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p14-584e07",
+   "to": "caption",
+   "why": "second half of the Extended Data Fig. 1 caption, split off from the figure node and rendered as a body paragraph in the middle of the text",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p19-672690",
+   "to": "caption",
+   "why": "second half of the Extended Data Fig. 6 caption, split off from the figure node and rendered as a body paragraph in the middle of the text",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p21-08b39c",
+   "to": "caption",
+   "why": "second half of the Extended Data Fig. 8 caption, split off from the figure node and rendered as a body paragraph in the middle of the text",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "retype",
+   "id": "p22-e3f474",
+   "to": "caption",
+   "why": "second half of the Extended Data Fig. 9 caption, split off from the figure node and rendered as a body paragraph in the middle of the text",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "set",
+   "id": "p7-3dd7c1",
+   "text": "Although a much smaller number of metatranscriptomes was available for this analysis (4,739; 17.6%), we observed that the majority of NMPFs (60%) comprised proteins encoded by genes identified in both metagenomes and metatranscriptomes, indicating that most of those genes are actively expressed, further supporting the validity of those clusters. The clustering quality was also supported by the observation that 92% of clusters had members spanning 50 samples or more, while 50% of the clusters were from proteins distributed across 100 samples or more (Fig. 2d).",
+   "why": "one Discussion sentence split at a column break (\"...we observed that the majority of\" | \"NMPFs (60%) comprised...\"); rejoined, and the line-break hyphen in \"avail - able\" closed up",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p7-e9c60a",
+   "why": "its text is now the tail of p7-3dd7c1",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-0f4488",
+   "why": "Springer Nature publisher's-note boilerplate",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-6d138d",
+   "why": "\"Open Access\" licence-block label, read as a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-86a2b1",
+   "why": "Creative Commons licence text, page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-61f049",
+   "why": "byline heading for the consortium member list that follows",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-26b2e6",
+   "why": "consortium member name lifted into a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-c67262",
+   "why": "consortium member name lifted into a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-7eed9b",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-9970b5",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-debf6e",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-a01158",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-eda43e",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-c3cad3",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-8fac79",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-176796",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-1f6444",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-0e76fa",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-642433",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p9-bf5183",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p9-607d39",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p9-7ff4f7",
+   "why": "numbered author-affiliation list read as body prose; the builder only suppresses affiliations that appear before the first heading, so these back-page blocks slip through",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p1-440601",
+   "why": "rest of the cover byline (starts with the corresponding-author envelope glyph), read as a body paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p2-0fddd6",
+   "text": "We initially collected all protein sequences (longer than 35 amino acid residues) from all public reference genomes and assembled metagen- omes and metatranscriptomes hosted in the IMG/M platform 6 . In total, we extracted all protein sequences from 89,412 bacterial, 9,202 viral, 3,073 archaeal and 804 eukaryal genomes, resulting in a final dataset of 94,672,003 sequences. The reference genomes included in this study consisted solely of isolate genomes, not MAGs or single-amplified genomes. Similarly, for unbinned metagenomes, we extracted all predicted protein sequences from scaffolds of at least 500 bp and with lengths of at least 35 amino acids from 26,931 datasets (20,759 metagenomes and 6,172 metatranscriptomes), hereafter referred to as the environmental dataset (ED). This resulted in a non-redundant set of 8,364,611,943 predicted proteins or protein fragments. To identify the functional dark-matter component of this dataset, we first discarded any protein sequence with hits to Pfam 8 or to any sequences from the reference genome set. The final non-redundant catalogue representing the unexplored metagenomic protein space consisted of 1,171,974,849 protein sequences (14% of the total).",
+   "why": "the paragraph runs across the Fig. 1 caption: the tail of that caption (\"visualization and comparison of cluster components per cluster...\") was spliced onto \"we first discarded\", and the real continuation was split off as p2-5369af. Cut the caption text out and folded the continuation back in (p2-5369af itself carries role=front and is never rendered)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p20-d72974",
+   "to": "caption",
+   "why": "second half of the Extended Data Fig. 7 caption, split off from the figure node and rendered as a body paragraph in the middle of the text",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-8727e5",
+   "why": "consortium member list read as a body paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-777895",
+   "why": "consortium member list read as a body paragraph",
+   "retired_because": "node id no longer exists"
+  }
+ ]
+}

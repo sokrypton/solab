@@ -1,0 +1,1120 @@
+{
+ "slug": "2017-architectures-of-lipid-transport-systems-for-the-bacterial-outer-membr",
+ "ops": [
+  {
+   "op": "set",
+   "id": "g9-a7eff5",
+   "text": "E. coli strain MG1655 contains three MCE genes (Figure 1B ): mlaD (maintenance of OM lipid asymmetry D), pqiB (paraquat inducible B), and yebT (also known as MAM7 [Krachler et al., 2011] ). These MCE genes are part of three different operons, each of which also encodes a multipass transmembrane (TM) protein (MlaE, PqiA, and YebS) (Figure 1B ). The mla operon also encodes an ABC-type (ATP binding cassette) ATPase (MlaF), a periplasmic protein MlaC, and a STAS domain protein, MlaB, and functions together with an OM lipoprotein, MlaA, encoded elsewhere in the genome (Figure 1B ) (Malinverni and Silhavy, 2009) . Mutations in mla genes result in increased sensitivity to a combination of SDS and EDTA (SDS+EDTA), suggestive of an OM defect, which has been attributed to a loss of OM asymmetry (Malinverni and Silhavy, 2009) . The presence of an ATPase and a multi-pass TM protein in some MCE operons has led to the hypothesis that MCE systems encode a family of ABC trans-porters (Carpenter et al., 2014; Casali and Riley, 2007; Zhang et al., 2012) . Recently, it has been shown that MlaF, MlaE, MlaD, and MlaB interact to form a complex (MlaFEDB) and that the MCE subunit MlaD binds phospholipids (Thong et al., 2016) , supporting a role in lipid transport. To assess whether other MCE proteins from E. coli may also be involved in lipid transport for the OM, we assayed binding of phospholipids to all three E. coli MCE proteins. Purified MlaD, PqiB, and YebT proteins expressed in E. coli were subjected to chloroform-methanol extraction, and the organic phase was analyzed by thin-layer chromatography (Figure 1C ). MlaD, PqiB, and YebT each bound phospholipid species that co-migrated with phosphatidylglycerol (PG), cardiolipin (CL), and phosphatidylethanolamine (PE) standards. PG and PE were found to be present in the samples by mass spectrometry and no CL was observed. Thus, all three MCE proteins in E. coli interact with phospholipids, suggesting that the Mla, Pqi, and Yeb systems may all function in lipid transport.",
+   "why": "the section heading (g8-92d8f7) is repeated as the first words of the paragraph under it",
+   "was": "g9-6fa855",
+   "at": "e coli strain mg1655 contains three mce genes figure 1b mlad maintenance"
+  },
+  {
+   "op": "set",
+   "id": "g20-e5b9ef",
+   "text": "We next sought to determine the architecture of the MlaFEDB complex by single-particle cryo-electron microscopy (cryo-EM).",
+   "why": "Figure 3's panel legends (A)-(H) were appended to this paragraph of body prose; moved to the figure caption",
+   "at": "we next sought to determine the architecture of the mlafedb complex by"
+  },
+  {
+   "op": "after",
+   "id": "b24-e40431",
+   "node": {
+    "type": "heading",
+    "text": "MlaC Binds Lipid Tails",
+    "level": 3
+   },
+   "why": "Results subsection heading was inlined into the first line of the paragraph below it",
+   "at": "recently a model for the mlae structure was generated from a powerful",
+   "was": "g22-f41141"
+  },
+  {
+   "op": "set",
+   "id": "b26-029dc2",
+   "text": "Many ABC trans-porters from double-membraned bacteria employ small substrate binding proteins that facilitate cargo recognition and trafficking across the periplasm. Although MlaC has no sequence-similarity to canonical substrate-binding proteins, it is part of the mla operon (Figure 4A ) and is targeted to the periplasm by an N-terminal signal sequence. Structures of two possible homologs of MlaC were previously deposited in the PDB by the Northeast Structural Genomics Consortium (NESG) without any associated publications (PDB: 2QGU and 4FCZ; 27% and 22% sequence identity and Ca rmsd of 2.5 A ånd 3.0 A ˚with E. coli MlaC, respectively). The NESG crystal structure of an MlaC-like protein from Ralstonia solanacearum (2QGU) was crystallized with a ligand of unknown origin bound in its hydrophobic pocket, which was modeled as phosphatidylethanolamine (Figures S4D and S4G ). Based upon these structures, it has been proposed that MlaC-like proteins may function as periplasmic substrate-binding proteins for the transport of lipids (Malinverni and Silhavy, 2009) or other hydrophobic molecules.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "many abc transporters from double membraned bacteria employ small substrate binding proteins",
+   "was": "g23-1b3324"
+  },
+  {
+   "op": "set",
+   "id": "b36-119378",
+   "text": "Each of the rings of density in the YebT and PqiB reconstructions exhibits apparent 6-fold symmetry and is similar in overall size and shape to the hexameric ring formed by the MCE domains of MlaD. Indeed, polyalanine MCE models derived from the MlaD hexamer fit well into each of the density rings (Figure S5E ). Thus, we propose that YebT is a $570 kDa hexameric assembly of six copies of the YebT polypeptide which is anchored in the IM via six TM helices in a manner analogous to MlaD. In this orientation, the C terminus of YebT could be as much as $230 A ˚away from the IM. Similarly, hexameric PqiB would form a $360 kDa complex, anchored on the IM by the face of one ring, with the syringe barrel and needle projecting up to $230 A ˚away from the IM. As the distance between the IM and OM in E. coli is $225 A ˚ (Hoffmann et al., 2008; Matias et al., 2003) , this raises the possibility that YebT and PqiB might directly span the intermembrane space, facilitating the transport of substrates (likely lipids or other hy-",
+   "why": "a stray cross-reference fragment (\"S4 .\") from figure furniture landed at the end of this paragraph, in the middle of a hyphenated word",
+   "at": "each of the rings of density in the yebt and pqib reconstructions",
+   "was": "g31-a9aaec"
+  },
+  {
+   "op": "merge",
+   "id": "b36-119378",
+   "why": "paragraph split across a column break: \"...other hy-\" + \"drophobic molecules) across the intervening, aqueous periplasm.\"",
+   "with": [
+    "g32-53ffb5"
+   ],
+   "at": "each of the rings of density in the yebt and pqib reconstructions",
+   "was": "g31-a9aaec"
+  },
+  {
+   "op": "role",
+   "id": "g45-54359b",
+   "to": "body",
+   "why": "STAR+METHODS was classified as back matter, so the whole methods section lost its heading and the page jumped from the Discussion straight into \"TEM of E. coli outer membrane\"",
+   "at": "star methods"
+  },
+  {
+   "op": "after",
+   "id": "g45-54359b",
+   "node": {
+    "type": "heading",
+    "text": "EXPERIMENTAL MODEL AND SUBJECT DETAILS",
+    "level": 3
+   },
+   "why": "Cell sets the STAR section headers in a coloured band; our layout pass reads them as figure interior and GROBID never emits them at all",
+   "at": "star methods"
+  },
+  {
+   "op": "after",
+   "id": "g47-9f320d",
+   "node": {
+    "type": "heading",
+    "text": "Lipid binding assay and thin-layer chromatography",
+    "level": 3
+   },
+   "why": "METHOD DETAILS subsection heading lost by GROBID; the three lipid/TLC paragraphs below it had no heading at all",
+   "at": "table d contact for reagent and resource sharing d experimental model and"
+  },
+  {
+   "op": "role",
+   "id": "g48-292b1c",
+   "to": "body",
+   "why": "lipid extraction / TLC methods paragraph was classified as back matter and so was dropped from the page entirely",
+   "at": "to extract lipid 2 ml of chloroform and 1 ml of methanol"
+  },
+  {
+   "op": "role",
+   "id": "g49-a7ebce",
+   "to": "body",
+   "why": "lipid extraction / TLC methods paragraph was classified as back matter and so was dropped from the page entirely",
+   "at": "tlc plates silica gel 60 merck millipore were cut to 10 cm"
+  },
+  {
+   "op": "role",
+   "id": "g50-d7eda2",
+   "to": "body",
+   "why": "lipid extraction / TLC methods paragraph was classified as back matter and so was dropped from the page entirely",
+   "at": "for identification of lipid species two plates were run side by side"
+  },
+  {
+   "op": "set",
+   "id": "g53-143d5a",
+   "text": "Three biological replicates of each strain were grown overnight at 37 C and used to inoculate fresh cultures (1:100). The cultures were grown to an OD600 of 0.6 and 1 mL of cells were pelleted at 5000 g for 5 min and washed twice with 1 mL of phosphate buffered saline (PBS). The OD600 of the suspensions was adjusted to 0.1 in PBS. 176 mL of each suspension was added to a 96 well plate (black, flat-bottomed) with two technical replicates, alongside wells containing 176 mL PBS only. 4 mL of 500 mM carbonyl cyanide-m-chlorophenyl hydrazine (CCCP) was added to each well to reach a final concentration of 10 mM and incubated at room temperature for 10 min. The plate was added to a FLUOstar Omega (BMG LABTECH), pre-set to 37 C and 20 mL of 60 mg/ml ethidium bromide was added with an auto injector to a final concentration of 6 mg/ml. Fluorescence readings were taken at regular intervals over 30 min from the top of the wells, with an excitation filter of 515 nm and an emission filter of 600 nm. For analysis, the mean value for PBS only was subtracted from the mean fluorescence value for each biological replicate. The experiment was repeated 5 times with 3 biological replicates in each run.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "three biological replicates of each strain were grown overnight at 37 c"
+  },
+  {
+   "op": "after",
+   "id": "g53-143d5a",
+   "node": {
+    "type": "heading",
+    "text": "Expression and purification of MlaD",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "three biological replicates of each strain were grown overnight at 37 c"
+  },
+  {
+   "op": "set",
+   "id": "b59-bf955d",
+   "text": "DNA corresponding to the ''periplasmic domain'' (residues 32-183) and ''core MCE domain'' (residues 32-140) of MlaD was amplified from the MG1655 genome and cloned by Gibson assembly into a custom pET vector (pBE1092) resulting in an N-terminal 6xHis tag followed by a TEV protease cleavage site just upstream of MlaD. The resulting plasmids (pBE1160 and pBE1161, respectively) were transformed into Rosetta 2 (DE3) cells (Novagen). For expression, overnight cultures of Rosetta 2 (DE3) / pBE1160 or Rosetta 2 (DE3) / pBE1161 were grown at 37 C with shaking to an OD600 of $0.9, then induced by addition of IPTG to a final concentration of 1 mM and continued incubation overnight shaking at 15 C. Cultures were harvested by centrifugation, and pellets were resuspended in lysis buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole). Cells were lysed by two passes through an Emulsiflex-C3 cell disruptor (Avestin), then centrifuged at 38,000 g to pellet cell debris. The clarified lysates were incubated with NiNTA resin (QIAGEN) at 4 C, which was subsequently washed with Ni Wash Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole) and bound proteins eluted with Ni Elution Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 250 mM imidazole). MlaD containing fractions eluted from the NiNTA column were pooled and concentrated before separation on a Superdex 200 gel filtration column (GE Healthcare) equilibrated in 20 mM Tris pH 8.0 and 150 mM NaCl.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "dna corresponding to the periplasmic domain residues 32 183 and core mce",
+   "was": "g54-5bb784"
+  },
+  {
+   "op": "after",
+   "id": "b59-bf955d",
+   "node": {
+    "type": "heading",
+    "text": "Crystallization and structure determination of MlaD",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "dna corresponding to the periplasmic domain residues 32 183 and core mce",
+   "was": "g54-5bb784"
+  },
+  {
+   "op": "set",
+   "id": "b61-5b4833",
+   "text": "Gel filtration fractions containing purified MlaD proteins were concentrated to 20-60 mg/mL and sitting drop, vapor-diffusion crystallization trials were conducted using the JCSG Core I-IV screens (QIAGEN). Crystals of the core MCE domain of MlaD (residues 32-140) grew from drops consisting of 100 nL protein plus 100 nL of a reservoir solution consisting of 0.1 M sodium acetate pH 4.5, and 40% 1,2 propanediol, and were cryoprotected by supplementing the reservoir solution with 25% ethylene glycol. Native diffraction data was collected at ALS beamline 8.3.1, and indexed to C2 and reduced using XDS (Table S1 ) (Kabsch, 2010) .",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "gel filtration fractions containing purified mlad proteins were concentrated to 20 60",
+   "was": "g55-cfdad9"
+  },
+  {
+   "op": "set",
+   "id": "b62-039cfa",
+   "text": "As MlaD has no homology to proteins of known structure, and has no Met residues in the core MCE domain, we set out to generate a panel of single mutants in which each Leu residue of the core domain was converted to Met (Leu42Met, Leu52Met, Leu73Met, Leu79Met, Leu84Met, Leu99Met, Leu106Met, Leu107Met, Leu112Met, Leu114Met, Leu123Met, and Leu128Met). Of these 12 target mutants, we successfully generated 11 by site directed mutagenesis (reaction for Leu73Met failed). Test expressions revealed that 5 of these 11 mutants expressed at near wild-type levels (Leu79Met, Leu84Met, Leu106Met, Leu107Met, Leu123Met). We then pre-pared selenomethionine-derivatived protein for each of these five mutants and screened for diffraction-quality crystals, which were obtained for 4 of the 5 mutants. Multi-wavelength anomalous dispersion (MAD) datasets were collected from selenomethioninederivatived crystals of the Leu84Met and Leu107Met mutants at ALS beamline 8.3.1. Anomalous signal from the Leu107Met crystals was weak despite high data quality and strong Se signal in X-ray fluorescence scans, and later this residue was found to be at the tip of a flexible/partially disordered loop. However, Leu84Met yielded a high quality dataset, which was indexed to C2 and reduced using XDS (Kabsch, 2010), and phased by MAD using the SHELX C/D/E pipeline (Sheldrick, 2010) (Tables S1 and S2). The polyalanine model from SHELXE was rebuild using the Autobuild module of Phenix (Adams et al., 2010). The resulting model was adjusted in Coot (Emsley et al., 2010) and refined using Phenix (Adams et al., 2010). The final model consists of 7 copies of the MCE domain forming a hepatmeric ring.",
+   "why": "paragraph broke off mid-list (\"Leu42Met, Leu52Met, Leu73Met,\") and was glued to the YebT purification paragraph from a page later; completed from our layout pass (p18-039cfa + p19-8b5148)",
+   "at": "as mlad has no homology to proteins of known structure and has",
+   "was": "g56-039cfa"
+  },
+  {
+   "op": "after",
+   "id": "b62-039cfa",
+   "node": {
+    "type": "heading",
+    "text": "Expression and purification of YebT",
+    "level": 3
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has",
+   "was": "g56-039cfa"
+  },
+  {
+   "op": "after",
+   "id": "b62-039cfa",
+   "node": {
+    "type": "heading",
+    "text": "Expression and purification of PqiB",
+    "level": 3
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has",
+   "was": "g56-039cfa"
+  },
+  {
+   "op": "after",
+   "id": "g56-039cfa",
+   "node": {
+    "type": "prose",
+    "text": "DNA corresponding to the complete mlaFEDCB operon (from MlaF start codon to MlaB stop codon) was amplified from the MG1655 genome and cloned by Gibson assembly into a custom pET vector (pDCE587) resulting in an C-terminal 6xHis tag. The resulting plasmid (pBE1200) was transformed into Rosetta 2 (DE3) cells (Novagen). For expression, overnight cultures of Rosetta 2 (DE3)/ pBE1200 were grown at 37°C with shaking to an OD600 of ~0.9, then induced by addition of IPTG to a final concentration of 1 mM and continued incubation for ~4hr shaking at 37°C. Cultures were harvested by centrifugation, and pellets were resuspended in lysis buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole). Cells were lysed by two passes through an Emulsiflex-C3 cell disruptor (Avestin), then centrifuged at 35,000 g to pellet cell debris. The clarified lysates were transferred to ultracentrifuge tubes and centrifuged at 200,000 g to pellet membrane fraction. Membrane pellets were resuspended in lysis buffer, then n-Dodecyl-β-D-Maltopyranoside (DDM; Anatrace) was added to a final concentration of 25 mM. After incubation for ~1hr with rocking at 4°C, the DDM solublized membrane fraction was centrifuged at 200,000 g. The supernatants were loaded onto a NiNTA column (QIAGEN) at 4°C, which was subsequently washed with Ni Wash Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole, 10% glycerol, 0.5 mM DDM) and bound proteins eluted with Ni Elution Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 250 mM imidazole, 10% glycerol, 0.5 mM DDM). Eluate from the NiNTA column was concentrated before separation on a Superdex 200 gel filtration column (GE Healthcare) equilibrated in 20 mM Tris pH 8.0, 150 mM NaCl, 10% glycerol, and 0.5 mM DDM. SDS-PAGE analysis of the resulting sample revealed the presence of four proteins, which were confirmed by trypsin digestion and tandem mass spectrometry (MS/MS) to be MlaF, MlaE, MlaD and MlaB. Only MlaC was not detected. Samples were not boiled before loading on SDS-PAGE to prevent aggregation of membrane proteins, so apparent molecular weight of protein bands are unreliable (e.g., in Figure 3 C). For cryo-EM, the sample in DDM was exchanged into amphipol A8-35 prior to size exclusion chromatography. Briefly, protein at ~1mg/mL was incubated for ~5 hr with 3-fold excess by mass of A8-35. Detergent from the buffer was then absorbed by incubation with Bio-Beads (Bio-Rad) overnight at 15 mg Bio-Beads per mL of solution. The sample was filtered to remove Bio-Beads and subjected to size exclusion chromatography using 20 mM Tris pH 8.0, 150 mM NaCl. The protein quality was then assessed by negative stain EM prior to cryo-EM grid preparation."
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has"
+  },
+  {
+   "op": "after",
+   "id": "b62-039cfa",
+   "node": {
+    "type": "heading",
+    "text": "Purification of the MlaFEDB complex",
+    "level": 3
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has",
+   "was": "g56-039cfa"
+  },
+  {
+   "op": "after",
+   "id": "g56-039cfa",
+   "node": {
+    "type": "prose",
+    "text": "Crystals of the complete MlaD periplasmic domain (residues 32-183) grew from drops consisting of 100 nL protein plus 100 nL of a reservoir solution consisting of 0.2 M zinc acetate, 0.1 M MES pH 6.0, and 15% ethanol, and were cryoprotected by supplementing the reservoir solution with 20% ethylene glycol. Native diffraction data was collected at ALS beamline 8.3.1, and indexed to C2 and reduced using XDS (Table S1) (Kabsch, 2010). This dataset was phased by molecular replacement using Phaser (McCoy et al., 2007), with the MlaD core MCE domain as a search model. The resulting model was adjusted in Coot (Emsley et al., 2010) and refined using Phenix (Adams et al., 2010). This final model consists of 3 copies of the MlaD periplasmic domain. Application of the 2-fold symmetry operator results in the biologically relevant hexameric ring."
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has"
+  },
+  {
+   "op": "set",
+   "id": "b86-5905e2",
+   "text": "3 copies of the hexameric MlaD ring were docked into the EM density map and fit as rigid bodies in Chimera (Pettersen et al., 2004) . Individual domains were then fit as rigid bodies in Coot (Emsley et al., 2010) . Regions of poor agreement between the model and map were pruned and then refined using phenix.real_space_refine (Adams et al., 2010) . The PqiB backbone model was rebuilt and the sequence register assigned by manual inspection of the EM density map in Coot (Emsley et al., 2010) , along sequence and structural alignments to MlaD. Additional density for the C-terminal helical region was fit manually using idealized a helices. The final model was refined using phenix.real_space_refine (Adams et al., 2010) against 2 different EM density maps: one masked over the entire model, which provided the best resolution of the PqiB barrel, and a second map masked on the MCE3 ring and needle, which yielded the highest quality maps for the needle.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "was": "g62-d70030",
+   "at": "3 copies of the hexameric mlad ring were docked into the em"
+  },
+  {
+   "op": "after",
+   "id": "g65-390824",
+   "node": {
+    "type": "heading",
+    "text": "Identification of inter-subunit restraints in MlaFEDB complex using co-evolving residue pairs",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "considering only the packing of the core mce domains in pqib large"
+  },
+  {
+   "op": "set",
+   "id": "b90-a4015d",
+   "text": "A multiple sequence alignment was generate using HHblits (Remmert et al., 2011) with UniProt database from 2015_06 for each of the Mla components. To prevent paralogous copies of each genes from corrupting the final alignments, stringent e-values were used. For MlaE, MlaF and MlaD evalues of 1E-20, 1E-40 and 1E-20 were used respectfully. The joint alignment was restricted to genes found within the same operon (maximum of two genes apart in the same contig). The genomic distance was determined by mapping the UniProt IDs back to their respective contiguous sequences from the ENA database. The alignments were then filtered to remove sequences that don't cover at least 75% of the query, positions that have more than 50% gaps and redundancy was reduced to 90%. GREMLIN was then run with default parameters to predict the top inter-co-evolving residue pairs (Ovchinnikov et al., 2014) . Residue pairs with predicted probability of 80% or higher are shown in Figures S3C and S3D mapped on the model structures.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "a multiple sequence alignment was generate using hhblits remmert et al 2012",
+   "was": "g66-67b3f0"
+  },
+  {
+   "op": "after",
+   "id": "b91-d7d52c",
+   "node": {
+    "type": "heading",
+    "text": "Expression and purification of MlaC",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "the previously predicted structure of mlae dimer ovchinnikov et al 2015 was",
+   "was": "g67-df3d36"
+  },
+  {
+   "op": "set",
+   "id": "g68-afee40",
+   "text": "DNA corresponding to mature, signal peptide-cleaved MlaC (residues 22-211) was amplified from the MG1655 genome and cloned by Gibson assembly into a custom pET vector (pBE1092) resulting in an N-terminal 6xHis tag and TEV protease cleavage site. The resulting plasmid (pBE1203) was transformed into Rosetta 2 (DE3) cells (Novagen). For expression, overnight cultures of Rosetta 2 (DE3)/pBE1203 were grown at 37 C with shaking to an OD600 of $0.9, then induced by addition of IPTG to a final concentration of 1 mM and continued incubation overnight shaking at 15 C. Cultures were harvested by centrifugation, and pellets were resuspended in lysis buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole). Cells were lysed by two passes through an Emulsiflex-C3 cell disruptor (Avestin), then centrifuged at 38,000 g to pellet cell debris. The clarified lysates were incubated with NiNTA resin (QIAGEN) at 4 C, which was subsequently washed with Ni Wash Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole) and bound proteins eluted with Ni Elution Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 250 mM imidazole). MlaC containing fractions eluted from the NiNTA column were pooled and concentrated before separation on a Superdex 200 gel filtration column (GE Healthcare) equilibrated in 20 mM Tris pH 8.0 and 150 mM NaCl.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "dna corresponding to mature signal peptide cleaved mlac residues 22 211 was"
+  },
+  {
+   "op": "after",
+   "id": "g68-afee40",
+   "node": {
+    "type": "heading",
+    "text": "Crystallization and structure determination of MlaC",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "dna corresponding to mature signal peptide cleaved mlac residues 22 211 was"
+  },
+  {
+   "op": "set",
+   "id": "b95-d1fe0a",
+   "text": "Gel filtration fractions containing purified MlaC proteins were concentrated to 10-60 mg/mL and sitting drop, vapor-diffusion crystallization trials were conducted using the JCSG Core I-IV screens (QIAGEN). Crystals of MlaC grew from drops consisting of 100 nL protein plus 100 nL of a reservoir solution consisting of 0.1 M citric acid pH 3.5 and 1.6 M ammonium sulfate, and were cryoprotected by supplementing the reservoir solution with 37.5% ethylene glycol. Native diffraction data was collected at ALS beamline 8.3.1, and indexed to P2 1 2 1 2 1 and reduced using XDS (Table S1 ) (Kabsch, 2010) . The structure was phased by molecular replacement using Phaser (McCoy et al., 2007) . Initial attempts to use the crystal structures of MlaC homologs as search models (PDB: 2QGU and 4FCZ) were unsuccessful. However, we were able to obtain a few clear solutions using the following approach. We created a homology model of MlaC with Phyre2 (Kelley et al., 2015) , based on 2QGU as a template. This homology model rebuilt using MR-Rosetta (DiMaio et al., 2011) , and the resulting 1000 rebuilt models were tested as search models using Phaser (McCoy et al., 2007) . A small number of these models gave clear solutions, which were adjusted in Coot (Emsley et al., 2010) and refined using Phenix (Adams et al., 2010) . In the later stages of refinement, two phosphatidic acid molecules were built into clearly defined electron density in the core of each of the two MlaC monomers in the asymmetric unit.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "gel filtration fractions containing purified mlac proteins were concentrated to 10 60",
+   "was": "g69-37076f"
+  },
+  {
+   "op": "after",
+   "id": "b95-d1fe0a",
+   "node": {
+    "type": "heading",
+    "text": "Expression and purification of MlaA-OmpF complex",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "gel filtration fractions containing purified mlac proteins were concentrated to 10 60",
+   "was": "g69-37076f"
+  },
+  {
+   "op": "set",
+   "id": "b97-e6e558",
+   "text": "DNA corresponding to mature, signal peptide-cleaved MlaA (residues 1-251) was amplified from the MG1655 genome and cloned by Gibson assembly into a custom pET vector (pDCE587) resulting in an C-terminal 6xHis tag. The resulting plasmid (pBE1242) was transformed into Rosetta 2 (DE3) cells (Novagen). For expression, overnight cultures of Rosetta 2 (DE3)/pBE1242 were grown at 37 C with shaking to an OD600 of $0.9, then induced by addition of IPTG to a final concentration of 1 mM and continued incubation for $4hr shaking at 15 C. Cultures were harvested by centrifugation, and pellets were resuspended in lysis buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole, 10% glycerol). Cells were lysed by two passes through an Emulsiflex-C3 cell disruptor (Avestin), then centrifuged at 38,000 g to pellet cell debris. The clarified lysates transferred to ultracentrifuge tubes and centrifuged at 200,000 g to pellet membrane fraction. Membrane pellets were resuspended in lysis buffer by sonication, then n-Dodecyl-b-D-Maltopyranoside (DDM; Anatrace) was added to a final concentration of 25 mM. After incubation for 1hr with rocking at 4 C, the DDM solublized membrane fraction was centrifuged at 200,000 g. The supernatants were loaded onto a NiNTA column (QIAGEN) at 4 C, which was subsequently washed with Ni Wash Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole, 10% glycerol, 0.5 mM DDM) and bound proteins eluted with Ni Elution Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 250 mM imidazole, 10% glycerol, 0.5 mM DDM). MlaA containing fractions eluted from the NiNTA column were pooled and concentrated before separation on a Superdex 200 gel filtration column (GE Healthcare) equilibrated in 20 mM Tris pH 8.0, 150 mM NaCl, 10% glycerol, and 0.5 mM DDM. SDS-PAGE analysis of the resulting sample revealed the presence of two proteins in roughly 1:1 stoichometry, which were confirmed by trypsin digestion and tandem mass spectrometry (MS/MS) to be MlaA and OmpF.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "dna corresponding to mature signal peptide cleaved mlaa residues 1 251 was",
+   "was": "g70-1cc0f8"
+  },
+  {
+   "op": "after",
+   "id": "b97-e6e558",
+   "node": {
+    "type": "heading",
+    "text": "Protein-protein interactions by biolayer interferometry",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "at": "dna corresponding to mature signal peptide cleaved mlaa residues 1 251 was",
+   "was": "g70-1cc0f8"
+  },
+  {
+   "op": "set",
+   "id": "g71-0297fa",
+   "text": "DNA corresponding to mature, signal peptide-cleaved MlaC (residues 22-211) was amplified from the MG1655 genome and cloned by Gibson assembly into a custom pET vector resulting in an N-terminal 6xHis tag, biotinylation site (amino acid sequence: GGGLNDIFEAQKIEWHE), and TEV protease cleavage site. The resulting plasmid (pBE1230) was transformed into Rosetta 2 (DE3) cells (Novagen), and tagged MlaC was expressed and purified essentially as described above. Purified MlaC at $2 mg/mL was biotinylated by the addition of 25 mg BirA enzyme/mg total protein. The reactions were carried out in the following buffer: 100mM Tris pH 8.0, 10mM ATP, 10mM MgOAc, 50 mM biotin. The biotinylation reactions were incubated at 4 C overnight. Biotinylated MlaC was purified by size exclusion chromatography, and concentrated to $5-20 mg/mL. Biotinylated MlaC was diluted to 50 mg/mL in 1x kinetics buffer (1x PBS, pH 7.4, 0.01% BSA, and 0.002% Tween 20) and loaded onto streptavidin coated biosensors (ForteBio) and incubated with varying concentrations of MlaFEDB complex, MlaD, or MlaA-OmpF. All binding data were collected on an Octet RED384 instrument at 25 C. In each case, an empty sensor (no MlaC loaded) was included as a negative control to test for non-specific interactions of MlaFEDB complex, MlaD, and MlaA-OmpF.",
+   "why": "remove the run-in heading now restored above this paragraph",
+   "at": "dna corresponding to mature signal peptide cleaved mlac residues 22 211 was"
+  },
+  {
+   "op": "after",
+   "id": "g71-0297fa",
+   "node": {
+    "type": "heading",
+    "text": "QUANTIFICATION AND STATISTICAL ANALYSIS",
+    "level": 3
+   },
+   "why": "STAR section header lost as figure interior; without it the ANOVA paragraph reads as part of the biolayer-interferometry protocol",
+   "at": "dna corresponding to mature signal peptide cleaved mlac residues 22 211 was"
+  },
+  {
+   "op": "drop",
+   "id": "g32-53ffb5",
+   "at": "drophobic molecules across the intervening aqueous periplasm",
+   "why": "stray duplicate: GROBID emitted this clause twice, once inside the 'Proteins of the MCE superfamily' paragraph where it belongs and again here as a fragment with 'hydrophobic' truncated to 'drophobic'"
+  }
+ ],
+ "retired": [
+  {
+   "op": "drop",
+   "id": "p15-e552c2",
+   "why": "'REAGENT or RESOURCE SOURCE IDENTIFIER' is the key-resources table's column header, not a section heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-d88618",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-7a0c74",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-636a58",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-2aa00e",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-9e798e",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-afe1d4",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-af2368",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-4da43b",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-33eb0d",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-628dc8",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-034cf3",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-430408",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-7e6b06",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-0ef9b6",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-8177ff",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-5b3a11",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-741b15",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-fc7d40",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-bb7dc9",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-b3e515",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-7d4262",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-de0b1a",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-c8c81b",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-cb73a0",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-3d554c",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-907a83",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-097a2c",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-ce2e3e",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-6e0ee4",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-d6a7be",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-b684d5",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-29b510",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-414d5a",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-5405d9",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-5a28ac",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-c9e425",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-e895b5",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-61d120",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-5ed7d7",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-a9ddc7",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-d83bbd",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-10fec3",
+   "why": "key-resources table row rendered as a paragraph with its columns run together; only rows over the length threshold survive, so the table appears as a random fragment of itself",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-4d5c46",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-04980c",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-26dfba",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-037ab0",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-3516df",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-61f476",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-d7bb57",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-d8c3fa",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-ed7288",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-2d2648",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-b3bdfa",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-9e5ee5",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-b9eb88",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-44095b",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-ee4b4f",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-b37080",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-17bfc8",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-d4ccd8",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-3d7977",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-e62ed2",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-a80eec",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-8709f3",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-7f88e3",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-e1d948",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-ac5d4e",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-6b86c9",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-042bd2",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "set",
+   "id": "p21-51a8cd",
+   "text": "18-stranded b -barrel lining interior of PqiB barrel",
+   "why": "the heading was cut after its first word; the rest of it opened the following paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p21-c69597",
+   "text": "Considering only the packing of the core MCE domains in PqiB, large holes be- tween subunits would allow for solvent and some small molecules to diffuse in and out of the PqiB barrel. However, in the regions where these holes exist (between the MCE1 and MCE2 rings; and between the MCE2 and MCE3 rings), our EM maps reveal that the interior of the barrel is lined with 18 tubes of density that run roughly parallel to the long/six-fold axis of PqiB. These densities exhibit the characteristic ‘‘pleated’’ shape of b strands, with spacing between tubes of density consistent with a curved b sheet, sug- gesting that the 18 densities correspond to an 18-stranded b -barrel that seals the gaps between the MCE rings. Consistent with this, densities resembling side chains protrude off from the strands, alternating between the lumenal and exterior faces of the barrel. In both parts of the structure lined by these 18 densities (between the MCE1 and MCE2 rings; and between the MCE2 and MCE3 rings), twelve of the eighteen b strands, two from each of the 6 subunits in the ring, can be modeled as a b -hairpin emanating from the b 5- b 6 loops in the MCE1 and MCE2 domains of PqiB, which are much longer than the corresponding b 5- b 6 loop of MlaD of the MCE3 domain of PqiB. In the remaining 6 b strand densities lining the pore, we have built polyalanine models, as we are currently unable to determine where these residues lie within the primary sequence, or if they may be derived from another polypeptide co-purifying with PqiB. Indeed, 3D classiﬁcation applied during the reconstruction of PqiB yielded two major classes that differed primarily in the presence or absence of strong density for this 18-stranded b -barrel, and it is possible that the 3D class with poor density in this region is missing an a polypeptide the contributes the remaining 6 strands and thereby stabilizes the pore lining. Future work and likely higher resolution structures will be needed to resolve this ambiguity.",
+   "why": "remove the tail of the heading from the start of this paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p5-e8595e",
+   "why": "mid-sentence continuation now merged into p4-0f0970",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-b8fec1",
+   "why": "mid-sentence continuation now merged into p7-063a9f",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p8-18dca3",
+   "text": "Since MlaC is a periplasmic lipid-binding protein, we hypothe- sized that MlaC shuttles lipid substrates between the IM MlaFEDB transporter and an OM complex, where lipids would be inserted into or removed from the OM. Lipoprotein MlaA is a candidate component for this OM complex, as it has been implicated in Mla function ( Malinverni and Silhavy, 2009 ) and forms a complex with the OM porin proteins, OmpC, and OmpF ( Chong et al., 2015 ). Thus, we asked whether MlaC could interact directly with puriﬁed MlaFEDB and MlaA-OmpF protein using biolayer interferometry. We overexpressed and puriﬁed MlaA from E. coli , which co-puriﬁed as a stable complex with OmpF under our culture conditions, as conﬁrmed by mass spec- trometry. We observed robust and speciﬁc binding of both MlaFEDB ( Figure 4 F) and MlaA-OmpF assemblies ( Figure 4 G) to MlaC, as well as a direct interaction be- tween MlaC and MlaD ( Figure S4 I). These results demonstrate that MlaC is capable of binding to both the IM and OM com- plexes, supporting a model where MlaC plays a central role in transferring a lipid substrate from one membrane to another.",
+   "why": "one paragraph broken in two by a column/page turn; rejoined with its continuation (p8-1bda40)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-1bda40",
+   "why": "mid-sentence continuation now merged into p8-18dca3",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-f883f4",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-5e9dbb",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-f371c4",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-6e1f94",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-cf0271",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-1753ed",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-d71cc8",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p13-5e77eb",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-23ac4d",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-cc1bde",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-5da30c",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-e9c557",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-9058a6",
+   "why": "bibliography entry rendered as a body paragraph between DISCUSSION and STAR+METHODS: extraction lost role=references partway down the list. Every one of these entries is already in the page's References section, so this is duplicated back matter",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p12-aa2891",
+   "why": "second STAR+METHODS heading: this one sits over the printed outline on p12; the heading that opens the actual methods (p15-aa2891) is suppressed as a duplicate, so drop this copy and let the real one stand",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-5e4153",
+   "why": "'Detailed methods are provided in the online version...' is the lead-in to the printed outline; the methods themselves are in this page, so the sentence and its colon dangle",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-f8a2ba",
+   "why": "bullet ('d ') from the STAR Methods outline read as a heading; the real KEY RESOURCES TABLE heading appears later with its content",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-1b4a39",
+   "why": "bullet ('d ') from the STAR Methods outline read as a heading; the real CONTACT FOR REAGENT AND RESOURCE SHARING heading appears later with its content",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-9bb534",
+   "why": "bullet ('d ') from the STAR Methods outline read as a heading; the real EXPERIMENTAL MODEL AND SUBJECT DETAILS heading appears later with its content",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-bacb34",
+   "why": "bullet ('d ') from the STAR Methods outline read as a heading; the real METHOD DETAILS heading appears later with its content",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-c77343",
+   "why": "bullet ('d ') from the STAR Methods outline read as a heading; the real QUANTIFICATION AND STATISTICAL ANALYSIS heading appears later with its content",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p12-d51036",
+   "why": "bullet ('d ') from the STAR Methods outline read as a heading; the real DATA AND SOFTWARE AVAILABILITY heading appears later with its content",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "after",
+   "id": "p5-e61f75",
+   "node": {
+    "type": "heading",
+    "text": "Architecture of the MlaFEDB Transporter Complex",
+    "level": 3
+   },
+   "why": "Results subsection heading was absorbed into the first line of the paragraph that follows it",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "p5-288545",
+   "text": "An MCE protein implicated in lipid transport in plants, TRIGALACTOSYLDIACYLGLYCEROL 2 (TGD2), forms part of a high-molecular-weight complex in the chloroplast IM ( Awai et al., 2006; Roston et al., 2011, 2012 ). To assess whether MlaD forms a complex with any of the other Mla proteins, we overexpressed the full mlaFEDCB operon in E. coli ( Figure 3 A) and determined whether any other Mla proteins co-purify with His-tagged MlaD. After afﬁnity puriﬁcation and gel ﬁltration ( Figure 3 B), SDS-PAGE analysis of the puriﬁed MlaD sample revealed the presence of three additional proteins forming a stable complex with MlaD ( Figure 3 C), which were identiﬁed by mass spec- trometry to be MlaF, MlaE, and MlaB; the co-expressed MlaC protein, however, was absent. Independently, similar results were recently reported ( Thong et al., 2016 ).",
+   "why": "strip the run-in heading now restored above this paragraph",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "after",
+   "id": "p18-106ed8",
+   "node": {
+    "type": "heading",
+    "text": "TEM of E. coli outer membrane",
+    "level": 3
+   },
+   "why": "METHOD DETAILS subsection heading was absorbed into the paragraph that follows it (it is listed in the paper's own outline as a section)",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "p18-2b22cf",
+   "text": "Overnight cultures of MG1655 and mutant strains were diluted 1:100 in LB and grown with shaking at 37 \u0003 C until an OD600 of \u0001 0.7. 3 m l of culture was spotted onto an electron microscopy grid (Quantifoil 2/2 holey ﬁlms with 2 m M holes), and cells allowed to attach for \u0001 30 s. The grid was blotted for 20 s and then plunge frozen in liquid ethane using an FEI Vitrobot Mark III. The grids were imaged using a FEI Polara microscope operating at 300keV, and equipped with a Gatan energy ﬁlter and K2 camera. UCSF tomography software was used to collect images of the wild-type and mutant cells.",
+   "why": "strip the run-in heading now restored above this paragraph",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "p4-0f0970",
+   "text": "The N terminus of each MCE domain is connected by a short linker to a TM helix, which places the N-terminal face of the ring in close proximity to the negatively charged phospholipid head groups ( Figure 2 F). Consistent with this orientation, the mem- brane-facing surface of the ring is considerably more basic than the C-terminal, periplasm-facing side ( Figure 2 E). The C-terminal helix from each subunit associates to form a hollow six-helix coiled coil, leaving a solvent-accessible channel running through the center of the ring ( Figure 2 G). This channel is lined with hydrophobic residues and has two notable constric- tion points: the ﬁrst is formed by Leu106 and Leu107 at the tip of the b 5- b 6 loop and the second by Phe150 in the C-terminal helix ( Figure 2 G). These narrowings, in particular the constriction formed by the Phe150 ring, are reminiscent of the Phe427 F clamp in the central pore of anthrax protective antigen, where they play a key role in the transport of protein toxins through the PA translocon ( Jiang et al., 2015 ). At the narrowest point, the channel diameter is \u0001 6–8 A ˚ , large enough to allow the passage of small hydrophobic molecules like phospholipids or sterols. It should also be noted that the weaker electron density in this region of the crystal structure suggests that these loops are at least somewhat ﬂexible and, therefore, may allow some- what larger molecules to pass through. Outside of these constriction points, several other residues from the C-terminal helices contribute to the hydrophobic pore lining, including Met141, Leu143, Leu146, Ile147, and Leu149. Based upon its orientation rela- tive to the IM ( Figure 2 F), this hydrophobic pore through the MlaD ring is poised to function as a channel to facilitate traf- ﬁcking of small hydrophobic molecules to or from the IM.",
+   "why": "one paragraph broken in two by a column/page turn; rejoined with its continuation (p5-e8595e)",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "p6-c0ab0d",
+   "text": "The 2D class averages were feature rich, and individual components within the complex and possible TM helices were clearly identiﬁable ( Figure 3 D). Some inherent ﬂexibility in the complex was apparent in these 2D class averages, sug- gesting that the relative orientation of the components is not rigidly ﬁxed, which may also limit the ﬁnal resolution of our density maps. 3D classiﬁcation and reﬁnement produced a \u0001 10 A ˚ resolution density map ( Figures 3 E, S3 A, and S3B). The 6-fold symmetry of the MlaD ring is readily apparent at one end of the map ( Figure 3 F), which could be well ﬁt by the hexameric, MlaD crystal structure ( Fig- ure 3 F). The opposite end of the map is \u0001 2-fold symmetric, consistent with the dimeric state of known ABC transporters. Homology models of the MlaF ATPase and MlaB STAS domain were generated ( Kelley et al., 2015 ), and two copies each of MlaF and MlaB can be ﬁt into the map ( Figure 3 G). It should be noted that, while the overall position of MlaB within the complex is clear, its orientation rela- tive to MlaF is not well deﬁned by the map, and the details of this interaction await further investigation. The remaining central density corresponds to the TM subunit, MlaE, along with the six TM helices from the MlaD ring. The volume of the TM region and the apparent 2-fold symmetry of the map suggest that there are most likely two copies of the MlaE subunit, although the modest resolution of our cryo-EM reconstruction does not allow us to trace the MlaE subunit, even at the secondary structure level. The apparent symmetry mismatch between the hexameric MlaD and the dimeric permease assemblies implies that the MlaD-MlaE interface cannot be identical for each of the six MlaD subunits.",
+   "why": "one paragraph broken in two by a column/page turn; rejoined with its continuation (p7-5c52e4)",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p7-5c52e4",
+   "why": "mid-sentence continuation now merged into p6-c0ab0d",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "p7-063a9f",
+   "text": "Many ABC transporters from double-membraned bacteria employ small substrate binding proteins that facilitate cargo recognition and trafﬁcking across the periplasm. Although MlaC has no sequence-similarity to canonical substrate-binding proteins, it is part of the mla operon ( Figure 4 A) and is targeted to the periplasm by an N-terminal signal sequence. Structures of two possible homologs of MlaC were previously deposited in the PDB by the Northeast Structural Genomics Consortium (NESG) without any associated publications (PDB: 2QGU and 4FCZ; 27% and 22% sequence identity and C a rmsd of 2.5 A ˚ and 3.0 A ˚ with E. coli MlaC, respectively). The NESG crystal struc- ture of an MlaC-like protein from Ralstonia solanacearum (2QGU) was crystallized with a ligand of unknown origin bound in its hy- drophobic pocket, which was modeled as phosphatidylethanol- amine ( Figures S4 D and S4G). Based upon these structures, it has been proposed that MlaC-like proteins may function as periplasmic substrate-binding proteins for the transport of lipids ( Malinverni and Silhavy, 2009 ) or other hydrophobic molecules.",
+   "why": "one paragraph broken in two by a column/page turn; rejoined with its continuation (p7-b8fec1)",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "p10-a16788",
+   "text": "At the C terminus of PqiB’s ﬁnal MCE domain, there is clear additional density for six helices ( Figure 6 D), one contributed from each polypeptide chain, forming a needle-like, six-helix coiled coil. The resulting needle has an outer diameter of \u0001 35 A ˚ and a hollow lumen \u0001 15–20 A ˚ wide that is continuous with the channel running through the PqiB barrel ( Figure 6 F). A similar arrangement of six helices was observed near the C ter- minus of MlaD in our crystal structure ( Figure 2 D and 2F), though the twist of the coiled coil is more pronounced in PqiB, resulting in a wider pore through the PqiB needle. After \u0001 20 helical resi- dues, there is a pronounced break in the density followed by an additional \u0001 40 helical residues, in good agreement with the predicted secondary structure for this region and a helix- breaking proline residue near the junction between these two he- lical segments ( Figure 6 D). The needle is somewhat ﬂexible at the junction with the barrel, as is clear from the 2D class averages ( Figure S6 B) and its signiﬁcantly lower local resolution compared with most of the barrel ( Figure S6 E). Consequently, we were un- able to assign the sequence register, and we have modeled this region with polyalanine helices. The density becomes progres- sively weaker moving from the barrel toward the tip of the needle, and beyond the ﬁrst \u0001 60 helical residues, the density becomes uninterpretable. However, most of the remaining 50–60 residues in the C-terminal region of PqiB are predicted to be helical, and it seems likely that the observed six-helix coiled-coil structure continues to nearly the C terminus. This additional modeled re- gion is absent in the deposited PDB coordinates, but the coordi- nates for the complete model are available in the Supplemental Information ( Data S1 ). This would result in a needle \u0001 135 A ˚ long, in good agreement with the maximum needle lengths that we observed in unaveraged, single-particle images. From the bottom of the barrel to the tip of the needle, our ﬁnal model of PqiB is \u0001 230 A ˚ long, similar to the length of YebT and the \u0001 225 A ˚ distance between the IM and OM. In MlaD, this helical bundle forms part of the central pore and is lined with hydropho- bic residues. While we were unable to model the sequence of the PqiB helices explicitly due to lower local resolution of the density, these C-terminal helices are amphipathic along their entire length, which may result in an inward-facing hydrophobic surface in the lumen of the needle and an outward-facing hydro- philic surface on the needle exterior. Thus, both PqiB and YebT are poised to serve as direct conduits for the transport of lipids or other hydrophobic molecules directly across the periplasm, without the need for a soluble carrier protein like MlaC.",
+   "why": "one paragraph broken in two by a column/page turn; rejoined with its continuation (p10-5f7eb4)",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "drop",
+   "id": "p10-5f7eb4",
+   "why": "mid-sentence continuation now merged into p10-a16788",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "retype",
+   "id": "p25-8eeb81",
+   "to": "caption",
+   "why": "the tail of the Figure S1 legend, continued on the next page; it is a caption, not body prose",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "level",
+   "id": "p8-b486d8",
+   "to": 3,
+   "why": "Results subsection, not a top-level section; read as level 2 only because the title is over 60 characters",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "level",
+   "id": "p21-1f52f5",
+   "to": 3,
+   "why": "METHOD DETAILS subsection, not a top-level section; read as level 2 only because the title is over 60 characters",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "level",
+   "id": "p24-e0ae32",
+   "to": 2,
+   "why": "'Supplemental Figures' opens the back matter; it was nested under QUANTIFICATION AND STATISTICAL ANALYSIS",
+   "retired_because": "written against the pre-GROBID extraction; node ids are now g-prefixed"
+  },
+  {
+   "op": "set",
+   "id": "g76-2440d7",
+   "text": "Figure 3. MlaD Is Part of a Large Transport Complex in the IM (A) Co-expression of MlaFEDCB with 6 3 His tagged MlaD. (B) Gel filtration of detergent solubilized MlaD yields a high molecular weight complex. (C) SDS-PAGE and mass spectrometry demonstrate that MlaF, MlaE, MlaD, and MlaB form a complex. (D) 2D cryo-EM class averages for the MlaFEDB. (E) 3D reconstruction of MlaFEDB complex. Density colored to indicate locations of MlaD (red), MlaF (green), MlaB (cyan), and TM domain (pink, including MlaE and MlaD TM helices and amphipol). (F) Left, top view (from the OM toward the IM) and right, side view of periplasmic EM density fit with hexameric MlaD crystal structure. (G) Side view of the cytoplasmic EM density, fit with homology models of MlaF (green) and MlaB (cyan). (H) Hybrid model of MlaFEDB complex. MlaD crystal structure (red), homology models of MlaF (green) and MlaB (cyan), and de novo, computationally predicted model for MlaE (pink). The MlaD TM region is not depicted.",
+   "why": "Figure 3's caption was truncated at its title; the panel legends had been swept into the preceding paragraph (g20-e5b9ef)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g72-3e0d31",
+   "node": {
+    "type": "heading",
+    "text": "DATA AND SOFTWARE AVAILABILITY",
+    "level": 3
+   },
+   "why": "STAR section header lost the same way; it is what makes the accession-number list (g73-6e3706) legible instead of a stray table dump",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "g81-15ae7f",
+   "why": "tail of the Figure S1 legend from a supplemental page; it renders as an orphan caption after the accession numbers and describes artwork this page deliberately does not show",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g52-3e86d8",
+   "node": {
+    "type": "heading",
+    "text": "Ethidium bromide uptake assays",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g61-30d7b6",
+   "node": {
+    "type": "heading",
+    "text": "Model building and refinement for PqiB",
+    "level": 3
+   },
+   "why": "STAR Methods subsection heading was inlined into the paragraph that follows it",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "g46-5e4153",
+   "node": {
+    "type": "prose",
+    "text": "E. coli was used as a model organism. MG1655 and BW25113 were used as a representative wild-type strains, and all deletion strains were constructed in these backgrounds. Mutant strains were constructed by P1 transduction of Kanamycin resistance-marked alleles from an appropriate strain from the Keio collection. SDS+EDTA sensitivity was assayed in LB agar supplemented with 0.5% SDS and 1.25 mM EDTA. For complementation experiments, E. coli mutants with deletions in mla genes were transformed with a pBAD-derived plasmid (Invitrogen) encoding the WT MlaFEDCB operon, of the operon with the indicated mutations. Serial dilutions of the resulting strains where spotted (2 uL each) on plates containing LB agar or LB agar supplemented with 0.5% SDS and 1.25 mM EDTA, and incubated for 2 days. Residues lining the hydrophobic pore were mutated to Asn (changing hydrophobic to non-charged but polar), and small deletions were introduced into the β5-β6 loop to widen the pore. A C-terminal truncation removes most of the hydrophobic pore-lining residues, while maintaining the overall structure of the MlaD core domain."
+   },
+   "why": "EXPERIMENTAL MODEL AND SUBJECT DETAILS paragraph (strains, SDS+EDTA assay, complementation constructs) is absent from GROBID; recovered from our layout pass (p17-74e421)",
+   "at": "detailed methods are provided in the online version of this paper and",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g47-9f320d",
+   "node": {
+    "type": "prose",
+    "text": "The periplasmic domains of mlaD, pqiB and yebT from E. coli K-12 MG1655 were cloned into expression vector pET22b (+). The constructs were transformed into the expression strain E. coli BL21 DE3. One liter of cells were grown to an OD600 of 0.6 and induced with 1 mM IPTG overnight at 18°C. The cells were pelleted and re-suspended in 50 mL of binding buffer (50mM NaPO4 pH 7, 500 mM NaCl and 50mM imidazole) and lysed using an Emulsiflex-C3 cell disrupter. To pellet unbroken cells the suspension was centrifuged at 17400 g for 20 min at 4°C. The supernatant was bound to a 5 mL HisTrap column (GE healthcare) overnight, using a peristaltic pump. After binding, the column was washed twice using binding buffer (5x column volume). The protein was eluted in elution buffer (50 mM NaPO4 pH 7, 500 mM NaCl and 500 mM imidazole). The elution was concentrated and separated on a Superdex 200 10/300 GL column gel filtration column using the ÄKTA Pure chromatography system in 50 mM NaPO4 pH 7 and 200 mM NaCl."
+   },
+   "why": "first paragraph of \"Lipid binding assay and thin-layer chromatography\" (cloning, expression, IMAC, gel filtration) is absent from GROBID; recovered from our layout pass (p17-304525)",
+   "at": "table d contact for reagent and resource sharing d experimental model and",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g56-039cfa",
+   "node": {
+    "type": "prose",
+    "text": "DNA encoding the yebST operon was amplified from the MG1655 genome and cloned by Gibson assembly into pBAD-His resulting in a bicistronic YebS-YebT co-expression construct with a C-terminal 6xHis tag on YebT. The resulting plasmid (pBE1287) was trans-formed into Rosetta 2 (DE3) cells (Novagen). Expression and purification were carried out as described for PqiB above. Though this construct co-expresses YebS and YebT, only significant amounts of full-length YebT were obtained under our expression conditions."
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "after",
+   "id": "g56-039cfa",
+   "node": {
+    "type": "prose",
+    "text": "DNA corresponding to mature, signal peptide-cleaved PqiB (residues 39-546) was amplified from the MG1655 genome and cloned by Gibson assembly into a custom pET vector (pBE1092) resulting in an N-terminal 6xHis tag and TEV protease cleavage site. The resulting plasmid (pBE1163) was transformed into Rosetta 2 (DE3) cells (Novagen). For expression, overnight cultures of Rosetta 2 (DE3)/pBE1163 were grown at 37°C with shaking to an OD600 of ~0.9, then induced by addition of IPTG to a final concentration of 1 mM and continued incubation overnight shaking at 15°C. Cultures were harvested by centrifugation, and pellets were resuspended in lysis buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole). Cells were lysed by two passes through an Emulsiflex-C3 cell disruptor (Avestin), then centrifuged at 38,000 g to pellet cell debris. The clarified lysates were incubated with NiNTA resin (QIAGEN) at 4°C, which was subsequently washed with Ni Wash Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 10 mM imidazole) and bound pro-teins eluted with Ni Elution Buffer (50 mM Tris pH 8.0, 300 mM NaCl, 250 mM imidazole). PqiB containing fractions eluted from the NiNTA column were pooled and concentrated before separation on a Superdex 200 gel filtration column (GE Healthcare) equilibrated in 20 mM Tris pH 8.0 and 150 mM NaCl."
+   },
+   "why": "GROBID dropped a full printed page of METHOD DETAILS (MlaD periplasmic-domain crystals, Purification of the MlaFEDB complex, Expression and purification of PqiB) plus the YebT heading; restored from our layout pass. Ops are written in reverse of reading order because each insert lands immediately behind the anchor",
+   "at": "as mlad has no homology to proteins of known structure and has",
+   "retired_because": "node already hidden by extraction"
+  }
+ ]
+}

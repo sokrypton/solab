@@ -1,0 +1,795 @@
+{
+ "slug": "2025-democratizing-protein-language-model-training-sharing-and-collaboratio",
+ "ops": [],
+ "retired": [
+  {
+   "op": "drop",
+   "id": "p1-01bc04",
+   "why": "second line of the preprint title (\"SaprotHub: Making Protein Modeling Accessible / to All Biologists\") read as a section heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-e5db6f",
+   "why": "author list from the cover, already shown in the page header",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-192c7f",
+   "why": "tail of the author list (\"Sergey Ovchinnikov 3 , Fajie Yuan 1\") read as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-d8a966",
+   "why": "affiliation footnotes from the cover",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-d79da3",
+   "why": "body \"Abstract\" heading: the page already prints an abstract above",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-d61fdf",
+   "why": "preprint abstract, duplicating the published abstract shown in the abstract box",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p1-697839",
+   "text": "Notably, several advancements have been made in this field, including the ESM models [ 18 , 10 , 35 , 40 ], ProtTrans [ 3 ], UniRep [ 2 ], ProGen [ 11 , 14 ], and ProtGPT2 [ 4 ], each demonstrating remarkable efficacy in their respective tasks. However, training and deploying these machine learning (ML) models for proteins pose a significant chal- lenge for researchers without ML expertise. These challenges encompass a spectrum of complexities, such as selecting suitable model architectures, managing the nuances of coding, preprocessing extensive datasets, training model parameters, and evaluat- ing or interpreting outputs. Such inherent complexity often serves as a deterrent for non-ML researchers, hindering their active involvement in this domain, particularly in the era when large foundation AI models are increasingly complex.",
+   "why": "one paragraph split across the page-1 footnote rule; rejoined, dropping the folio \"1\" that led the continuation",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-356a19",
+   "why": "continuation now merged into p1-697839",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p4-629b49",
+   "text": "ColabSaprot supports all tasks within the Saprot framework, enabling direct uti- lization for tasks such as zero-shot mutational effect prediction and protein inverse folding. For supervised tasks, users are required to fine-tune ColabSaprot using their own data. We introduce a parameter-efficient fine-tuning technique by integrating lightweight adapter networks into the ColabSaprot model (Fig. 2 b) (see Methods). During training, only the adapter parameters in ColabSaprot are updated, resulting in nearly identical accuracy compared to fine-tuning all Saprot parameters (Supple- mentary Fig. 5 ). This design not only enhances optimization efficiency [ 22 , 43 ], but also, more significantly, as first proposed in this work, cultivates collaborative develop- ment of various Saprot models within the research community (Fig. 2 c). Researchers can easily store and exchange their re-trained Saprot models on SaprotHub, accessing existing models by simply loading or uploading adapter networks (Fig. 2 d). Given that adapter networks contain much fewer parameters, often around 1% of Saprot’s, this method significantly reduces storage, communication, and management burdens on SaprotHub, making accessibility and co-construction possible for a broader scientific community.",
+   "why": "paragraph split across the page 4/5 break; rejoined, dropping the folio \"4\" that led the continuation",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p4-1b6453",
+   "why": "continuation now merged into p4-629b49",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p11-70f6f4",
+   "text": "For each mutation dataset, we provide all variants with the wild-type structure, as AF2 cannot distinguish the structural changes induced by single mutations. The Clin- Var dataset only provides UniProt IDs, so we manually downloaded all AF2 structures and eliminated proteins without structures in AlphaFoldDB. Both ProteinGym and Mega-scale datasets provide protein structures, either predicted from AF2 or derived from de novo design.",
+   "why": "sentence broken by the page 11/12 break with the folio and equation (1) debris (\"11 t | x \\ T ) - logP ...\") welded into it; restored the sentence from p12-9642b5",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p12-9642b5",
+   "why": "continuation now merged into p11-70f6f4",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p4-58bcd9",
+   "to": "prose",
+   "why": "body text about Fig. 1c, not a caption; Fig. 1 already has its own caption on p3",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p26-b5a230",
+   "to": "caption",
+   "why": "panel (a) legend of Supplementary Fig. 4, read as a body paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p21-78593d",
+   "text": "Supplementary Table 3 : More baseline results on supervised learning tasks. MIF- ST and GearNet are not applicable when protein structures are not available as input.",
+   "why": "last row of Supplementary Table 3 (\"rho 0.813 0.783 - - 0.829\") welded onto the front of its caption",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p21-78593d",
+   "to": "caption",
+   "why": "it is the Supplementary Table 3 caption; the table itself cannot be rendered",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p25-c5b9a6",
+   "text": "Supplementary Fig. 3 : Case studies of protein inverse folding using Saprot. The blue-colored protein structures are predicted using ESMFold, with residue sequences generated by Saprot, and the green-colored structures are the experimentally deter- mined structures. Given the backbone, Saprot is capable of predicting diverse sequences with few residue overlap while maintaining almost the same 3D structure.",
+   "why": "in-figure label (\"Sequence recovery: 37.71%\") welded onto the front of the Supplementary Fig. 3 caption",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p25-c5b9a6",
+   "to": "caption",
+   "why": "Supplementary Fig. 3 caption whose artwork was not cropped",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-50eae4",
+   "why": "row group label inside Supplementary Table 1, promoted to a heading because it is bold, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p20-0274bf",
+   "why": "the Saprot row of Supplementary Table 2 (\"Saprot 0.457 0.574 0.909\"), promoted to a heading because it is bold, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p21-70ed0e",
+   "why": "column header fragment of Supplementary Table 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p21-bdb9fc",
+   "why": "column label \"AAV\" from Supplementary Table 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p22-54e60f",
+   "why": "a data row of Supplementary Table 4 (\"RMSD 2.28 2.07\"), not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-e82cce",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-fdd11c",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries (first of 87 such lines)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-343436",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-e66cf5",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-333713",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-08d0a7",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-5d6bbc",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-aa9210",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-48e914",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-6c1692",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-90808e",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-e3f36c",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-699244",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p6-d2e7ac",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-482714",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-1f794f",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-4649d3",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-ba1aa5",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-0b71e9",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-28a3a2",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-3a1baa",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-3ed3e7",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-a68185",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-7cd046",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-5a2286",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-465047",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-1dbdfa",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-5cbf21",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-eacf66",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-5ff232",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-15e4bb",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-fe10fe",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p7-d113ff",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-9c94a4",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-1d47c8",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-e39414",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-f989d7",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-8089f6",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-3711cf",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p8-f99a82",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-6f52ae",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-2d47c3",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-19c59c",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-959042",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-ae4aa9",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-80106a",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-7248be",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-969a8f",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-845711",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-aa9210",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-c0f9b7",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-d391ed",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-ba653f",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p15-75a7d3",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-e60c0f",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-5a6e5b",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-526d54",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-95282c",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-3cdc6b",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-3457e2",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-a68185",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-103866",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-59a9a0",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-2aa6b8",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-8b8098",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-eb554b",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-bb6325",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-c0846c",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-19782e",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-d7a79e",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-5ff232",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-6b5688",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p16-1574bd",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-0f89c1",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-97c338",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-f51c7a",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-25bc5e",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-7d5aca",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-1bd645",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-c78960",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-f62c9d",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-b6a9a6",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-42b654",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-4e2bc4",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-231681",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-c70f2a",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-20213c",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p17-882c7f",
+   "why": "bibliography entry rendered as a body paragraph; the References section below already lists all 50 entries",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p1-3955ad",
+   "why": "preprint title, duplicating the page title above (and it differs from the published title)",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-5892ff",
+   "why": "column header row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-1334d9",
+   "why": "row-group label inside Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-6e8bd8",
+   "why": "a data row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-1d03af",
+   "why": "a data row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-c8d11d",
+   "why": "row-group label inside Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-2f0fdb",
+   "why": "a data row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-fdb918",
+   "why": "a data row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-6bc7c6",
+   "why": "a data row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-4b555d",
+   "why": "a data row of Supplementary Table 1, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p22-9d2f11",
+   "why": "column header row of Supplementary Table 4, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-21d9fe",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-3c6d03",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-925744",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-f6115b",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-233896",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-25527b",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-e4080a",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p25-ee996d",
+   "why": "PDB id label printed inside Supplementary Fig. 3, not a section",
+   "retired_because": "node id no longer exists"
+  }
+ ]
+}

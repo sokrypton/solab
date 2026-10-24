@@ -1,0 +1,1105 @@
+{
+ "slug": "2025-de-novo-design-of-a-peptide-modulator-to-reverse-sodium-channel-dysfun",
+ "ops": [],
+ "retired": [
+  {
+   "op": "drop",
+   "id": "p1-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p2-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p3-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p4-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p4-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p5-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p5-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p6-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p6-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p7-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p7-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p9-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p9-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p10-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p10-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p12-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p12-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p13-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p15-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p16-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p17-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p18-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p18-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p19-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p19-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p20-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p20-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p21-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p21-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p22-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p22-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p23-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p23-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p24-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p24-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p25-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p25-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-f1a19d",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p27-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p27-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p28-f1a19d",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p29-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p29-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p30-f1a19d",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p31-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p31-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p32-f1a19d",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p34-f1a19d",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p35-110c8a",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p35-4360c2",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p36-f1a19d",
+   "why": "Cell Press running head (the “ll” logo glyph and the word “Article”) read as a heading; page furniture",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-e9a53f",
+   "why": "panel letter / residue label from inside figure artwork ('A B G.O.F. phenotype'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-8fb1f6",
+   "why": "panel letter / residue label from inside figure artwork ('C D'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-49f812",
+   "why": "panel letter / residue label from inside figure artwork ('F G H'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-ca2989",
+   "why": "panel letter / residue label from inside figure artwork ('I J K'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p8-e0184a",
+   "why": "panel letter / residue label from inside figure artwork ('E'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-6dcd4c",
+   "why": "panel letter / residue label from inside figure artwork ('A'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-ae4f28",
+   "why": "panel letter / residue label from inside figure artwork ('B'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-89f5d0",
+   "why": "panel letter / residue label from inside figure artwork ('δ D E F'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-15a92e",
+   "why": "panel letter / residue label from inside figure artwork ('G H I'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-745c3d",
+   "why": "panel letter / residue label from inside figure artwork ('J K L'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p11-32096c",
+   "why": "panel letter / residue label from inside figure artwork ('C'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p23-6df09b",
+   "why": "all that survived of a displayed equation ('1 − E D'); no readable content, and it became a contents entry",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p25-c45bad",
+   "why": "all that survived of a displayed equation ('STV ='); no readable content, and it became a contents entry",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p25-6dcd61",
+   "why": "all that survived of a displayed equation ('QT C = QT'); no readable content, and it became a contents entry",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p25-170102",
+   "why": "all that survived of a displayed equation ('RR 100'); no readable content, and it became a contents entry",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-6dcd4c",
+   "why": "panel letter / residue label from inside figure artwork ('A'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-ae4f28",
+   "why": "panel letter / residue label from inside figure artwork ('B'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-50c9e8",
+   "why": "panel letter / residue label from inside figure artwork ('D'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-e69f20",
+   "why": "panel letter / residue label from inside figure artwork ('F'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-7cf184",
+   "why": "panel letter / residue label from inside figure artwork ('H'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-58668e",
+   "why": "panel letter / residue label from inside figure artwork ('J'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-32096c",
+   "why": "panel letter / residue label from inside figure artwork ('C'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-e0184a",
+   "why": "panel letter / residue label from inside figure artwork ('E'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-a36a67",
+   "why": "panel letter / residue label from inside figure artwork ('G'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-ca73ab",
+   "why": "panel letter / residue label from inside figure artwork ('I'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-622b1c",
+   "why": "panel letter / residue label from inside figure artwork ('C1850'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p26-1b7d13",
+   "why": "panel letter / residue label from inside figure artwork ('L1854'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p28-6dcd4c",
+   "why": "panel letter / residue label from inside figure artwork ('A'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p28-ae4f28",
+   "why": "panel letter / residue label from inside figure artwork ('B'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p28-e0184a",
+   "why": "panel letter / residue label from inside figure artwork ('E'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p28-32096c",
+   "why": "panel letter / residue label from inside figure artwork ('C'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-6dcd4c",
+   "why": "panel letter / residue label from inside figure artwork ('A'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-4a4bb4",
+   "why": "panel letter / residue label from inside figure artwork ('B C'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-e0184a",
+   "why": "panel letter / residue label from inside figure artwork ('E'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-c65114",
+   "why": "panel letter / residue label from inside figure artwork ('F G'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-fe193d",
+   "why": "panel letter / residue label from inside figure artwork ('I J'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-a7ee38",
+   "why": "panel letter / residue label from inside figure artwork ('K'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-5d815a",
+   "why": "panel letter / residue label from inside figure artwork ('M N'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-50c9e8",
+   "why": "panel letter / residue label from inside figure artwork ('D'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-7cf184",
+   "why": "panel letter / residue label from inside figure artwork ('H'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p33-d160e0",
+   "why": "panel letter / residue label from inside figure artwork ('L'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p35-8aabb8",
+   "why": "panel letter / residue label from inside figure artwork ('A B'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p35-50c9e8",
+   "why": "panel letter / residue label from inside figure artwork ('D'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p35-32096c",
+   "why": "panel letter / residue label from inside figure artwork ('C'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p35-5aaa00",
+   "why": "panel letter / residue label from inside figure artwork ('E F'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p36-ae4f28",
+   "why": "panel letter / residue label from inside figure artwork ('B'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p36-32096c",
+   "why": "panel letter / residue label from inside figure artwork ('C'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p36-6dcd4c",
+   "why": "panel letter / residue label from inside figure artwork ('A'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p36-50c9e8",
+   "why": "panel letter / residue label from inside figure artwork ('D'), classified as a heading",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "drop",
+   "id": "p14-200c4a",
+   "why": "tail of the funding/acknowledgments block (opens mid grant number); back matter that lost its role",
+   "retired_because": "node already hidden by extraction"
+  },
+  {
+   "op": "set",
+   "id": "p4-cec574",
+   "text": "Fast inactivation of Na V channels is a multistep process involving distinct channel elements. Following depolarization, movement of voltage-sensing domains (VSDs) I–III couples to pore opening, while that of domain IV VSD initiates conformational changes that result in inactivation. 32–34 Of particular importance for the latter is the inactivation gate (IG, linker between domains III and IV), which contains the isoleucine-phenylalanine-methionine (IFM) motif that binds to a site near the channel pore to halt Na +",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p5-8306d2",
+   "text": "ELIXIR decreases I NaL of a channelopathic Na V 1.5 variant",
+   "why": "heading truncated: its closing phrase 'I NaL of a channelopathic Na V 1.5 variant' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p5-06e255",
+   "text": "Thus affirmed, we sought to determine the functional conse- quences of ELIXIR interaction on Na V 1.5 function. Whole-cell patch-clamp recordings demonstrated that ELIXIR co-expres- sion did not significantly alter channel activation, inactiva- tion, or recovery from inactivation of wild-type Na V 1.5 ( Figures S2 D–S2G). To probe whether ELIXIR inhibits patholog- ical I NaL , we conducted cell-attached multichannel recordings of HEK293 cells heterologously expressing either wild-type Na V 1.5 or a disease-linked variant that truncates the channel CTD ( Δ 1864). As the channel unitary current is larger than instrument noise, multichannel recordings allow simulta- neous quantification of peak current and rare late channel open- ings. 25 , 26 , 48 We quantified I NaL as R persist , the ratio of average open probability ( P O ) following 50 ms of depolarization normal- ized to the peak P O . Wild-type Na V 1.5 exhibited a low baseline I NaL , which was minimally perturbed by co-expression of ELIXIR ( Figures 2 A–2C and S3 A). By contrast, the Δ 1864 mutant showed greatly ( ∼ 40-fold) elevated I NaL , consistent with its pathogenicity ( Figures 2 C–2E and S3 B). Strikingly, ELIXIR co- expression evoked a >12-fold reduction in I NaL of the Δ 1864 channel ( Figures 2 C–2E and S3 B). A similar degree of I NaL inhi- bition was observed with the unmodified ELIXIR sequence that lacked the C15S substitution ( Figures S3 C–S3E). Native Na V channel complexes may include auxiliary β -subunits, which modulate I NaL . 49 , 50 ELIXIR minimally perturbed wild-type Na V 1.5 co-expressed with β 1 and β 4 ( Figures S3 F, S3H, and S3J). By comparison, expression of β 1 and β 4 with the Δ 1864 mutant yielded a reduction in I Na,L , which was further reduced with ELIXIR ( Figures S3 G, S3I, and S3J). Ranolazine (10 μ M), a well-established small-molecule I NaL inhibitor, 24 evoked an ∼ 4-fold reduction in I NaL of Na V 1.5 Δ 1864 ( Figures 2 C, 2F, and S4 A).",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p5-5f3252",
+   "text": "At the molecular level, a variety of perturbations to Na V 1.5 contribute to pathogenic increases in I NaL . These include variants distributed throughout the channel sequence and post-transla- tional modifications, such as phosphorylation, that are associ- ated with cardiac pathologies, including HF. 51 Our results with Na V 1.5 Δ 1864 suggest that ELIXIR is a potent inhibitor of I NaL ; thus, we sought to determine its generality in tuning I NaL trig- gered by distinct mechanisms. Accordingly, we assessed the ef- ficacy of ELIXIR in inhibiting I NaL of several Na V 1.5 mutations located in distinct channel domains. These included (1) the Δ KPQ variant linked to LQT3, (2) a mutation (F1759A) in the classic AAD-binding pocket linked to atrial fibrillation, 2 and (3) a structure-guided mutation (IQ/AA) engineered to block binding of the auxiliary protein CaM ( Figure 3 A). These mutations were selected as they represent disparate structural mechanisms that can contribute to increased I NaL in cardiac pathologies. Consistent with our previous results, 26 when expressed alone, each of these Na V 1.5 mutants displayed an elevated I NaL (21- fold F1759A; 13-fold Δ KPQ; 10-fold IQ/AA) relative to the wild- type channel ( Figures 3 B, 3C, 3E, and S5 A–S5D). For each Na V 1.5 mutant, co-expression of ELIXIR resulted in a statistically significant decrease in I NaL , with reductions ranging from 12-fold (F1759A) to 3-fold (IQ/AA; Figures 3 B, 3C, 3E, and S5 A–S5D).",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p5-e2e888",
+   "text": "ELIXIR preferentially tunes pathological I NaL",
+   "why": "heading truncated: its closing phrase 'I NaL' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p5-15b33b",
+   "text": "The nine Na V isoforms (1.1–1.9) are known to have distinct inactivation properties that are critical for their physiological func- tions. 55 GoF variants in Na V isoforms are linked to diverse clinical phenotypes, including epilepsy, 21 myotonia, 6 neurodevelopmen- tal disorders, 56 and chronic pain 22 ( Figure 4 A). The high homology of the CTD ( Figure 4 B) suggests that ELIXIR may interact with each Na V isoform. Consistent with this, in ColabFold 41 -generated models, ELIXIR was predicted to adopt a highly similar binding pose with the EFL of Na V 1.1–1.9 ( Figures S6 A–S6H).",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p9-686cfc",
+   "text": "ELIXIR reduces I NaL and APD 90 of CaMKII δ C,OE ventricular myocytes",
+   "why": "heading truncated: its closing phrase 'I NaL and APD 90 of CaMKII δ C,OE ventricular myocytes' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p9-5c9555",
+   "text": "In HF, phosphorylation of Na V 1.5 by CaMKII results in elevated I NaL , which contributes to increased risk of cardiac ar- rhythmias. 51 , 52 , 68 We examined whether ELIXIR may reverse pathological I NaL in adult mouse ventricular myocytes (aMVMs)",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "level",
+   "id": "p9-686cfc",
+   "to": 3,
+   "why": "a subsection like its siblings; the repaired heading is just over the length cutoff that would make it h2",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p9-ef386a",
+   "text": "ELIXIR inhibits I NaL in LQT3 patient-derived iPSC-CMs",
+   "why": "heading truncated: its closing phrase 'I NaL in LQT3 patient-derived iPSC-CMs' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p9-1f42de",
+   "text": "While ELIXIR-cpp allows for short-term modification of Na V func- tion in cardiomyocytes, constitutive expression of ELIXIR may be advantageous in pathophysiological settings. As such, we used",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p24-34c6af",
+   "text": "Hearts from CaMKII δ C,OE mice and WT littermate were excised and retrograde perfused on a constant flow Langendorff apparatus (4 min, 37 º C) with Ca 2+ -free normal Tyrode’s solution, gassed with 100% O 2 . The heart was then perfused for 12 - 17 min with 100 mg collagenase (type 2, Worthington Biochemical Corp) and 1.4 mg protease (type XIV, Sigma-Aldrich) in 50 mL of Tyrode’s solution (with 10 μ mol/L Ca 2+ ) to enzymatically isolate cardiomyocytes. Following digestion, the myocytes were gently triturated with a pipette, then filtered through a nylon mesh and allowed to sediment for ∼ 10 min. The sedimentation was repeated three times with increasing [Ca 2+ ] from 0.125 to 0.25 to 0.5 mmol/L. Finally, ventricular myocytes were kept in Tyrode’s solution (0.5 mmol/L Ca 2+ ) at room temperature until use.",
+   "why": "paragraph opened with the tail of the preceding heading; returned to the heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "p19-d835cb",
+   "node": {
+    "type": "heading",
+    "text": "CaMKII δ C,OE mice",
+    "level": 3
+   },
+   "why": "subsection heading 'CaMKII δ C,OE mice' was absorbed into the following paragraph; reinstated",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "after",
+   "id": "p24-34c6af",
+   "node": {
+    "type": "heading",
+    "text": "CaMKII δ C,OE cardiomyocyte electrophysiology",
+    "level": 3
+   },
+   "why": "subsection heading 'CaMKII δ C,OE cardiomyocyte electrophysiology' was absorbed into the following paragraph; reinstated",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-da00dc",
+   "why": "panel letter / residue label from inside figure artwork ('L1786 S1787 E1788 F1791 L1854 F1794 Y179'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-3a4217",
+   "why": "panel letter / residue label from inside figure artwork ('F1879'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-722ad9",
+   "why": "panel letter / residue label from inside figure artwork ('L1786 S1787 E1788'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-49ef0b",
+   "why": "panel letter / residue label from inside figure artwork ('F1791 F1794 Y1795 W1798 Q1807 N1883 C185'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-2624f3",
+   "why": "panel letter / residue label from inside figure artwork ('L1786 S1787 E1788 F1791 F1794 L1854 W179'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-940fed",
+   "why": "panel letter / residue label from inside figure artwork ('E1788 F1791 F1794 Y1795'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-a07e70",
+   "why": "panel letter / residue label from inside figure artwork ('W1798'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-175512",
+   "why": "panel letter / residue label from inside figure artwork ('A1805'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p26-2d53f6",
+   "why": "panel letter / residue label from inside figure artwork ('Q1807 N1883 F1879'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p28-4f948a",
+   "why": "panel letter / residue label from inside figure artwork ('I PR Y Q GF M PR Y R GF'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p28-f31213",
+   "why": "panel letter / residue label from inside figure artwork ('REALYRG A YDV M R REALYRG C YDV L R'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p28-454ca7",
+   "why": "panel letter / residue label from inside figure artwork ('P H REALYR A P R REALYR G'), classified as a heading",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p30-45300f",
+   "why": "all that survived of a displayed equation ('∆ G'); no readable content, and it became a contents entry",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p4-ae7103",
+   "text": "A rational approach to developing an I NaL inhibitor",
+   "why": "heading truncated: its closing phrase 'I NaL inhibitor' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p5-738374",
+   "text": "ELIXIR is a general inhibitor of NaV1.5 I NaL",
+   "why": "heading truncated: its closing phrase 'I NaL' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p24-6a1306",
+   "text": "Enzymatic isolation of ventricular CaMKII δ C,OE cardiomyocytes",
+   "why": "heading truncated: its closing phrase 'δ C,OE cardiomyocytes' broke away and was glued to the next paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "level",
+   "id": "p24-6a1306",
+   "to": 3,
+   "why": "a subsection like its siblings; the repaired heading is just over the length cutoff that would make it h2",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p19-722221",
+   "text": "Young adult (8 to 10-wk-old, male and female) CaMKII δ C,OE mice and WT littermate control mice in the C57BL6/J background were used. Mice were kept at standard temperature, humidity, and lighting. Food (Teklad, 2018) and fresh, sterile drinking water were pro- vided ad libitum . Before terminal surgery, mice were injected with heparin (400 U/kg body weight) and anesthetized with isoflurane",
+   "why": "paragraph opened with its own heading text; the heading is reinstated as its own node",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "set",
+   "id": "p24-ae10ca",
+   "text": "Isolated single murine ventricular cardiomyocytes were placed in a temperature-controlled perfusion chamber (Warner Instruments) and mounted on a Leica DMI3000 B inverted microscope (Leica Microsystems). Cells were bathed at 37 ◦ C, for 10 minutes, before starting, and continuously perfused (2 mL/min) during experiments with Tyrode’s solution containing (in mmol/L): NaCl 140, KCl 4, CaCl 2 1.8, MgCl 2 1, HEPES 5, Na-HEPES 5, glucose 5.5; pH=7.4. Electrodes were fabricated from borosilicate glass (World Precision Instruments) and had tip resistances of 2 to 3 M Ω when filled with internal solution which contained (in mmol/L): K-aspartate 100, KCl 30, NaCl 8, Mg-ATP 5, phosphocreatine dipotassium salt 10, HEPES 10, EGTA 0.01, cAMP 0.002, and calmodulin 0.0001; pH=7.2 (with KOH). Using this internal solution, the intracellular Ca 2+ transient and contraction of the cardiomyocyte are preserved. An Ax- opatch 200B amplifier (Axon Instruments Inc.) was used for recording and signals were digitized at 50 kHz by a Digidata 1322A A/D",
+   "why": "paragraph opened with its own heading text; the heading is reinstated as its own node",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p21-ea5f3d",
+   "to": "caption",
+   "why": "displayed Equation 1 (fluorescence anisotropy) read as a heading; kept as a set-apart line so the “where I VV …” paragraph still has a referent, but out of the contents rail",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p9-d38594",
+   "to": "caption",
+   "why": "Figure 4 caption read as a paragraph, mid-Results",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p11-81dd7d",
+   "to": "caption",
+   "why": "Figure 6 caption read as a paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p27-33d215",
+   "to": "caption",
+   "why": "Figure S1 caption read as a paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p32-c3f1e0",
+   "to": "caption",
+   "why": "continuation of the Figure S5 caption (panels H–K) read as a paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p34-d2370b",
+   "to": "caption",
+   "why": "Figure S6 caption read as a paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "retype",
+   "id": "p35-8f7a83",
+   "to": "caption",
+   "why": "Figure S7 caption read as a paragraph",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p18-e552c2",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p18-044de7",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p18-cb8186",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p18-e716de",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-0e4aa7",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-e552c2",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-811a2d",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-1b1ef3",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-b063de",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-2675f5",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-4ad844",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-4f8b05",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-1f33a6",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-22fd2f",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-6a6994",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-c498af",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-d6b552",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-b0f83b",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p19-60480d",
+   "why": "row of the key resources table; with the columns gone the cells run together and read as noise",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p23-5f3bca",
+   "why": "a run of combining-macron characters from a displayed equation's overbar; no text content",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "drop",
+   "id": "p14-11b8b1",
+   "why": "two bullets of Cell's STAR Methods outline, rendered as an h2; the real headings follow",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "level",
+   "id": "p14-38d179",
+   "to": 2,
+   "why": "STAR★METHODS is a top-level division, like RESULTS and DISCUSSION",
+   "retired_because": "node id no longer exists"
+  },
+  {
+   "op": "level",
+   "id": "p9-fd0462",
+   "to": 3,
+   "why": "a Results subsection like the ELIXIR… headings around it; only its length pushed it to h2",
+   "retired_because": "node id no longer exists"
+  }
+ ]
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interpreting Potts and Transformer Protein Models Through th — solab</title>
+  <meta name="description" content="The established approach to unsupervised protein contact prediction estimates coevolving positions using undirected graphical models. This approach trains a Potts model on a Multip">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/paper.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="solab — Ovchinnikov Lab">
+  <meta property="og:title" content="Interpreting Potts and Transformer Protein Models Through th — solab">
+  <meta property="og:description" content="The established approach to unsupervised protein contact prediction estimates coevolving positions using undirected graphical models. This approach trains a Potts model on a Multip">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../../">solab</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../lab/">Lab</a></li>
+        <li><a href="../../research/">Research</a></li>
+        <li><a href="../../publications/" class="active">Publications</a></li>
+        <li><a href="../../tools/">Tools</a></li>
+        <li><a href="../../resources/">Resources</a></li>
+        <li><a href="../../contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="paper-layout paper--with-toc">
+      <nav class="paper-toc" aria-label="Contents">
+        <p class="paper-toc-head">Contents</p>
+        <ul>
+          <li class="lvl2" data-section="sec-1-introduction"><a href="#sec-1-introduction">Introduction</a></li>
+          <li class="lvl2" data-section="sec-2-background"><a href="#sec-2-background">Background</a></li>
+          <li class="lvl3" data-parent="sec-2-background"><a href="#sec-3-multiple-sequence-alignments">Multiple Sequence Alignments.</a></li>
+          <li class="lvl3" data-parent="sec-2-background"><a href="#sec-4-coevolutionary-analysis-of-protein-famil">Coevolutionary Analysis of Protein Families.</a></li>
+          <li class="lvl2" data-section="sec-5-methods"><a href="#sec-5-methods">Methods</a></li>
+          <li class="lvl3" data-parent="sec-5-methods"><a href="#sec-6-potts-models">Potts Models</a></li>
+          <li class="lvl3" data-parent="sec-5-methods"><a href="#sec-7-factored-attention">Factored Attention</a></li>
+          <li class="lvl3" data-parent="sec-5-methods"><a href="#sec-8-single-layer-attention">Single-layer attention</a></li>
+          <li class="lvl3" data-parent="sec-5-methods"><a href="#sec-9-pretraining-on-sequence-databases">Pretraining on Sequence Databases</a></li>
+          <li class="lvl3" data-parent="sec-5-methods"><a href="#sec-10-extracting-contacts">Extracting Contacts</a></li>
+          <li class="lvl3" data-parent="sec-5-methods"><a href="#sec-11-average-product-correction-apc">Average Product Correction (APC).</a></li>
+          <li class="lvl2" data-section="sec-12-results"><a href="#sec-12-results">Results</a></li>
+          <li class="lvl3" data-parent="sec-12-results"><a href="#sec-13-experimental-setup">Experimental Setup.</a></li>
+          <li class="lvl3" data-parent="sec-12-results"><a href="#sec-14-impact-of-training-loss-function">Impact of training loss function.</a></li>
+          <li class="lvl2" data-section="sec-15-discussion"><a href="#sec-15-discussion">Discussion</a></li>
+          <li class="lvl2"><a href="#references">References</a></li>
+        </ul>
+      </nav>
+    <article class="paper">
+      <p class="paper-eyebrow"><a href="../../publications/#evolution">Unified Model of Protein Evolution</a></p>
+      <h1 class="paper-title">Interpreting Potts and Transformer Protein Models Through the Lens of Simplified Attention</h1>
+      <p class="paper-authors">Bhattacharya N, Thomas N, Rao R, Dauparas J, Koo PK, Baker D, Song YS and <a href="../../lab/member/?name=Sergey_Ovchinnikov">Ovchinnikov S.</a></p>
+      <p class="paper-meta">2021 · Pacific Symposium on Biocomputing 2022. GitHub</p>
+      <p class="paper-links"><a class="pill" href="https://doi.org/10.1142/9789811250477_0004">DOI</a> <a class="pill" href="https://pubmed.ncbi.nlm.nih.gov/34890134/">Publisher</a> <a class="pill" href="https://europepmc.org/article/PMC/PMC8752338">Europe PMC</a></p>
+      <section class="paper-abstract"><h2>Abstract</h2><p>The established approach to unsupervised protein contact prediction estimates coevolving positions using undirected graphical models. This approach trains a Potts model on a Multiple Sequence Alignment. Increasingly large Transformers are being pretrained on unlabeled, unaligned protein sequence databases and showing competitive performance on protein contact prediction. We argue that attention is a principled model of protein interactions, grounded in real properties of protein family data. We introduce an energy-based attention layer, factored attention, which, in a certain limit, recovers a Potts model, and use it to contrast Potts and Transformers. We show that the Transformer leverages hierarchical signal in protein family databases not captured by single-layer models. This raises the exciting possibility for the development of powerful structured models of protein family databases.</p></section>
+      <div class="paper-body paper-body--plain">
+<h2 id="sec-1-introduction" data-node="g2-2473e9">Introduction</h2>
+<p data-node="g3-c1a16d">Inferring protein structure from sequence is a longstanding problem in computational biochemistry. Potts models, a particular kind of Markov Random Field (MRF), are the predominant unsupervised method for modeling inter-actions between amino acids. Potts models are trained to maximize pseudolikelihood on alignments of evolutionarily related proteins. <a class="paper-cite" href="#ref-b0">[1]</a><a class="paper-cite" href="#ref-b1">[2]</a><a class="paper-cite" href="#ref-b2">[3]</a> Features derived from Potts models were the main drivers of improved performance at the CASP11 competition. <a class="paper-cite" href="#ref-b3">4</a> Potts models were subsequently used as input features for top performing supervised neural network models in CASP13. <a class="paper-cite" href="#ref-b4">[5]</a><a class="paper-cite" href="#ref-b5">[6]</a><a class="paper-cite" href="#ref-b6">[7]</a> Inspired by the success of BERT, <a class="paper-cite" href="#ref-b7">8</a> GPT <a class="paper-cite" href="#ref-b8">9</a> and related unsupervised models in NLP, a line of work has emerged that learns features of proteins through self-supervised pretraining. <a class="paper-cite" href="#ref-b9">[10]</a><a class="paper-cite" href="#ref-b10">[11]</a><a class="paper-cite" href="#ref-b11">[12]</a><a class="paper-cite" href="#ref-b12">[13]</a><a class="paper-cite" href="#ref-b13">[14]</a> This new approach trains Transformer <a class="paper-cite" href="#ref-b14">15</a> models on large datasets of protein sequences. Pretrained model performance raises questions about the importance of data and model scale, 11,<a class="paper-cite" href="#ref-b15">16</a> whether neural features compete with evolutionary features extracted by established bioinformatic methods, <a class="paper-cite" href="#ref-b11">12</a> and the benefits of transfer learning. <a class="paper-cite" href="#ref-b16">[17]</a><a class="paper-cite" href="#ref-b17">[18]</a><a class="paper-cite" href="#ref-b18">[19]</a> In CASP14, Alphafold2 achieved breakthrough performance by replacing the Potts model with an attention-based model that directly used the MSA as input. <a class="paper-cite" href="#ref-b19">20</a> This approach was adapted subsequently in RoseTTAFold. <a class="paper-cite" href="#ref-b20">21</a> The performance of these methods established attention as state-of-the-art for extracting features from MSAs. This raises a natural question of how Potts models and attention mechanisms are related.</p>
+<p data-node="g4-7a626f">In this paper, we investigate the ways in which attention-based models and Potts models trained on alignments can learn meaningful inter-actions in biological sequence data. To do so, we introduce a simplified energy-based attention model trained on alignments, factored attention, which interpolates between the standard attention mechanism and Potts models. We show that factored attention can successfully share parameters across positions within a family or share amino acid features across hundreds of families.</p>
+<h2 id="sec-2-background" data-node="g5-64dd60">Background</h2>
+<p data-node="g6-de891c">Proteins are polymers composed of amino acids and are commonly represented as strings. Along with this 1D sequence representation, each protein folds into a 3D physical structure. Physical distance between positions in 3D is often a much better indicator of functional interaction than proximity in sequence. One representation of physical distance is a contact map C, a symmetric matrix in which entry C ij = 1 if the beta carbons a of i and j are within 8 Å of one another, and 0 otherwise.</p>
+<h3 id="sec-3-multiple-sequence-alignments" data-node="g7-caf81d">Multiple Sequence Alignments.</h3>
+<p data-node="g8-b8f27e">To understand structure and function of a protein sequence, one typically assembles a set of its evolutionary relatives and looks for patterns within the set. A set of related sequences is referred to as a protein family, commonly represented by a Multiple Sequence Alignment (MSA). Gaps in aligned sequences correspond to insertions from an alignment algorithm, 22,<a class="paper-cite" href="#ref-b22">23</a> ensuring that positions with similar structure and function line up for all members of the family. After aligning, sequence position carries significant evolutionary, structural, and functional information.</p>
+<h3 id="sec-4-coevolutionary-analysis-of-protein-famil" data-node="g9-9e0b2a">Coevolutionary Analysis of Protein Families.</h3>
+<p data-node="g10-7e607c">The observation that statistical patterns in MSAs can be used to predict couplings has been widely used to infer structure and function from protein families. <a class="paper-cite" href="#ref-b23">[24]</a><a class="paper-cite" href="#ref-b24">[25]</a><a class="paper-cite" href="#ref-b25">[26]</a><a class="paper-cite" href="#ref-b26">[27]</a></p>
+<h2 id="sec-5-methods" data-node="g11-7e4ac6">Methods</h2>
+<div data-node="g12-2c5265" class="paper-equation">p ✓ (x 1 , . . . , x p ) = 1 Z exp X i&lt;j E ✓ (x i , x j ) ! , ( 1</div>
+<div data-node="g13-6cc7d5" class="paper-equation">E ✓ (x i ) = b i,xi for b 2 R L⇥A .</div>
+<p data-node="g14-c314fa">To explore how attention and Potts models learn inter-actions in protein sequence data, we compare a number of unsupervised methods which learn contacts with sequence-modeling objectives. Many of these methods are based on the formalism of Markov Random Fields a In the case of glycine, the alpha carbon is used.</p>
+<p data-node="g15-3b86d1">We do not extend our analysis to supervised contact prediction models which take MRF features as input, as these are outside the scope of this work.</p>
+<p data-node="g16-9731b6">This sequence is part of an MSA of length L with N total sequences. Recall that a fully-connected Pairwise MRF over p variables X 1 , . . . , X p specifies a distribution</p>
+<p data-node="g17-6c7c40">For all models below, we can introduce an explicit functional E ✓ (x i ) to capture the marginal distribution of X i . When introduced, we parametrize the marginal with</p>
+<h3 id="sec-6-potts-models" data-node="g18-6d3a34">Potts Models</h3>
+<div data-node="g19-78b5e6" class="paper-equation">E ✓ (x i , x j ) = W ij (x i , x j ).</div>
+<p data-node="g20-32d418">A Potts model is a fully-connected pairwise MRF with L variables, each representing a position in the MSA. An edge (i, j) is parametrized with a matrix W ij 2 R A⇥A . These matrices are organized into an order-4 tensor which form the parameters of a Potts model. Note that W ij = W ji . The energy functional of a Potts model is given through lookups, namely</p>
+<h3 id="sec-7-factored-attention" data-node="g21-c51b8a">Factored Attention</h3>
+<div data-node="g22-2e9395" class="paper-equation">E ✓ (x i , x j ) = H X h=1 symm ⇣ softmax ⇣ A h ⌘⌘ ij W h V (x i , x j ). (3)</div>
+<div data-node="g23-723f55" class="paper-equation">E ✓ (x i , x j ) = H X h=1 symm ⇣ softmax ⇣ W h Q W h K T ⌘⌘ ij W h V (x i , x j ), (4)</div>
+<p data-node="g24-f5fa69">Factored attention has two advantages over Potts for modeling protein families: it shares a pool of amino acid feature matrices across all positions and it estimates O(L) parameters instead of O(L 2 ).</p>
+<p data-node="g25-022d5f">Sharing amino acid features. Many contacts in a protein are driven by similar inter-actions between amino acids, such as many types of weakly polar inter-actions. 28,<a class="paper-cite" href="#ref-b28">29</a> If two pairs of positions (i, j) and (l, m) are both in contact due to the same interaction, a Potts model must estimate completely separate amino acid features W ij and W lm . In order to share amino acid features, we want to compute all energies from one pool of A ⇥ A feature matrices. The simplest way to accomplish this is by associating an L ⇥ L matrix A to every A ⇥ A feature matrix W V . For H such pairs (A, W V ), we could introduce a factorized MRF:</p>
+<p data-node="g26-436b91">A row-wise softmax is taken to encourage sparse inter-actions and aid in normalization. This model allows the pairs (i, j) and (l, m) to reuse a single feature W h V , assuming A h ij and A h lm are both large.</p>
+<p data-node="g27-b8096b">Scaling linearly in length. Both Potts and the factorized model in Equation 3 have O(L 2 ) parameters. However, contacts are observed to grow linearly over the wide range of protein structures currently available. 30,<a class="paper-cite" href="#ref-b30">31</a> Given that the number of inter-actions we wish to estimate grows linearly in length, the quadratic scaling of these models can be greatly improved. One way to fix this is by introducing the factorization A = W Q W T K , where W Q , W K 2 R L⇥d . We use the subscripts Q, K, and V in analogy with the &quot;Query&quot;, &quot;Key&quot;, and &quot;Value&quot; nomenclature from the attention literature. <a class="paper-cite" href="#ref-b14">15</a> As before, we employ a row-wise softmax for sparsity and normalization. Combining feature sharing with linear length scaling leads to factored attention, defined in Equation 4.</p>
+<p data-node="g28-d0bd6e">Like Potts, factored attention is a fully-connected pairwise MRF with L variables. The parameters of this model consist of H triples (W Q , W K , W V ), where W Q , W K 2 R L⇥d ; W V 2 R A⇥A ; and d is a hyperparameter. Each such triple is called a head and d is the head size. Unlike a Potts model, the parameters for each edge (i, j) are tied through the use of heads. The energy functional is where symm(M ) = (M + M T )/2 ensures the positional inter-actions are symmetric. Adding sequence-dependent inter-actions leads to standard attention, see Appendix A.1.</p>
+<h3 id="sec-8-single-layer-attention" data-node="g30-bd4970">Single-layer attention</h3>
+<div data-node="g31-07b1a9" class="paper-equation">L P L (✓; x) = L X i=1 log p ✓ (x i |x \i ), L MLM (✓; x, M ) = X i2M log p ✓ (x i |x \M ).</div>
+<p data-node="g32-6b61f2">Our single-layer attention model consists of a single Transformer encoder layer: an attention layer followed by a dense layer, with layer normalization <a class="paper-cite" href="#ref-b31">32</a> to aid in optimization. Transformer implementations typically use a sine/cosine positional encoding <a class="paper-cite" href="#ref-b14">15</a> or learned Gaussian positional encoding, <a class="paper-cite" href="#ref-b32">33</a> rather than the one-hot positional encoding used in our single-layer models.</p>
+<p data-node="g33-109d76">Given an MSA, many standard methods estimate Potts model parameters through pseudolikelihood maximization. 2,<a class="paper-cite" href="#ref-b30">31</a> On the other hand, BERTlike attention-based models are typically trained with variants of masked language modeling. <a class="paper-cite" href="#ref-b7">8</a> Pseudolikelihood is challenging to compute e ciently for generic models, unlike the masked language modeling loss. Both of these losses require computing conditionals of the form p ✓ (x i |x \M ), where M is a subset of {1, . . . , L} containing i. The losses L P L and L MLM for pseudolikelihood and masked language modeling, respectively, are</p>
+<p data-node="g34-bc33c5">Regularization for Potts and factored attention are both based on MRF edge parameters, while single-layer attention is penalized using weight decay. More details can be found in Appendix A.2.</p>
+<h3 id="sec-9-pretraining-on-sequence-databases" data-node="g35-85c641">Pretraining on Sequence Databases</h3>
+<p data-node="g36-aace1a">All single-layer models are trained on a set of evolutionarily related sequences. Given a large database of protein sequences such as UniRef100 <a class="paper-cite" href="#ref-b33">34</a> or BFD, 35,<a class="paper-cite" href="#ref-b35">36</a> these models cannot be trained until significant preprocessing has been done: clustering, dereplication of highly related sequences, and alignment to generate an MSA for each cluster. In contrast, the self-supervised approach taken by works such as Refs. 10-13 applies BERT-style pretraining directly on the database of proteins with minimal preprocessing.</p>
+<p data-node="g37-2e590e">Given a new sequence of interest and a database of sequences, single-family models require more steps for inference than pretrained Transformers. To apply a single-family model, one must query the database for related sequences, dereplicate the set, align sequences into an MSA, then train a model to learn contacts. On the other hand, a Transformer pretrained on the database simply computes a forward pass for the sequence of interest and its attention activations are used to predict contacts. No explicit querying or aligning is performed.</p>
+<h3 id="sec-10-extracting-contacts" data-node="g38-5032a8">Extracting Contacts</h3>
+<div data-node="g39-fd22a6" class="paper-equation">C ij = kW ij k F .</div>
+<p data-node="g40-da086a">Potts. We follow standard practice and extract a contact map b C 2 R L⇥L from the order-4 interaction tensor W by setting b</p>
+<p data-node="g41-d232af">Since factored attention is a pairwise MRF, we can compute its order-4 interaction tensor W and use the same procedure as Potts. See Equation A.2.</p>
+<p data-node="g42-5d0e08">To produce contacts for an MSA, we compute attention maps from only the positional encoding (without sequence) and average attention maps from all heads. Each single-layer attention model is trained on one MSA, so the positional encoding is a feature shared by all sequences in the MSA.</p>
+<p data-node="g43-c32923">We extract contacts from ProtBERT by averaging a subset of attention maps for an input sequence x. Of the 1<a class="paper-cite" href="#ref-b5">6</a> heads in 30 layers, we selected six whose attention maps had the top individual contact precisions over 500 families randomly selected from the Yang et al. 6 dataset. Predicted contacts for x are given by averaging the L ⇥ L attention maps from these six heads, then symmetrizing additively. See Appendix Table A1.</p>
+<h3 id="sec-11-average-product-correction-apc" data-node="g44-3caa19">Average Product Correction (APC).</h3>
+<p data-node="g45-5948b1">Empirically, Potts models trained with Frobenius norm regularization have artifacts in the outputs b C. These are removed with the Average Product Correction (APC). <a class="paper-cite" href="#ref-b36">37</a> Unless otherwise stated, we apply APC to all extracted contacts.</p>
+<h2 id="sec-12-results" data-node="g46-612e12">Results</h2>
+<h3 id="sec-13-experimental-setup" data-node="g47-612aa7">Experimental Setup.</h3>
+<p data-node="g48-cdefde">We use a set of 748 protein families from Ref. 6 to evaluate all models. For Potts models and single attention layers, we train separate models on each individual MSA. ProtBERT-BFD is frozen for all experiments. We train models using PyTorch-Lightning 38 and Weights and Biases. <a class="paper-cite" href="#ref-b38">39</a> We extract contacts from each model following the procedure outlined in Appendix A.4.2. We compare predicted contact maps b C to true contact maps C using standard metrics based on precision. A particularly important metric is precision at L, where L is the length of the sequence. 40,<a class="paper-cite" href="#ref-b40">41</a> This is computed by masking b C to only consider positions 6 apart, predicting the top L entries to be contacts, and computing precision. We provide more information on data and metrics in Appendix A.4 and on model hyperparameters in Appendix A.5.</p>
+<p data-node="g49-11dbed">Attention assumptions reflected in 15,051 protein structures. We examine all 15,051 structures in the dataset in Ref. 6 for evidence of two key properties useful for singlelayer attention models: few contacts per residue and the number of contacts scaling linearly in length. In Appendix Figure A2, we see that 80% of the 3,747,101 million residues in these structures have 4 or fewer contacts. Only 1.8% of residues have more than ten contacts. This shows that the row-wise softmax, which encourages each residue to attend to only a few other 256 1024 4096 16384 0.0 0.2 0.4 0.6 0.8 1.0 Precision at L Potts Factored Attn (H = 256) Single-Layer Attn ProtBERT-BFD (a) MSA depth 200 400 600 800 0.0 0.2 0.4 0.6 0.8 1.0 Precision at L (b) Reference length 0.0 0.2 0.4 0.6 0.8 1.0 Precision at L/5 (a) Short-range 0.0 0.2 0.4 0.6 0.8 1.0 Precision at L/5 (b) Medium-range 0.0 0.2 0.4 0.6 0.8 1.0 Precision at L/5 (c) Long-range Fig. 3: Contact precision for all models stratified by the range of the interaction, with the same color correspondence as in Figure 2a. Potts, Factored Attention, and ProtBERT-BFD perform comparably for long and medium-range contacts, while ProtBERT-BFD has slightly better precision on short-range contacts.</p>
+<figure class="paper-fig" id="figure-2" data-node="g65-d9d990">
+  <img loading="lazy" src="../../assets/papers/2021-interpreting-potts-and-transformer-protein-models-through-the-lens-of/fig-02.png" alt="Fig. 2 :Fig. 3">
+  <figcaption><b>Fig. 2 :Fig. 3</b> Fig. 2: Model performance evaluated on MSA depth and reference length. ProtBERT-BFD has higher precision on MSAs with fewer than 256 sequences. For larger MSAs, Potts, Factored Attention, and ProtBERT-BFD perform comparably. Across a variety of protein lengths, Factored Attention performs comparably to Potts with substantially fewer parameters</figcaption>
+</figure>
+<p data-node="g50-7169f6">residues per-head, reflects structure found in the data.</p>
+<p data-node="g51-57c475">Factored attention matches Potts performance on 748 families. Figure <a class="paper-cite" href="#figure-1">1</a> shows a representative sample of good quality contact maps extracted from all models. Figure <a class="paper-cite" href="#figure-2">2a</a> summarizes the performance of all models over the set of 748 protein families. Factored at- tention, Potts, and ProtBERT-BFD have comparable overall performance, with median precision at L of 0.46, 0.47, and 0.48, respectively. Stratifying by number of sequences reveals that ProtBERT-BFD has higher precision on MSAs with fewer than 256 sequences. For MSAs with greater than 1024 sequences, Potts, factored attention, and ProtBERT-BFD have comparable performance. Single-layer attention is uniformly worse over all MSA depths. Next, we evaluate the impact of sequence length on performance. Figure <a class="paper-cite" href="#figure-2">2b</a> shows that factored attention and Potts achieve similar precision at L over the whole range of family lengths, despite factored attention having far fewer parameters for long families. This shows that factored attention can successfully leverage sparsity assumptions where they are most useful.</p>
+<figure class="paper-fig" id="figure-1" data-node="g64-e08485">
+  <img loading="lazy" src="../../assets/papers/2021-interpreting-potts-and-transformer-protein-models-through-the-lens-of/gb-01.jpg" alt="Fig. 1">
+  <figcaption><b>Fig. 1</b> Predicted contact maps and Precision at L for each model on PDB entry 2BFW. Blue indicates a true positive, red indicates a false positive, and grey indicates a false negative</figcaption>
+</figure>
+<p data-node="g52-62ed9b">Long-range contacts are particularly important for downstream structure-prediction algorithms -long-range precision at L/5 is reported in both CASP12 and CASP13. 40,<a class="paper-cite" href="#ref-b40">41</a> Figure 3 breaks down contact precisions based on position separation into short (6  sep &lt; 12), medium (12  sep &lt; 24), and long (24  sep). We see that ProtBERT-BFD performs best on shortrange contacts, with a median increase of 0.068 precision at L/5. On long-range contacts, there is no appreciable di↵erence in performance to Potts and factored attention. Across the range of contact bins, factored attention and Potts perform very similarly.</p>
+<p data-node="g53-86143f">Fewer heads can match Potts on L/5 contacts. We probe the limits of parameter sharing by lowering the number of heads in factored attention and evaluating whether fewer heads can be used to precisely estimate contacts. Figure <a class="paper-cite" href="#figure-4">4a</a> shows that 128 heads can be used to estimate L/5 contacts as precisely as Potts over the full set of 748 families. In Figure <a class="paper-cite" href="#figure-4">4b</a>, we see that factored attention with 32 and 64 heads is still able to achieve reasonable overall performance compared to Potts. 32 and 64 heads have precision at L/5 at least as high as Potts for 329 and 348 families, respectively. If we wish to recover the top L contacts, 256 heads are required to match Potts across all families, as seen in Appendix Figure A3. Having more heads than 256 does not further increase performance. Intriguingly, Appendix Figure A4 demonstrates that both Spearman and Pearson correlation between the order-4 interaction H = 4 tensors of factored attention and Potts improve even when increasing to 512 heads. We do not observe the same trends for increasing head size, as shown in Appendix Figure A5 For some families, the number of heads can be reduced even further. We show an example on the MSA built for PDB entry 3n2a. In Figure <a class="paper-cite" href="#figure-5">5a</a>, we see that merely 4 heads are required to recover L/5 contacts nearly identical to those recovered by Potts. This shows that shared amino acid features and interaction parameters can enable identical performance with a 300⇥ reduction in parameters. The training dynamics of these models are shown in Figure <a class="paper-cite" href="#figure-5">5b</a>. Both factored attention with 256 heads and Potts converge after roughly 100 gradient steps, whereas factored attention with 4 heads requires nearly 10,000 steps to converge. In Appendix Figure A6, we show that the top L contacts are significantly worse for 4 heads compared to Potts.</p>
+<figure class="paper-fig" id="figure-4" data-node="g66-c6182a">
+  <img loading="lazy" src="../../assets/papers/2021-interpreting-potts-and-transformer-protein-models-through-the-lens-of/fig-03.png" alt="Fig. 4">
+  <figcaption><b>Fig. 4</b> Examining impact of number of heads on precision at L/5. Left: Comparing performance of Potts and 128 heads over each family shows comparable performance. Right: Precision at L/5 drops o↵ slowly until 32 heads, then steeply declines beyond that</figcaption>
+</figure>
+<figure class="paper-fig" id="figure-5" data-node="g67-66f162">
+  <img loading="lazy" src="../../assets/papers/2021-interpreting-potts-and-transformer-protein-models-through-the-lens-of/gb-04.jpg" alt="Fig. 5">
+  <figcaption><b>Fig. 5</b> Factored attention with 4 heads can learn the top L/5 contacts on PDB 3n2a</figcaption>
+</figure>
+<p data-node="g54-768385">Thus far we have only examined models that share parameters within single protein families. Since ProtBERT is trained on an entire database, it can leverage feature sharing across families to attain greater parameter e ciency and improved performance on small MSAs.</p>
+<p data-node="g55-675c34">To explore the possibility that attention can share parameters across families, we train factored attention using a single set of frozen value matrices. We first train factored attention normally on 3n2a with 25<a class="paper-cite" href="#figure-6">6</a> heads, then freeze the learned value matrices for the remaining 747 families. The query and key parameters are trained normally. In Figure 6, we compare the precision at L of factored attention with frozen 3n2a features to that of factored attention trained normally. Using a single frozen set of features results in only 6 families seeing precision at L decrease by more than 0.05, with a 7: E↵ect of loss on precision at L over many families. Pseudolikelihood has a uniform but small benefit over masked language modeling for both models. maximum drop of 0.11. This suggests that, even for a single-layer model, a single set of value matrices can capture amino acid features across functionally and structurally distinct protein families.</p>
+<figure class="paper-fig" id="figure-6" data-node="g68-facbae">
+  <img loading="lazy" src="../../assets/papers/2021-interpreting-potts-and-transformer-protein-models-through-the-lens-of/fig-05.png" alt="Fig. 6">
+  <figcaption><b>Fig. 6</b> Precision at L comparison, which illustrates that a single set of frozen value matrices can be used for all families</figcaption>
+</figure>
+<p data-node="g57-d750d0">Factored attention reduces total parameters estimated. For an MSA of length L with alphabet size A, Potts models require L 2 A 2 parameters. Factored attention with H heads and head size d requires H(2Ld + A 2 ) parameters. In Figure A7, we plot number of parameters versus length for various values of H and d = 32. Potts requires a total of 12 billion parameters to model all 748 families. Factored attention with 256 heads and head size 32 has 3.2 billion parameters; lowering to 128 heads reduces this to 790 million. Half of this reduction comes from 107 families of length greater than 400. ProtBERT-BFD is the most e cient, with 420 million parameters.</p>
+<h3 id="sec-14-impact-of-training-loss-function" data-node="g58-86c206">Impact of training loss function.</h3>
+<p data-node="g59-e2ff20">The choice of loss function had a uniform but small impact for factored attention and Potts. As seen in Figure <a class="paper-cite" href="#figure-7">7</a>, pseudolikelihood training slightly improves contact accuracy over masked language modeling training.</p>
+<figure class="paper-fig" id="figure-7" data-node="g907-1a8f31">
+  <img loading="lazy" src="../../assets/papers/2021-interpreting-potts-and-transformer-protein-models-through-the-lens-of/fig-06.png" alt="Fig. 7">
+  <figcaption><b>Fig. 7</b> E↵ect of loss on precision at L over many families. Pseudolikelihood has a uniform but small benefit over masked language modeling for both models</figcaption>
+</figure>
+<p data-node="g60-4cacf9">APC has a considerable impact on both Potts and factored attention, creating a median increase in precision at L of 0.1 and 0.07, respectively. The e↵ect of APC is negligible for single-layer attention and ProtBERT. Addition of the single-site potential b i increases performance slightly for attention layers, but not enough to change overall trends. To compare to ProtBERT-BFD, we train our single-layer attention models on unaligned families and found that performance degrades significantly. See Appendix Figures A8-A10.</p>
+<h2 id="sec-15-discussion" data-node="g61-8fb937">Discussion</h2>
+<p data-node="g62-f7cf47">We have shown that single-layer factored attention models and the ProtBert-BFD Transformer achieve performance comparable to Potts models on unsupervised contact extraction. We have also shown that the assumptions encoded by attention reflect important properties of protein families. These results suggest that attention has a natural role in protein representation learning, without analogy to attention&#x27;s success in the domain of NLP.</p>
+<p data-node="g63-a97db1">Our results also show that hierarchical signal within and across families can be captured by even simple attention models. The MSA Transformer <a class="paper-cite" href="#ref-b41">42</a> explicitly ties weights within families to achieve improved results on contact extraction, showing that modeling of hierarchical structure is beneficial for larger models trained on entire databases. There have been extensive e↵orts to organize the relationships between protein families and folds, most notably the SCOP <a class="paper-cite" href="#ref-b43">43</a> and CATH <a class="paper-cite" href="#ref-b44">44</a> hierarchies. Further leveraging such rich structure will be essential to the development of powerful protein representations.</p>
+      </div>
+      <section class="paper-refs" id="references">
+        <h2>References</h2>
+        <ol>
+        <li id="ref-b0" value="1">Balakrishnan S, Kamisetty H, Carbonell J, Lee S, Langmead C. Learning generative models for protein fold families. Proteins: Structure, Function, and Bioinformatics 2011</li>
+        <li id="ref-b1" value="2">Ekeberg M, Lövkvist C, Lan Y, Weigt M, Aurell E. Improved contact prediction in proteins: using pseudolikelihoods to infer potts models. Phys. Rev. E Stat. Nonlin. Soft Matter Phys 2013</li>
+        <li id="ref-b2" value="3">Seemayer S, Gruber M, Söding J. CCMpred -Fast and precise prediction of protein residue-residue contacts from correlated mutations. Bioinformatics 2014</li>
+        <li id="ref-b3" value="4">Monastyrskyy B, D&#x27;andrea D, Fidelis K, Tramontano A, Kryshtafovych A. New encouraging developments in contact prediction: Assessment of the casp 11 results. Proteins: Structure, Function, and Bioinformatics 2016</li>
+        <li id="ref-b4" value="5">Wang S, Sun S, Li Z, Zhang R, Xu J. Accurate de novo prediction of protein contact map by ultra-deep learning model. PLOS Computational Biology 2017</li>
+        <li id="ref-b5" value="6">Yang J, Anishchenko I, Park H, Peng Z, Ovchinnikov S, Baker D. Improved protein structure prediction using predicted inter-residue orientations. bioRxiv 2019</li>
+        <li id="ref-b6" value="7">Senior A, Evans R, Jumper J, Kirkpatrick J, Sifre L, Green T, Qin C, Žídek A et al. Improved protein structure prediction using potentials from deep learning. Nature 2020</li>
+        <li id="ref-b7" value="8">Devlin J, Chang M, Lee K, Toutanova K. 2018</li>
+        <li id="ref-b8" value="9">Brown T, Mann B, Ryder N, Subbiah M, Kaplan J, Dhariwal P, Neelakantan A, Shyam P et al. 2020</li>
+        <li id="ref-b9" value="10">Rives A, Meier J, Sercu T, Goyal S, Lin Z, Guo D, Ott M, Lawrence Zitnick C et al. 2020</li>
+        <li id="ref-b10" value="11">Elnaggar A, Heinzinger M, Dallago C, Rihawi G, Wang Y, Jones L, Gibbs T, Feher T et al. 2020</li>
+        <li id="ref-b11" value="12">Rao R, Bhattacharya N, Thomas N, Duan Y, Chen P, Canny J, Abbeel P, Song Y. Evaluating protein transfer learning with TAPE. 2019</li>
+        <li id="ref-b12" value="13">Madani A, Mccann B, Naik N, Keskar N. 2020</li>
+        <li id="ref-b13" value="14">Nambiar A, Liu S, Hopkins M, Heflin M, Maslov S, Ritz A. 2020</li>
+        <li id="ref-b14" value="15">Vaswani A, Shazeer N, Parmar N, Uszkoreit J, Jones L, Gomez A, Kaiser L, Polosukhin I. Attention is all you need. 2017</li>
+        <li id="ref-b15" value="16">Lu A, Zhang H, Ghassemi M, Moses A. Self-supervised contrastive learning of protein representations by mutual information maximization. bioRxiv 2020</li>
+        <li id="ref-b16" value="17">Shanehsazzadeh A, Belanger D, Dohan D. 2020</li>
+        <li id="ref-b17" value="18">Hsu C, Nisono↵ H, Fannjiang C, Listgarten J. Combining evolutionary and assay-labelled data for protein fitness prediction. bioRxiv 2021</li>
+        <li id="ref-b18" value="19">Dallago C, Mou J, Johnston K, Wittmann B, Bhattacharya N, Goldman S, Madani A, Yang K. 2021</li>
+        <li id="ref-b19" value="20">Jumper J, Evans R, Pritzel A, Green T, Figurnov M, Ronneberger O, Tunyasuvunakool K, Bates R et al. Highly accurate protein structure prediction with alphafold. Nature 2021</li>
+        <li id="ref-b20" value="21">Baek M, Dimaio F, Anishchenko I, Dauparas J, Ovchinnikov S, Lee G, Wang J, Cong Q et al. Accurate prediction of protein structures and inter-actions using a three-track neural network. Science 2021</li>
+        <li id="ref-b21" value="22">Johnson L, Eddy S, Portugaly E. Hidden Markov model speed heuristic and iterative HMM search procedure. BMC Bioinformatics 2010</li>
+        <li id="ref-b22" value="23">Remmert M, Biegert A, Hauser A, Söding J. HHblits: Lightning-fast iterative protein sequence searching by HMM-HMM alignment. Nature Methods 2012</li>
+        <li id="ref-b23" value="24">Lockless S, Ranganathan R. Evolutionarily conserved pathways of energetic connectivity in protein families. Science 1999</li>
+        <li id="ref-b24" value="25">Fodor A, Aldrich R. On Evolutionary Conservation of Thermodynamic Coupling in Proteins. Journal of Biological Chemistry 2004</li>
+        <li id="ref-b25" value="26">Thomas J, Ramakrishnan N, Bailey-Kellogg C. Graphical models of residue coupling in protein families. IEEE/ACM Transactions on Computational Biology and Bioinformatics 2008</li>
+        <li id="ref-b26" value="27">Weigt M, White R. Szurmant and others, Identification of direct residue contacts in protein-protein interaction by message passing. Proceedings 2009</li>
+        <li id="ref-b27" value="28">Burley S, Petsko G. Weakly polar inter-actions in proteins. Advances in protein chemistry 1988</li>
+        <li id="ref-b28" value="29">Jaenicke R. Stability and stabilization of globular proteins in solution. Journal of Biotechnology 2000</li>
+        <li id="ref-b29" value="30">Taylor W, Sadowski M. Structural constraints on the covariance matrix derived from multiple aligned protein sequences. PLoS One 2011</li>
+        <li id="ref-b30" value="31">Kamisetty H, Ovchinnikov S, Baker D. Assessing the utility of coevolution-based residue-residue contact predictions in a sequence-and structure-rich era. Proc. Natl. Acad. Sci. U. S. A 2013</li>
+        <li id="ref-b31" value="32">Ba J, Kiros J, Hinton G. 2016</li>
+        <li id="ref-b32" value="33">Wolf T, Debut L, Sanh V, Chaumond J, Delangue C, Moi A, Cistac P, Rault T et al. Transformers: State-of-the-art natural language processing. 2020</li>
+        <li id="ref-b33" value="34">Suzek B, Huang H, Mcgarvey P, Mazumder R, Wu C. 2007</li>
+        <li id="ref-b34" value="35">Steinegger M, Söding J. Clustering huge protein sequence sets in linear time. Nature communications 2018</li>
+        <li id="ref-b35" value="36">Steinegger M, Meier M, Mirdita M, Vöhringer H, Haunsberger S, Söding J. HH-suite3 for fast remote homology detection and deep protein annotation. BMC Bioinformatics 2019</li>
+        <li id="ref-b36" value="37">Dunn S, Wahl L, Gloor G. Mutual information without the influence of phylogeny or entropy dramatically improves residue contact prediction. Bioinformatics 2008</li>
+        <li id="ref-b38" value="39">Biewald L. Experiment tracking with weights and biases. 2020</li>
+        <li id="ref-b39" value="40">Schaarschmidt J, Monastyrskyy B, Kryshtafovych A, Bonvin A. Assessment of contact predictions in casp12: co-evolution and deep learning coming of age. Proteins: Structure, Function, and Bioinformatics 2018</li>
+        <li id="ref-b40" value="41">Shrestha R, Fajardo E, Gil N, Fidelis K, Kryshtafovych A, Monastyrskyy B, Fiser A. Assessing the accuracy of contact predictions in casp13. Proteins: Structure, Function, and Bioinformatics 2019</li>
+        <li id="ref-b41" value="42">Rao R, Liu J, Verkuil R, Meier J, Canny J, Abbeel P, Sercu T, Rives A et al</li>
+        <li id="ref-b43" value="43">Chandonia J, Fox N, Brenner S. Scope: classification of large macromolecular structures in the structural classification of proteins-extended database. Nucleic acids research 2019</li>
+        <li id="ref-b44" value="44">Sillitoe I, Bordin N, Dawson N, Waman V, Ashford P, Scholes H, Pang C, Woodridge L et al. Cath: increased structural coverage of functional space. Nucleic acids research 2021</li>
+        <li id="ref-b45" value="45">Brown D, Krishnamurthy N, Sjölander K. Automated protein subfamily identification and classification. PLoS Comput Biol 2007</li>
+        <li id="ref-b46" value="46">Malinverni D, Barducci A. Coevolutionary analysis of protein subfamilies by sequence reweighting. Entropy 2019</li>
+        <li id="ref-b47" value="47">Ovchinnikov S, Kamisetty H, Baker D. 2014</li>
+        <li id="ref-b48" value="48">Dauparas J, Wang H, Swartz A, Koo P, Nitzan M, Ovchinnikov S. 2019</li>
+        <li id="ref-b49" value="49">Suzek B, Wang Y, Huang H, Mcgarvey P, Wu C, Consortium U. Uniref clusters: a comprehensive and scalable alternative for improving sequence similarity searches. Bioinformatics 2015</li>
+        </ol>
+      </section>
+      <nav class="paper-related">
+        <h2>Earlier work from the lab cited here</h2>
+        <ul>
+        <li><a href="../2021-accurate-prediction-of-protein-structures-and-interactions-using-a-thr/">Accurate prediction of protein structures and interactions using a three-track neural network</a> <span class="yr">2021</span></li>
+        <li><a href="../2020-improved-protein-structure-prediction-using-predicted-interresidue-ori/">Improved protein structure prediction using predicted interresidue orientations</a> <span class="yr">2020</span></li>
+        </ul>
+      </nav>
+    </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span><a href="https://web.mit.edu/">Massachusetts Institute of Technology</a></span>
+      <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
+    </div>
+  </footer>
+  <script defer src="../../assets/js/msa.js"></script>
+  <script defer src="../../assets/js/paper.js"></script>
+</body>
+</html>

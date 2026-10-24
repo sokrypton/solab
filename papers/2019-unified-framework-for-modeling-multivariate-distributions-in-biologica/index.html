@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unified framework for modeling multivariate distributions in — solab</title>
+  <meta name="description" content="Revealing the functional sites of biological sequences, such as evolutionary conserved, structurally interacting or co-evolving protein sites, is a fundamental, and yet challenging">
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/paper.css">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="solab — Ovchinnikov Lab">
+  <meta property="og:title" content="Unified framework for modeling multivariate distributions in — solab">
+  <meta property="og:description" content="Revealing the functional sites of biological sequences, such as evolutionary conserved, structurally interacting or co-evolving protein sites, is a fundamental, and yet challenging">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="../../">solab</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.getElementById('navlinks').classList.toggle('open')">&#9776;</button>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="../../">Home</a></li>
+        <li><a href="../../lab/">Lab</a></li>
+        <li><a href="../../research/">Research</a></li>
+        <li><a href="../../publications/" class="active">Publications</a></li>
+        <li><a href="../../tools/">Tools</a></li>
+        <li><a href="../../resources/">Resources</a></li>
+        <li><a href="../../contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="paper-layout paper--with-toc">
+      <nav class="paper-toc" aria-label="Contents">
+        <p class="paper-toc-head">Contents</p>
+        <ul>
+          <li class="lvl2" data-section="sec-1-introduction"><a href="#sec-1-introduction">Introduction</a></li>
+          <li class="lvl2" data-section="sec-2-results"><a href="#sec-2-results">Results</a></li>
+          <li class="lvl3" data-parent="sec-2-results"><a href="#sec-3-position-specific-scoring-matrix">Position-specific scoring matrix</a></li>
+          <li class="lvl3" data-parent="sec-2-results"><a href="#sec-4-mrf-with-pseudo-likelihood-is-identical">MRF with pseudo-likelihood is identical to cross entropy</a></li>
+          <li class="lvl3" data-parent="sec-2-results"><a href="#sec-5-mg-can-be-reformulated-as-mean-squared-e">MG can be reformulated as mean squared error</a></li>
+          <li class="lvl3" data-parent="sec-2-results"><a href="#sec-6-unifying-multivariate-distributions-in-a">Unifying multivariate distributions in a single framework</a></li>
+          <li class="lvl3" data-parent="sec-2-results"><a href="#sec-7-application-protein-contact-prediction">Application: Protein contact prediction</a></li>
+          <li class="lvl2" data-section="sec-8-conclusion"><a href="#sec-8-conclusion">Conclusion</a></li>
+          <li class="lvl2"><a href="#references">References</a></li>
+        </ul>
+      </nav>
+    <article class="paper">
+      <p class="paper-eyebrow"><a href="../../publications/#evolution">Unified Model of Protein Evolution</a></p>
+      <h1 class="paper-title">Unified framework for modeling multivariate distributions in biological sequences</h1>
+      <p class="paper-authors">Dauparas J, Wang H, Swartz A, Koo P, Nitzan M and <a href="../../lab/member/?name=Sergey_Ovchinnikov">Ovchinnikov S.</a></p>
+      <p class="paper-meta">2019 · ICML CompBio Workshop. GitHub</p>
+      <p class="paper-links"><a class="pill" href="https://doi.org/10.48550/arxiv.1906.02598">DOI</a> <a class="pill" href="https://arxiv.org/abs/1906.02598">Publisher</a></p>
+      <section class="paper-abstract"><h2>Abstract</h2><p>Revealing the functional sites of biological sequences, such as evolutionary conserved, structurally interacting or co-evolving protein sites, is a fundamental, and yet challenging task. Different frameworks and models were developed to approach this challenge, including Position-Specific Scoring Matrices, Markov Random Fields, Multivariate Gaussian models and most recently Autoencoders. Each of these methods has certain advantages, and while they have generated a set of insights for better biological predictions, these have been restricted to the corresponding methods and were difficult to translate to the complementary domains. Here we propose a unified framework for the above-mentioned models, that allows for interpretable transformations between the different methods and naturally incorporates the advantages and insight gained individually in the different communities. We show how, by using the unified framework, we are able to achieve state-of-the-art performance for protein structure prediction, while enhancing interpretability of the prediction process.</p></section>
+      <div class="paper-body paper-body--plain">
+<h2 id="sec-1-introduction" data-node="g2-2473e9">Introduction</h2>
+<p data-node="g3-edbe94">The function of the products of biological sequences, such as proteins and RNAs, is, to a large extent, encoded directly into the sequence itself. However, determining the function from a single sequence remains a challenge. One promising approach is to leverage the power of evolution and comparison, to gain statistical power to identify which positions are conserved and which pairs of positions are coevolving, thus supporting their functional importance.</p>
+<p data-node="p1-e94fc1">1 FAS Division of Science, Harvard University 2 Harvard College 3 Howard Hughes Medical Institute, Harvard University 4 JHDSF Program, Harvard University. Correspondence to: Mor Nitzan &lt; mornitzan@fas.harvard.edu &gt; , Sergey Ovchinnikov &lt; so@fas.harvard.edu &gt; .</p>
+<p data-node="g4-0e7bfd">Generative models are typically employed to infer such statistical properties from homologous sequences which are organized into a multiple sequence alignment (MSA). Such methods include Position-Specific Scoring Matrices (PSSMs), Markov Random Fields (MRFs), Multivariate-Gaussians (MGs), and more recently, Autoencoders (AEs). PSSMs are site-independent models that are limited to capture one-body terms, i.e. evolutionary conservation, across the species in an MSA (Stormo et al., 1982). To capture additional two-body interaction terms, i.e. coevolving positions, MRFs and MGs have emerged, specifically in the context of protein structure contact prediction (Balakrishnan et al., 2011;Kamisetty et al., 2013;Ekeberg et al., 2013;Morcos et al., 2011;Baldassi et al., 2014). MGs assume the distributions of the amino acids are continuous, and are able to capture higher-order interactions with their covariance matrix. On the other hand, MRFs explicitly model the amino acids as categorical distributions and capture higher order interactions with two-body coupling terms.</p>
+<p data-node="g5-fba822">Although MRFs and MGs have largely been considered to be two distinct approaches to model conservation and coevolution in protein sequences, we present a unified mathematical framework for both, formulated as a general autoencoder, reducing the differences between the two traditional approaches to trivial changes. Moreover, this unifying framework allows for the insights gained by one approach to be utilized and interpreted by the other. We envision that this framework will enable merging the advantages of the different existing approaches, thus leading to better results for prediction of physical contacts and coevolution for biological sequences.</p>
+<h2 id="sec-2-results" data-node="g6-612e12">Results</h2>
+<p data-node="g7-feed72">For a set of homologous sequences in an MSA, X ∈ R N ×L×K , with N sequences of length L and an alphabet of size K, we would like to interpret the underlying patterns of those sequences; Which positions are conserved? Which subsets of positions are coevolving? The sequences can be encoded as a one-hot representation (Fig. <a class="paper-cite" href="#figure-1">1</a>), where the sum over alphabet is equal to one, i.e.</p>
+<figure class="paper-fig" id="figure-1" data-node="g57-a27f89">
+  <img loading="lazy" src="../../assets/papers/2019-unified-framework-for-modeling-multivariate-distributions-in-biologica/fig-01.png" alt="Figure 1">
+  <figcaption><b>Figure 1</b> Aligned biological sequences such as DNA, RNA, or protein. Every position in the sequence is represented using onehot encoding. The data matrix X ∈ R N ×LK = R N ×L×K has N sequences, every sequence is of length L and every position in the sequence can have K different states</figcaption>
+</figure>
+<h3 id="sec-3-position-specific-scoring-matrix" data-node="g8-a9fcee">Position-specific scoring matrix</h3>
+<div data-node="g9-81b1e2" class="paper-equation">L P SSM = 1 N N n=1 L l=1 cce[X, softmax(b)], (1)</div>
+<div data-node="g10-b7b9a9" class="paper-equation">L P SSM = - 1 N N n=1 L l=1 K k=1 X nlk log e b lk K q=1 e b lq (2)</div>
+<p data-node="g11-5e6fe4">To capture site-independent patterns in biological sequences, i.e. evolutionary conservation, a position-specific scoring matrix (PSSM) is frequently used (Stormo et al., 1982). The parameter in this model is a matrix b ∈ R L×K , and the loss function L P SSM for this model can be written as an average cross entropy loss between the data and the PSSM matrix: where the softmax and cross entropy functions are taken along the alphabet. See Fig. 2 for the graphical representation of the model. The maximum likelihood estimator for b is given by b rs = log 1 N N n=1 X nrs , i.e. the natural logarithm of the empirical frequencies.</p>
+<figure class="paper-fig" id="figure-2" data-node="g58-e88e3a">
+  <img loading="lazy" src="../../assets/papers/2019-unified-framework-for-modeling-multivariate-distributions-in-biologica/fig-02.png" alt="Figure 2">
+  <figcaption><b>Figure 2</b> Graphical representation of the models. A positionspecific scoring matrix (PSSM) model with the loss LP SSM = mean {cce[X, softmax(b)]} learns the parameters b ∈ R L×K = R LK which are shown as a red vector. A Markov random field (MRF) with pseudo-likelihood has the loss LMRF = mean {cce[X, softmax(B + XW)]} + λ||W|| 2 2 where the parameters are B ∈ R N ×LK (red) and W ∈ R LK×LK (blue). A multivariate Gaussian (MG) type model has the loss LMG =</figcaption>
+</figure>
+<h3 id="sec-4-mrf-with-pseudo-likelihood-is-identical" data-node="g13-7ccd10">MRF with pseudo-likelihood is identical to cross entropy</h3>
+<div data-node="g14-9440d0" class="paper-equation">log p(x) ≈ n i=1 log p(x i , x -i ) xi p(x i , x -i ) , (3)</div>
+<div data-node="g15-2652cf" class="paper-equation">L M RF = - 1 N N n=1 L l=1 log e K k=1 X nlk H nlk K q=1 e K k=1 C nqk H nlk , (4) where H nlk = B nlk + L r=1 K s=1</div>
+<div data-node="g16-3984a3" class="paper-equation">L = 1 N N n=1 L l=1 {cce[X, softmax(H)]} nl , = - 1 N N n=1 L l=1 log e K k=1 X nlk H nlk K g=1 e H nlg K k=1 X nlk , = - 1 N N n=1 L l=1 log e K k=1 X nlk H nlk K g=1 e H nlg , (5)</div>
+<p data-node="g17-27ae46">PSSMs only consider one-body terms, i.e. conservations. A Markov Random Field, or Potts model, generalizes the PSSMs to also include two-body interaction terms (Lapedes et al., 1999;Thomas et al., 2005;Balakrishnan et al., 2009;Weigt et al., 2009). The maximum entropy solution to a model that is constrained to capture single site amino acid frequencies and pairwise amino acid frequencies in an MSA is a Boltzmann distribution given by p( where X ∈ R N ×LK is the mean-centered data and W ∈ R LK×LK (blue) are the parameters. Either MRF or MG models can be extended to a full auto-encoder (AE) by addition of hidden layer(s).</p>
+<p data-node="g19-b65beb">the diagonal one can write (1 LK×LK -I) • W, where 1 LK×LK is the matrix of ones, I is an identity matrix, and • denotes the Hadamard product.</p>
+<p data-node="g20-651776">The partition function for discrete distributions is given by a sum over all realizations of the data and hence it is often not tractable. However, the partition function cancels out for conditional probabilities, as achieved by the pseudo-likelihood objective (Besag, 1975): where x has n features, x i denotes the i-th feature and x -i all the features apart from the i-th one. A pseudo-likelihood approximation replaces the sum over all possibilities in the partition function only by the sum over the states of the considered location while all the other locations of the sequence are fixed from the data (Balakrishnan et al., 2011;Kamisetty et al., 2013;Ekeberg et al., 2013).</p>
+<p data-node="g22-daf0a6">The loss L M RF for the MRF with a pseudo-likelihood approximation is given by</p>
+<p data-node="g23-d9c4f3">X nrs W rslk , the constant C ∈ R N ×K×K is an encoding of alphabet which is broadcasted C nqk = c qk , ∀ n, l, k, and B ∈ R N ×L×K is a broadcasted b, i.e. B nlk = b lk ∀ n, l, k. If one-hot encoding is used then c is an identity matrix. The graphical representation of the model is shown in Fig. <a class="paper-cite" href="#figure-2">2</a>.</p>
+<p data-node="g24-6d5158">We will now show that the loss function of an average cross entropy is identical to the Markov Random Field with onehot encoding. The loss function L for the model using an average cross entropy loss is given by</p>
+<p data-node="g25-008ec9">L = L M RF , which demonstrates that the MRF with a pseudo-likelihood approximation is equivalent to the cce loss formulation.</p>
+<h3 id="sec-5-mg-can-be-reformulated-as-mean-squared-e" data-node="g26-9aad1d">MG can be reformulated as mean squared error</h3>
+<div data-node="g27-44ee46" class="paper-equation">l(Θ) = 1 2 log det(Θ) - 1 2N N n=1 x (n) Θx (n) , ( 6</div>
+<div data-node="g28-6705d0" class="paper-equation">X nf = 1 N N i=1 X if ∀n. The loss function L M G is defined as L M G = 1 N N n=1 LK f =1 {mse[ X, XW]} nf = 1 N N n=1 LK f =1 Xnf - LK q=1 Xnq W qf 2 . (7)</div>
+<div data-node="g29-9afd4f" class="paper-equation">R = λ W 2 2 -2γ tr(W). (8)</div>
+<div data-node="g30-26e731" class="paper-equation">∂ LMG ∂W = 2 N XT XW -XT X + 2λW -2γI. (9) Solving ∂ LMG ∂W = 0 leads to W = (γ -λ) cov( X) + λI -1 + I ( 10</div>
+<div data-node="g31-57b2db" class="paper-equation">LMG = 1 N || X W|| 2 2 + λ|| W + I|| 2 2 -2γ tr( W) ( 11</div>
+<div data-node="g32-9065b0" class="paper-equation">W = (γ -λ) cov( X) + λI -1 . ( 12</div>
+<div data-node="g33-dcd853" class="paper-equation">W = I -C -1 I C -1 • I , (13)</div>
+<div data-node="g34-00eb36" class="paper-equation">C = cov( X) + λI.</div>
+<p data-node="g35-8ea38f">Suppose that each sequence is instead sampled from a multivariate Gaussian distribution, i.e. x (n) ∼ N (0, Σ), where x (n) is the nth sequence in X. The log-likelihood for i.i.d.</p>
+<p data-node="g36-f77941">x (i) up to a constant is given by where Θ is the positive definite precision matrix defined as Θ = Σ -1 . This is maximized when Θ = S -1 , where S is the empirical covariance matrix defined as S := X T X N . We will now consider the mean squared error loss function of the centered data and the matrix multiplication of the centered data. This model can be thought of as a mapping onto itself with an affine transformation (see Fig. 2). However, to prevent a trivial self-mapping, a regularization is needed.</p>
+<p data-node="g38-804e25">The model has parameters W ∈ R LK×LK and the mean-centered data is denoted as X = X -X, where X ∈ R N ×LK and</p>
+<p data-node="g39-f916b7">To prevent the trivial identity solution, we add regularization R and write the total loss as LMG = L M G + R where</p>
+<p data-node="g40-cf990f">In this case the derivative of the total loss is</p>
+<p data-node="g41-f4ed0a">If we remove the identity from the parameter matrix by writing W = I + W then the modified loss up to a constant is given by and the solution to this optimization problem is simply shifted by the identity matrix, i.e.</p>
+<p data-node="g43-1f9a11">If we choose γ = 1 then W is given as the inverse of the regularized empirical covariance matrix, and if we set λ = 0 then it is just the inverse of the covariance matrix. Therefore, the log-likelihood loss for the multivariate Gaussian model (Eq. 6) and the mean squared error loss (Eq. 11) both have the same global minimum. Interestingly, unlike for the multivariate Gaussian model, the mean squared error model does not require a postitive definite constraint. This switch can drastically reduce the run time.</p>
+<p data-node="g44-589b54">If we write W • (1 LK×LK -I) in the MG model (Eq. 7)</p>
+<p data-node="g46-307283">Therefore, the symmetric part is Ŵ = (W + W T )/2.</p>
+<h3 id="sec-6-unifying-multivariate-distributions-in-a" data-node="g47-2fc76c">Unifying multivariate distributions in a single framework</h3>
+<p data-node="g48-a847d9">In summary, we have demonstrated that: 1) Maximizing the pseudo-likelihood of a MRF is identical to minimizing the categorical cross entropy (CCE); <a class="paper-cite" href="#figure-2">2</a>) Maximizing the likelihood of a multivariate Gaussian model has the same global optima as minimizing mean-squared-error (MSE), where L2 regularization is identical to shrinking the covariance matrix before inversion. The significance of this is that both models can be reformulated as a single dense (or fully-connected) layer that maps the input data onto itself. The difference is that MRF explicitly removes connections with the same positions, while MG includes these connections but must include regularization to prevent the trivial mapping. MRF and MG treat input data as categorical and continuous, respectively. Nevertheless, the benefit of reframing these problems as a graphical model enables to leverage widelyused neural network frameworks, such as Tensorflow and PyTorch, which gives access to GPU libraries. Moreover, additional hidden layers can be added in between the inputs and outputs to enable auto-encoding (see Fig. 2).</p>
+<h3 id="sec-7-application-protein-contact-prediction" data-node="g49-540d94">Application: Protein contact prediction</h3>
+<p data-node="g50-ef14a6">In the case of MRFs (Markov Random Fields) , the two-body term is used for graph or contact map inference (Fig. <a class="paper-cite" href="#figure-3">3</a>).</p>
+<figure class="paper-fig" id="figure-3" data-node="g59-62cf22">
+  <img loading="lazy" src="../../assets/papers/2019-unified-framework-for-modeling-multivariate-distributions-in-biologica/fig-03.png" alt="Figure 3">
+  <figcaption><b>Figure 3</b> From the Markov Random Field model with pseudolikelihood one can infer the matrix W ∈ R LK×LK and take L2 norm to get a contact map shown on the right</figcaption>
+</figure>
+<p data-node="g51-9f9e38">For the mean-field approximation of MRFs (Morcos et al., 2011) or MG models (Baldassi et al., 2014), the precision (or inverse covariance) matrix is used to infer &quot;direct causation&quot; (Markowetz &amp; Spang, 2007). Though the application is similar, it is not immediately obvious why maximizing the pseudo-likelihood of a regularized MRF results in a more accurate pairwise term (Balakrishnan et al., 2011;Kamisetty et al., 2013), compared to estimating this term by taking the inverse of the shrunken covariance matrix. Under our unifying framework, the major difference between these models is their loss functions. Beyond that, different regularization techniques are used to promote sparsity in MSE and CCE models. For MSE, these include the addition of a pseudo-count, small constant along the diagonal (Morcos et al., 2011;Baldassi et al., 2014;Rawi et al., 2016) and/or L1 penalty during graphical lasso optimization (Friedman et al., 2008;Jones et al., 2011). For CCE, these include L1, group L1 and L2 penalty, where L2 regularization was found to work best for contact prediction (Kamisetty et al., 2013;Ekeberg et al., 2013). To test if L2 regularization also works for MSE, we add a small constant 4.5/N 1/2 along the diagonal before inversion. Remarkably, MSE outperforms GaussDCA (Baldassi et al., 2014), which adds a pseudo-count to the entire covariance matrix. By zeroing the diagonal of the pairwise matrix (see Eq. 13), we see a small but consistent improvement. Coincidentally, we find this to be equivalent to computing the partial correlation coefficient. Though the results are still not as good as The axes indicate the accuracy of each method, defined as the average precision of the top L ranked contacts. L is the length of the protein, the contact is defined using CONFIND (Holland et al., 2018), between every pair of positions that are greater than or equal to sequence separation of 6.</p>
+<p data-node="g52-af4968">CCE, MSE with equivalent regularization provides a closer approximation to CCE (see Fig. 4).</p>
+<p class="paper-orphan-caption" data-node="g60-744b81">Figure 4 .. Figure4. MSE is more accurate than GaussDCA (Baldassi et al., 2014) for protein contact prediction, but worse than CCE. Each point corresponds to a protein. The axes indicate the accuracy of each method, defined as the average precision of the top L ranked contacts. L is the length of the protein, the contact is defined using CONFIND (Holland et al., 2018) , between every pair of positions that are greater than or equal to sequence separation of 6</p>
+<p data-node="g53-072ffc">The test was performed on a diverse set of proteins with at least 1K effective sequences from (Anishchenko et al., 2017). The redundancy was reduced by selecting one random member per connected component, where the edges of the graph were defined using a 1E-10 e-value threshold, computed by HMM-HMM alignment (Hildebrand et al., 2009). To keep the data-set consistent, each alignment was sub-sampled to 1K. Before ranking, all methods were corrected for entropy using Average Product Correction (Dunn et al., 2007).</p>
+<h2 id="sec-8-conclusion" data-node="g54-e39262">Conclusion</h2>
+<p data-node="g55-04cc6e">We showed that widely used models for multivariate distributions in biological sequences can all be expressed as a single fully-connected layer, where the weights and bias of the dense layer captures the co-evolution and conservation, respectively. The differences in the models comes down to the loss function used, where inverse-covariance methods are effectively minimizing the mean-squared error (more appropriate for continuous data) and markov-random-field methods are minimizing the categorical cross entropy (more appropriate for categorical data). Since maximizing the pseudo-likelihood for MRF is identical to minimizing the categorical cross entropy (loss function often used for encoding/decoding biological sequences) this further reduces the difference between AE and MRF to a simple addition of hidden layer(s) between the input and output.</p>
+<p data-node="g56-0f436e">Though the result is simple, it helps unite and bridge the gap between these widely used models across multiple fields. This framework should allow researchers to easily extend and incorporate features used in one set of models to others. We show a simple example of this by incorporating regularization often used in MRFs to MG models.</p>
+      </div>
+      <section class="paper-refs" id="references">
+        <h2>References</h2>
+        <ol>
+        <li id="ref-b0" value="1">Anishchenko I, Ovchinnikov S, Kamisetty H, Baker D. Origins of coevolution between residues distant in protein 3d structures. Proceedings of the National Academy of Sciences 2017</li>
+        <li id="ref-b1" value="2">Balakrishnan S, Kamisetty H, Carbonell J, Langmead C. 2009</li>
+        <li id="ref-b2" value="3">Balakrishnan S, Kamisetty H, Carbonell J, Lee S, Langmead C. Learning generative models for protein fold families. Proteins: Structure, Function, and Bioinformatics 2011</li>
+        <li id="ref-b3" value="4">Baldassi C, Zamparo M, Feinauer C, Procaccini A, Zecchina R, Weigt M, Pagnani A. Fast and accurate multivariate Gaussian modeling of protein families: predicting residue contacts and protein-interaction partners. PloS one 2014</li>
+        <li id="ref-b4" value="5">Besag J. Statistical analysis of non-lattice data. Journal of the Royal Statistical Society: Series D (The Statistician) 1975</li>
+        <li id="ref-b5" value="6">Dunn S, Wahl L, Gloor G. Mutual information without the influence of phylogeny or entropy dramatically improves residue contact prediction. Bioinformatics 2007</li>
+        <li id="ref-b6" value="7">Ekeberg M, Lövkvist C, Lan Y, Weigt M, Aurell E. Improved contact prediction in proteins: using pseudolikelihoods to infer Potts models. Physical Review E 2013</li>
+        <li id="ref-b7" value="8">Friedman J, Hastie T, Tibshirani R. Sparse inverse covariance estimation with the graphical lasso. Biostatistics 2008</li>
+        <li id="ref-b8" value="9">Hildebrand A, Remmert M, Biegert A, Söding J. Fast and accurate automatic structure prediction with hhpred. Proteins: Structure, Function, and Bioinformatics 2009</li>
+        <li id="ref-b9" value="10">Holland J, Pan Q, Grigoryan G. Contact prediction is hardest for the most informative contacts, but improves with the incorporation of contact potentials. PloS one 2018</li>
+        <li id="ref-b10" value="11">Jones D, Buchan D, Cozzetto D, Pontil M. Psicov: precise structural contact prediction using sparse inverse covariance estimation on large multiple sequence alignments. Bioinformatics 2011</li>
+        <li id="ref-b11" value="12">Kamisetty H, Ovchinnikov S, Baker D. Assessing the utility of coevolution-based residue-residue contact predictions in a sequence-and structure-rich era. Proceedings of the National Academy of Sciences 2013</li>
+        <li id="ref-b12" value="13">Lapedes A, Giraud B, Liu L, Stormo G. Correlated mutations in models of protein sequences: phylogenetic and structural effects. 1999</li>
+        <li id="ref-b13" value="14">Markowetz F, Spang R. Inferring cellular networks-a review. BMC bioinformatics 2007</li>
+        <li id="ref-b14" value="15">Morcos F, Pagnani A, Lunt B, Bertolino A, Marks D, Sander C, Zecchina R, Onuchic J et al. Direct-coupling analysis of residue coevolution captures native contacts across many protein families. Proceedings of the National Academy of Sciences 2011</li>
+        <li id="ref-b15" value="16">Rawi R, Mall R, Kunji K, El Anbari M, Aupetit M, Ullah E, Bensmail H. Couscous: improved protein contact prediction using an empirical bayes covariance estimator. BMC bioinformatics 2016</li>
+        <li id="ref-b16" value="17">Stormo G, Schneider T, Gold L, Ehrenfeucht A. Use of the Perceptron algorithm to distinguish trans-lational initiation sites in E. coli. Nucleic Acids Res 1982</li>
+        <li id="ref-b17" value="18">Thomas J, Ramakrishnan N, Bailey-Kellogg C. 2005</li>
+        <li id="ref-b18" value="19">Weigt M, White R, Szurmant H, Hoch J, Hwa T. Identification of direct residue contacts in proteinprotein interaction by message passing. Proceedings of the National Academy of Sciences 2009</li>
+        </ol>
+      </section>
+
+    </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span><a href="https://web.mit.edu/">Massachusetts Institute of Technology</a></span>
+      <span><a href="https://biology.mit.edu/">MIT Biology</a></span>
+    </div>
+  </footer>
+  <script defer src="../../assets/js/msa.js"></script>
+  <script defer src="../../assets/js/paper.js"></script>
+</body>
+</html>
